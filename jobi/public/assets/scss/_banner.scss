@@ -1,0 +1,668 @@
+// Hero Banner One
+.hero-banner-one {
+    background: $color-one;
+    z-index: 9;
+
+    h1 {
+        color: #fff;
+        span {
+            display: block;
+            color: $color-two;
+        }
+    }
+    .img-box {
+        position: absolute;
+        width: 46%;
+        bottom: -95px;
+        right: -29px;
+        z-index: -1;
+        .shapes {
+            left: -40px;
+            top:-40px;
+            z-index: -1;
+        }
+    }
+    .shape_01 {
+        top:14px;
+        right: 37%;
+    }
+    .shape_02 {
+        bottom: 0;
+        left: 0;
+    }
+}
+// Hero Banner Two
+.hero-banner-two {
+    background: #E2F9EE;
+    z-index: 1;
+    h1 {
+        font-size: 90px;
+    }
+    .img-box {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 45%;
+        height: 92%;
+        .screen_01 {
+            right: 0;
+            top:10%;
+        }
+        .screen_02 {
+            left: -8%;
+            top:40%;
+        }
+    }
+    .rating-box {
+        background: url(../images/shape/bg_shape_01.png) no-repeat bottom center;
+        background-size: cover;
+        padding: 60px 50px;
+        z-index: 1;
+        .rating li:not(:last-child) {
+            color: #FBD300;
+            font-size: 13px;
+            margin-right: 6px;
+        }
+        .rating li:last-child {
+            font-size: 14px;
+            color: rgba($color: #000000, $alpha: 0.5);
+            margin-left: 10px;
+        }
+        span {
+            color: rgba($color: #000000, $alpha: 0.5); 
+        }
+    }
+    .shape_01 {
+        top:5%;
+        left: 17%;
+    }
+    .shape_02 {
+        top:0;
+        right: 0;
+    }
+    .shape_03 {
+        bottom:37%;
+        right: 3%;
+        z-index: -1;
+    }
+    .shape_04 {
+        bottom:5%;
+        left: 40%;
+        z-index: 1;
+    }
+    .shape_05 {
+        bottom:32px;
+        left: 0;
+    }
+    .shape_06 {
+        bottom:-60px;
+        right: 7%;
+        z-index: 1;
+    }
+}
+// Hero Banner Three
+.hero-banner-three {
+    z-index: 5;
+    .slogan {
+        color:#5EA17E;
+    }
+    h1 {
+        font-weight: 700;
+        letter-spacing: -1px;
+        color: $color-four;
+    }
+    .partner-title {
+        font-family: var(--eb_garamond-font);
+        color: #93AD9F;
+        font-size: 24px;
+    }
+    .img-box {
+        position: absolute;
+        right: 0;
+        bottom: 6%;
+        width: 38.4%;
+        .screen_01 {
+            top:8%;
+            left: -3%;
+            width: 98%;
+            animation: jumpThree 5s infinite linear;
+        }
+        .screen_02 {
+            bottom:5%;
+            left: -16%;
+            width: 28%;
+        }
+    }
+}
+// Hero Banner Four
+.hero-banner-four {
+    background: url(../images/assets/img_27.jpg) no-repeat center bottom;
+    background-size: cover;
+    z-index: 1;
+    .shape_01 {
+        top:20%;
+        left: 6%;
+        z-index: -1;
+        animation: jumpFour 5s infinite linear;
+    }
+    .shape_02 {
+        top:40%;
+        left: 3%;
+        z-index: -1;
+        animation: jumpTwo 5s infinite linear;
+    }
+    .shape_03 {
+        top:22%;
+        right: 8%;
+        z-index: -1;
+        animation: jumpThree 5s infinite linear;
+    }
+    .shape_04 {
+        top:38%;
+        right: 4%;
+        z-index: -1;
+        animation: jumpFour 5s infinite linear;
+    }
+}
+// Hero Banner Five
+.hero-banner-five {
+    background: #fff;
+    z-index: 2;
+    h1 {
+        font-family: var(--gorditas-font);
+        font-size: 72px;
+        line-height: 1.277em;
+        letter-spacing: -1px;
+    }
+    .img-meta {
+        position: absolute;
+        top:0;
+        right: 0;
+        bottom: 0;
+        width: 45%;
+        background: url(../images/assets/img_29.jpg) no-repeat center;
+        background-size: cover;
+        z-index: -1;
+
+        .shape_01 {
+            bottom: -61px;
+            left: -61px;
+        }
+    }
+    .chat-btn {
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        text-align: center;
+        line-height: 90px;
+        font-size: 30px;
+        color: $color-three;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 1;
+        &:hover {
+            background: $color-three;
+            color: #fff;
+        }
+    }
+}
+// Hero Banner Six
+.hero-banner-six {
+    background-color: #212121;
+    min-height: 100vh;
+    z-index: 5;
+
+    h1 {
+        font-family: var(--gorditas-font);
+        color: #fff;
+        font-weight: 500;
+        line-height: 1.15em;
+    }
+
+    #banner-six-carousel {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top:0;
+        left: 0;
+        z-index: -1;
+
+        .carousel-item {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+}
+// Hero Banner Seven
+.hero-banner-seven {
+    background: #fff;
+    z-index: 1;
+    h1 {
+        font-family: var(--gorditas-font);
+        font-weight: 500;
+        font-size: 74px;
+        line-height: 1.243em;
+    }
+    .screen01 {
+        max-width: 20%;
+        top:30%;
+        right: 3%;
+        z-index: -1;
+    }
+    .screen02 {
+        max-width: 20%;
+        top:30%;
+        left: 3%;
+        z-index: -1;
+    }
+}
+// Fancy Banner One
+.fancy-banner-one .bg-wrapper {
+    background: $color-one;
+    z-index: 1;
+    &:before {
+        content: '';
+        width: 155px;
+        height: 155px;
+        border-radius: 50%;
+        background: rgba($color: #fff, $alpha: 0.14);
+        position: absolute;
+        top:-65px;
+        left: -75px;
+    }
+    &:after {
+        content: url(../images/shape/shape_11.svg);
+        position: absolute;
+        bottom:-8px;
+        right: 0;
+    }
+    p {
+        color: #81B197;
+    }
+    .upload-btn {
+        width: 215px;
+        height: 55px;
+        border-radius: 6px;
+        overflow: hidden;
+        background: $color-two;
+        @include transition(0.2s);
+        #uploadCV {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top:0;
+            z-index: 1;
+        }
+        * {
+            cursor: pointer;
+        }
+    }
+    .shape_01 {
+        top:24%;
+        left: 18%;
+    }
+    .shape_02 {
+        top:16%;
+        right: 20%;
+    }
+    .shape_03 {
+        top:-53px;
+        right: -53px;
+    }
+}
+// Fancy Banner Two
+.fancy-banner-two .bg-wrapper {
+    background: #614137;
+    .text-wrapper {
+        padding: 60px 25px 60px 65px;
+        .counter-wrapper {
+            border-top: 1px solid #fff;
+            .main-count {
+                font-size: 32px;
+                margin-bottom: 5px;
+            }
+        }
+        .explore-btn {
+            font-size: 15px;
+            font-weight: 500;
+            color: #fff;
+            padding: 0 25px;
+            line-height: 35px;
+            border-radius: 30px;
+            background: $color-three;
+            &:hover {
+                background: $color-two;
+                color: $color-one;
+            }
+        }
+    }
+    .img-meta {
+        background: url(../images/assets/img_20.jpg) no-repeat center;
+        background-size: cover;
+        height: 100%;
+    }
+}
+// Fancy Banner Three
+.fancy-banner-three .bg-wrapper {
+    background: url(../images/assets/img_21.jpg) no-repeat center;
+    background-size: cover;
+    z-index: 1;
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 38%;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 21.24%, rgba(0, 0, 0, 0.65) 90.88%);
+        opacity: 0.5;
+        z-index: -1;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top:0;
+        bottom: 0;
+        width: 70%;
+        background: linear-gradient(269.96deg, rgba(0, 0, 0, 0.74) 1.09%, rgba(0, 0, 0, 0.5) 58.13%, rgba(0, 0, 0, 0) 99.96%);
+        z-index: -1;
+    }
+    .text-wrapper {
+        padding: 85px 55px 90px 0;
+        .video-icon {
+            width: 65px;
+            height: 65px;
+            color: #fff;
+            font-size: 40px;
+            padding-left: 5px;
+            background: $color-three;
+            &:hover {
+                background: $color-two;
+                color: $color-one;
+            }
+        }
+    }
+    .bottom-content {
+        padding: 25px 40px 45px;
+        &:after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            top:0;
+            left: 0;
+            z-index: -1;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(7.5px);
+        }
+        .count {
+            width: 35px;
+            height: 35px;
+            font-size: 18px;
+            background: $color-three;
+        }
+        .text {
+            width: calc(100% - 35px);
+            a {
+                font-size: 12px;
+                letter-spacing: 1px;
+                color: $color-three;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+// Fancy Banner Four
+.fancy-banner-four .bg-wrapper {
+    background: #755146;
+    border-radius: 30px;
+    .text-wrapper {
+        padding: 80px 90px 100px 65px;
+        .find-job-btn {
+            border: 1px solid #fff;
+            border-radius: 30px;
+            padding: 7px 15px;
+            @include transition(0.3s);
+            &:hover {
+                background: $color-one;
+                border-color: $color-one;
+            }
+        }
+    }
+    .img-meta {
+        background: url(../images/assets/img_28.jpg) no-repeat center top;
+        background-size: cover;
+        height: 100%;
+        border-radius: 30px 0 0 30px;
+        .screen_01 {
+            right: -12%;
+            bottom: -22%;
+            width: 61%;
+            max-width: 380px;
+        }
+    }
+}
+// Fancy Banner Five
+.fancy-banner-five .bg-wrapper {
+    background: #60392D;
+    padding: 35px 15px 0;
+    .btn-seven {
+        border-color: #fff;
+        color: #fff;
+    }
+    .shape_01 {
+        bottom: 23%;
+        left: 36%;
+    }
+    .shape_02 {
+        top: -53px;
+        right: -53px;
+    }
+}
+.fancy-banner-five.bg-image {
+    background: url(../images/assets/img_40.jpg) no-repeat center;
+    background-size: cover;
+    z-index: 1;
+    &:before {
+        content: '';
+        position: absolute;
+        top:0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba($color: #000000, $alpha: 0.3);
+        z-index: -1;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        top:0;
+        bottom: 0;
+        left: 0;
+        width: 70%;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 93.25%);
+        z-index: -1;
+    }
+    .btn-seven {
+        border-color: #fff;
+        color: #fff;
+    }
+}
+// Fancy Banner Six
+.fancy-banner-six .bg-wrapper {
+    background: $light-bg;
+    z-index: 1;
+    border-radius: 30px;
+    overflow: hidden;
+    &:before {
+        content: '';
+        width: 155px;
+        height: 155px;
+        border-radius: 50%;
+        background: rgba($color: #249F46, $alpha: 0.1);
+        position: absolute;
+        top:-65px;
+        left: -75px;
+    }
+    &:after {
+        content: url(../images/shape/shape_33.svg);
+        position: absolute;
+        bottom:-8px;
+        right: 0;
+    }
+    p {
+        color: #81B197;
+    }
+    .upload-btn {
+        width: 215px;
+        height: 55px;
+        border-radius: 6px;
+        overflow: hidden;
+        background: $color-three;
+        cursor: pointer;
+        @include transition(0.2s);
+        #uploadCV {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top:0;
+            z-index: 1;
+            cursor: pointer;
+        }
+    }
+    .shape_01 {
+        top:24%;
+        left: 18%;
+    }
+    .shape_02 {
+        top:16%;
+        right: 20%;
+    }
+    .shape_03 {
+        top:-53px;
+        right: -53px;
+    }
+}
+// Job Portal Intro
+.job-portal-intro .bottom-border {
+    border-bottom: 1px solid #EBEBEB;
+}
+.job-portal-intro .top-border {
+    border-top: 1px solid #EBEBEB;
+}
+.job-portal-intro h2 {
+    font-size: 55px;
+}
+// Inner Banner One
+.inner-banner-one {
+    background: $color-one;
+    padding: 150px 0 115px;
+    z-index: 9;
+
+    h1 {
+        color: #fff;
+        span {
+            display: block;
+            color: $color-two;
+        }
+    }
+    .post-date {
+        color: rgba($color: #fff, $alpha: 0.5);
+        margin: 25px 0 10px;
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+    .share-buttons li {
+        margin: 5px 4px 0;
+        a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            line-height: 33px;
+            border-radius: 5px;
+            padding: 0 15px;
+            margin-top: 5px;
+            background: rgba($color: #fff, $alpha: 0.2);
+            @include transition(0.2s);
+            i {
+                font-size: 13px;
+                margin-right: 7px;
+            }
+            &:hover {
+                background: $color-three;
+                color: #fff;
+            }
+        }
+    }
+    .page-pagination li {
+        font-size: 17px;
+        color: #fff;
+        margin: 0 2px;
+        i {
+            font-size: 0.8em;
+        }
+        a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+    }
+    .shape_01 {
+        top:14px;
+        right: 37%;
+    }
+    .shape_02 {
+        bottom: 0;
+        left: 0;
+    }
+    .candidate-profile-card {
+        background: url(../images/shape/shape_34.svg) repeat-x;
+        background-size: cover;
+        border: none;
+        .candidate-post {
+            color: rgba($color: #fff, $alpha: 0.4);
+        }
+        .candidate-info span {
+            color: rgba($color: #fff, $alpha: 0.6); 
+        }
+        .candidate-info div {
+            color: #fff;
+        }
+        .cv-download-btn {
+            line-height: 38px;
+            border: 1px solid #fff;
+            border-radius: 40px;
+            color: #fff;
+            font-size: 15px;
+            letter-spacing: -0.5px;
+            padding: 0 20px;
+            &:hover {
+                background: #375749;
+                border-color: #375749;
+            }
+        }
+        .cadidate-skills li {
+            background: #375749;
+            color: rgba($color: #fff, $alpha: 0.55);
+        }
+        &.list-layout .save-btn {
+            background: #375749;
+            border-color: #fff;
+            color: #fff;
+        }
+        &.list-layout .cadidate-skills {
+            position: static;
+        }
+    }
+}

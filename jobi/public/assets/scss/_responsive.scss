@@ -1,0 +1,567 @@
+/* Responsive CSS Document */
+
+/* 
+    Created on   : 04/06/2023.
+    Theme Name   : Jobi - Responsive Job Board HTML Template
+    Version      : 1.0.
+    Developed by : (me@heloshape.com) / (www.me.heloshape.com)
+   
+*/
+
+@media (min-width: 992px) {
+  .container {padding-right: 0;padding-left: 0;}
+}
+/*(min-width: 992px)*/
+
+@media (min-width: 1400px) {
+
+
+}
+/*(min-width: 1400px)*/
+
+/*Grid xl Start*/
+@media (max-width: 1399px) { 
+  .category-menu {padding: 0 15px;}
+  .card-style-nine {padding: 25px 15px;}
+  .feedback-section-five .feedback-slider-one {margin: 0 -15px;}
+  .feedback-section-five .feedback-slider-one .item {margin: 0 15px;}
+}
+/*(max-width: 1399px)*/
+
+
+
+/*Between Grid xl*/
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .theme-main-menu {padding: 30px 25px;}
+  .hero-banner-two h1 {font-size: 85px;}
+  .hero-banner-five h1 {font-size: 65px;}
+  .hero-banner-seven h1 {font-size: 65px;}
+  .h1, h1 {font-size: 80px;}
+  .h2, h2 {font-size: 62px;}
+  .title-one h2.main-font {font-size: 55px;}
+  .title-two h2 {font-size: 55px;}
+  .title-two h2.main-font {font-size: 50px;}
+  .title-three h2 {font-size: 45px;}
+  .hero-banner-one .img-box {bottom: -50px;}
+  .job-search-one form .input-box {margin: 15px 0;}
+  .feedback-block-one blockquote {font-size: 32px;}
+  .hero-banner-two .img-box {height: 80%;}
+  .feedback-section-two .slider-wrapper {width: calc(100% + 50vw);}
+  .hero-banner-three .img-box {width: 49%;}
+  .fancy-banner-two .bg-wrapper .text-wrapper {padding: 60px 0 60px 50px;}
+  .fancy-banner-three .bg-wrapper .text-wrapper {padding: 70px 55px 80px 20px;}
+  .feedback-section-three #feedBack_carousel .carousel-inner p {font-size: 30px;}
+  .text-feature-four .bg-wrapper {padding: 60px 50px 85px 50px;}
+  .fancy-banner-four .bg-wrapper .text-wrapper {padding: 60px 50px 85px 20px;}
+  .job-list-one {padding: 35px 25px;}
+  .accordion-style-two .accordion-body {width: 90%;}
+  .card-style-seven a {padding: 15px 20px;}
+  .feedback-section-four .bg-wrapper {padding: 80px 100px 130px 70px;}
+  .feedback-section-four .bg-wrapper p {font-size: 35px; margin-bottom: 70px;}
+  .feedback-section-four .slider-wrapper {width: 82vw; bottom: 14%;}
+  .feedback-section-five .slider-arrows {top:50px;}
+  .feedback-block-three blockquote {font-size: 22px;}
+  .candidate-profile-card.list-layout {padding: 27px 15px 38px;}
+  .error-page h2 {font-size: 70px;}
+  .blog-meta-two .blog-title.xs {font-size: 26px;}
+  .blog-details-meta .blog-heading {font-size: 46px;}
+  
+}
+/*(min-width: 1200px) and (max-width: 1399px)*/
+
+
+@media (min-width: 992px) and (max-width: 1399px) { 
+  .card-style-two.arrow:after {right: -70px;}
+  .card-style-two.arrow:before {left: -70px;}
+  .blog-section-one .explore-btn {top:16px;}
+}
+/* (min-width: 992px) and (max-width: 1399px) */
+
+
+/*Grid lg Start*/
+@media (max-width: 1199px) {
+  body {font-size: 15px;}
+  .theme-main-menu {padding: 20px 12px;}
+  .btn-one {font-size: 14px; padding: 8px 20px; border-width: 1px;}
+  .btn-one.lg {padding: 8px 25px;}
+  .btn-three {padding: 11px 20px;}
+  .btn-four {padding: 13px 20px;}
+  .btn-five {padding: 11px 20px; min-width: 120px;}
+  .btn-seven {padding: 10px 20px; min-width: 120px;}
+  .text-lg {font-size: 18px; line-height: 1.65em;}
+  .text-md {font-size: 17px; line-height: 1.75em;}
+  .title-one .sub-title {font-size: 12px;}
+  .title-two .sub-title {font-size: 16px; margin-bottom: 12px;}
+  .job-search-one form .input-box .nice-select,
+  .job-search-one.style-two .input-box .nice-select,
+  .job-search-one form .input-box .keyword {font-size: 15px; font-weight: normal;}
+  .job-search-one form .input-box .label {margin-bottom: 0;}
+  .job-search-one form .input-box,
+  .job-search-one.style-two .input-box {margin: 10px 0; padding: 0 10px;}
+  .job-search-one form .search-btn {width: 100%; font-size: 14px;}
+  .hero-banner-one .img-box {right: 0; bottom: 0;}
+  .title-one span img {max-width: 72px; right: -70px; top:-12px;}
+  .card-style-one .wrapper .title {font-size: 16px; margin: 30px 0 25px;}
+  .card-style-one .wrapper {padding: 30px 10px; border-radius: 48px;}
+  .list-style-one li {font-size: 16px; margin-top: 18px;}
+  .card-style-two .icon,.card-style-five .icon {width: 65px; height: 65px;}
+  .card-style-two .icon img {width: 38%;}
+  .card-style-two .title {font-size: 20px; margin: 20px 0 10px;}
+  .feedback-block-one {padding: 25px 20px;}
+  .feedback-block-one blockquote {font-size: 20px; line-height: 1.65em;}
+  .text-feature-two .big-circle .brand-icon {max-height: 105px; max-width: 105px; padding: 15px;}
+  .blog-meta-one .blog-title {font-size: 20px; margin: 0;}
+  .fancy-banner-one .bg-wrapper .upload-btn,.fancy-banner-six .bg-wrapper .upload-btn {width: 190px; height: 50px;}
+  .footer-one {padding-top: 70px;}
+  .footer-one .footer-title {font-size: 18px; margin-bottom: 15px;}
+  .job-search-two form {height: 50px;}
+  .job-search-two form input {width: calc(100% - 130px);}
+  .hero-banner-two .img-box {height: auto;}
+  .hero-banner-two .img-box .screen_01,.hero-banner-two .img-box .screen_02 {width: 50%;}
+  .hero-banner-two .rating-box {padding: 30px 20px;}
+  .text-feature-one .img-data .video-icon {width: 80px; height: 80px; line-height: 80px; font-size: 45px; bottom: 35%;}
+  .counter-block-one .main-count {font-size: 32px; margin-bottom: -2px;}
+  .counter-block-one h2.main-count {font-size: 40px;}
+  .card-style-four a {padding: 25px 20px 30px;}
+  .card-style-four.bg-color a {padding: 10px 20px 20px;}
+  .card-style-four .icon {width: 50px; height: 50px; padding: 14px;}
+  .card-style-four .total-job {font-size: 15px;}
+  .card-style-four .title {margin: 20px 0;}
+  .card-style-four.bg-color .title {font-size: 40px;}
+  .text-feature-three .img-box {height: auto; padding-top: 80px;}
+  .text-feature-three .img-box .screen_01,.text-feature-three .img-box .screen_02 {top:-2%;}
+  .accordion-style-one .accordion-button {font-size: 18px; padding: 15px 0;}
+  .feedback-section-two .rating-title {font-size: 25px;}
+  .feedback-slider-two .item {margin: 50px 15px;}
+  .feedback-block-two {padding: 25px 20px;}
+  .feedback-block-two .review,.feedback-block-three .review {font-size: 18px;}
+  .feedback-block-two .block-footer .author-img {width: 40px; height: 40px;}
+  .feedback-block-two .block-footer .name {font-size: 16px;}
+  .feedback-block-two .block-footer .quote-icon {width: 25px;}
+  .feedback-section-two .slick-dots {margin-top: 25px;}
+  .footer-one .email {font-size: 16px;}
+  .fancy-banner-two .bg-wrapper .text-wrapper {padding: 50px 20px;}
+  .fancy-banner-two .bg-wrapper .text-wrapper .counter-wrapper .main-count {font-size: 25px; margin-bottom: 2px;}
+  .fancy-banner-three .bg-wrapper .text-wrapper {padding: 50px 20px;}
+  .fancy-banner-three .bg-wrapper .text-wrapper .video-icon {width: 55px; height: 55px; font-size: 35px;}
+  .fancy-banner-three .bg-wrapper .bottom-content {padding: 10px 20px 30px;}
+  .feedback-section-three #feedBack_carousel .carousel-indicators {margin-top: 30px;}
+  .feedback-section-three #feedBack_carousel .carousel-indicators button {width: 45px; height: 45px; margin: 0 5px;}
+  .text-feature-four .bg-wrapper {padding: 50px 20px 70px;}
+  .text-feature-four .bg-wrapper .big-circle .logo {width: 100px; height: 100px; padding: 30px;}
+  .text-feature-four .bg-wrapper .brand span {font-size: 35px; line-height: 40px;}
+  .text-feature-four .bg-wrapper .brand {right: 0;}
+  .category-section-four .title {font-size: 20px; margin-bottom: 0;}
+  .category-section-four .list-item a {font-size: 15px;}
+  .fancy-banner-four .bg-wrapper .text-wrapper {padding: 50px 20px;}
+  .job-list-one {padding: 25px 20px;}
+  .job-list-one .logo {width: 45px;}
+  .job-list-one .title {font-size: 16px; width: calc(100% - 60px); margin-left: 15px;}
+  .job-list-one .job-duration,.job-list-one .job-date,.job-list-one .job-location a,
+  .job-list-one .job-category a {font-size: 14px;}
+  .faq-section .bg-wrapper {padding: 5px 20px;}
+  .accordion-style-two .accordion-button {padding: 20px 0; font-size: 18px;}
+  .accordion-style-two .accordion-button:not(.collapsed) {padding-bottom: 10px;}
+  .accordion-style-two .accordion-body {width: 100%; padding: 0 40px 10px 0;}
+  .accordion-style-two .accordion-body p {font-size: 16px;}
+  .hero-banner-five .chat-btn {width: 60px; height: 60px; line-height: 60px;}
+  .card-style-seven a .title {margin-left: 10px;}
+  .g-control-nav li {font-size: 15px; margin-left: 22px;}
+  .job-list-two {padding: 25px 15px;}
+  .job-list-two .job-duration {margin-top: 30px;}
+  .job-list-two .title {font-size: 18px; line-height: 1.5em;}
+  .job-list-two .job-date,.job-list-two .job-salary {font-size: 15px; margin: 15px 0 30px;}
+  .job-list-two .job-location a {font-size: 15px;}
+  .feedback-section-four .bg-wrapper .icon {width: 55px; height: 55px; padding: 15px;}
+  .blog-meta-two .blog-title {line-height: 1.35em; margin: 18px 0;}
+  .blog-meta-two .continue-btn {font-size: 15px;}
+  .feedback-block-three {padding: 25px 20px;}
+  .feedback-block-three blockquote {font-size: 18px;}
+  .feedback-block-three .name {font-size: 16px;}
+  .feedback-block-three .author-img {width: 45px; height: 45px;}
+  .feedback-block-three .quote-icon {top:28px; right: 15px; width: 25px;}
+  .filter-area-tab .main-title {font-size: 20px;}
+  .job-list-one .split-box1 {width: calc(100% - 45px); padding-left: 15px;}
+  .job-list-two .save-btn {top:25px; right: 15px;}
+  .filter-area-tab .filter-header {padding-top: 18px; padding-bottom: 18px;}
+  .filter-area-tab .filter-header:before {top:16px; right: 15px;}
+  .job-list-three .main-wrapper .list-header {padding-bottom: 20px; margin-bottom: 18px;}
+  .job-list-three .main-wrapper p {margin-bottom: 18px;}
+  .job-details .post-title {font-size: 28px;}
+  .job-details .post-block.border-style {padding: 20px 15px;}
+  .job-details .block-title {font-size: 18px;}
+  .job-details .block-numb {width: 22px; height: 22px; line-height: 22px; font-size: 13px;}
+  .job-details p,.job-details .list-type-one li,
+  .job-details .list-type-two li {font-size: 16px; margin-top: 15px;}
+  .job-company-info {padding: 30px 15px;}
+  .related-job-section .slick-arrow-one {top:0;}
+  .job-details .job-meta-data-two .bg-wrapper {padding: 25px 20px 30px; border-radius: 45px;}
+  .job-details .job-meta-data-two .bg-wrapper span {margin-top: 20px;}
+  .candidate-profile-card.list-layout .cadidate-skills {position: static; margin-top: 10px; margin-bottom: 10px;}
+  .candidate-profile-card.list-layout {padding: 25px 15px;}
+  .candidate-profile-card .cadidate-avatar {width: 60px; height: 60px;}
+  .candidate-profile-card.list-layout .right-side {width: calc(100% - 60px); padding-left: 20px;}
+  .candidate-profile-card.list-layout .candidate-info {margin-top: 10px;}
+  .candidates-profile-details .title {font-size: 20px; margin-bottom: 12px;}
+  .candidates-profile-details .inner-card.border-style .title {top:-12px; left: 10px;}
+  .candidates-profile-details .inner-card.border-style {padding: 25px 15px 15px;}
+  .candidates-profile-details .inner-card {padding: 15px;}
+  .candidates-profile-details .video-post {height: 350px;}
+  .candidates-profile-details .video-post .video-icon {width: 50px; height: 50px; line-height: 50px; font-size: 35px;}
+  .candidates-profile-details .time-line-data .info .numb {width: 35px; height: 35px;}
+  .candidates-profile-details .time-line-data .info {padding: 0 0 20px 50px;}
+  .candidates-profile-details .time-line-data .info h4 {font-size: 16px; margin-bottom: 8px;}
+  .candidates-profile-details .skill-tags li {font-size: 14px; line-height: 35px; margin-top: 10px; padding: 0 15px;}
+  .candidates-profile-details .skill-tags li.more {width: 35px; height: 35px;}
+  .cadidate-profile-sidebar .cadidate-bio .cadidate-name {font-size: 18px; margin: 10px 0;}
+  .company-grid-layout .company-logo {width: 70px; height: 70px;}
+  .company-list-layout .company-logo {width: 60px; height: 60px;}
+  .company-grid-layout .company-name,
+  .company-list-layout .company-name {font-size: 20px;}
+  .company-grid-layout .bottom-line {margin-top: 30px;}
+  .company-grid-layout .bottom-line a {font-size: 14px; padding: 15px 0;}
+  .company-list-layout .company-data {width: calc(100% - 60px);}
+  .company-list-layout {padding: 30px 20px 20px;}
+  .company-details .details-post-data h3 {font-size: 22px;}
+  .text-feature-three .video-post .video-icon {height: 55px; width: 55px; line-height: 55px; font-size: 40px; padding-left: 5px;}
+  .pricing-card-one .price {font-size: 52px; margin-bottom: 20px;}
+  .pricing-card-one ul li {font-size: 16px; margin-bottom: 14px;}
+  .faq-section .nav .nav-link {font-size: 16px;}
+  .user-data-form .nav .nav-item .nav-link {font-size: 15px;}
+  .user-data-form h2 {font-size: 40px;}
+  .user-data-form {padding-top: 25px;}
+  .error-page .error {font-size: 60px;}
+  .error-page h2 {font-size: 50px; margin: -5px 0 30px;}
+  .error-page .btn-one {font-size: 14px; padding: 12px 20px;}
+  .blog-sidebar .sidebar-title {font-size: 20px; margin-bottom: 15px;}
+  .blog-sidebar .sidebar-recent-news .post .title {font-size: 16px;}
+  .blog-meta-two .blog-title.xs {font-size: 18px;}
+  .blog-meta-two.box-layout {padding: 15px 15px 30px;}
+  .blog-details-meta .blog-heading {font-size: 22px; margin: 10px 0 12px;}
+  .blog-details-meta h5 {font-size: 17px;}
+  .blog-details-meta .quote-text {padding: 25px 15px 30px; margin: 25px 0 30px;}
+  .blog-details-meta .quote-text blockquote {font-size: 30px; line-height: 1.15em;}
+  .blog-details-meta h3 {font-size: 22px;}
+  .blog-details-page .blog-comment-area {padding: 50px 0;}
+  .blog-details-page .blog-inner-title {font-size: 25px;}
+  .blog-details-page .blog-comment-area .comment .comment-text .name {font-size: 18px;}
+  .blog-details-page .blog-comment-area .comment .comment-text p {padding: 10px 0 0;}
+  .blog-details-page .blog-comment-form {padding: 30px 15px;}
+  .map-banner {height: 350px;}
+  .address-block-one .icon {width: 50px; height: 50px; padding: 15px;}
+  .address-block-one .title {font-size: 18px; padding: 15px 0 0;}
+  .address-block-one p {font-size: 15px;}
+}
+/*(max-width: 1199px)*/
+
+
+
+/*Between Grid lg*/
+@media (min-width: 992px) and (max-width: 1199px) {
+  .navbar .nav-item .nav-link {margin: 0 15px;}
+  .menu-style-one .navbar .nav-item.category-btn .nav-link {margin-right: 25px;}
+  .hero-banner-two h1 {font-size: 70px;}
+  .hero-banner-five h1 {font-size: 58px;}
+  .hero-banner-seven h1 {font-size: 58px;}
+  .h1, h1 {font-size: 65px;}
+  .title-one h2.main-font {font-size: 45px;}
+  .title-one h2 {font-size: 52px;}
+  .title-two h2 {font-size: 48px;}
+  .title-two h2.main-font {font-size: 42px;}
+  .title-three h2 {font-size: 42px;}
+  .job-portal-intro h2 {font-size: 48px;}
+  .text-feature-two .big-circle {width: 400px; height: 400px;}
+  .category-menu li {padding: 0 12px;}
+  .category-menu li a {font-size: 14px;}
+  .hero-banner-three .img-box {width: 45%;}
+  .category-section-three .slider-arrows {top:10px;}
+  .card-style-six {height: 300px;}
+  .feedback-section-three #feedBack_carousel .carousel-inner p {font-size: 24px; margin-bottom: 35px;}
+  .feedback-section-three #feedBack_carousel .carousel-btn {top:35px;}
+  .card-style-seven a {padding: 10px 12px;}
+  .feedback-section-four .bg-wrapper {padding: 60px 70px 100px 35px;}
+  .feedback-section-four .bg-wrapper p {font-size: 25px; margin-bottom: 70px;}
+  .feedback-section-four .slider-wrapper {width: 75vw; bottom: 10%; right: -22vw;}
+  .blog-meta-two .blog-title {font-size: 24px;}
+  .inner-banner-one {padding-bottom: 80px;}
+  .text-feature-three .video-post {height: 450px;}
+  
+}
+/*(min-width: 992px) and (max-width: 1199px)*/
+
+
+
+/*Grid md Start*/
+@media (max-width: 991px) {
+  .h1, h1 {font-size: 45px;}
+  .h2, h2 {font-size: 40px;}
+  .theme-main-menu.fixed {padding-top: 10px; padding-bottom: 10px;}
+  .hero-banner-two h1 {font-size: 48px;}
+  .hero-banner-five h1 {font-size: 40px;}
+  .hero-banner-seven h1 {font-size: 40px;}
+  .title-one h2.main-font {font-size: 35px;}
+  .title-two h2 {font-size: 38px;}
+  .title-two h2.main-font {font-size: 34px;}
+  .title-three h2 {font-size: 36px;}
+  .job-portal-intro h2 {font-size: 38px;}
+  .menu-style-one .navbar .nav-item.category-btn .nav-link {margin: 10px 0; border-radius: 5px; line-height: 45px;}
+  .theme-main-menu .category-dropdown .item {margin: 3px 5px; font-size: 14px;}
+  .theme-main-menu .category-dropdown .item .icon {width: 40px; height: 40px; padding: 10px;}
+  .theme-main-menu .category-dropdown .explore-all-btn {font-size: 15px; margin-top: 15px; border-radius: 0;}
+  .theme-main-menu .category-dropdown .explore-all-btn:hover {background: #244034;}
+  .feedback-block-one .logo {height: 40px;}
+  .text-feature-two .big-circle {margin: 60px auto 0;}
+  .footer-one .bottom-footer {padding: 30px 0 5px;}
+  .footer-one .bottom-footer .bottom-nav a,
+  .footer-one .bottom-footer .social-icon a {margin: 0 8px;}
+  .text-feature-three .img-box {max-width: 500px; margin: 60px auto 0;}
+  .feedback-section-two:before {top:40%; width: 70%;}
+  .card-style-six {height: 250px;}
+  .fancy-banner-three .bg-wrapper::before {width: 100%;}
+  .feedback-section-three #feedBack_carousel .carousel-inner p {font-size: 20px; margin-bottom: 35px;}
+  .feedback-section-three #feedBack_carousel .carousel-btn {display: none;}
+  .fancy-banner-four .bg-wrapper .img-meta {height: 300px; border-radius: 0 0 30px 30px;}
+  .job-list-one {padding-left: 75px;}
+  .job-list-one .logo {position: absolute; left: 15px; top:17px;}
+  .job-list-one .title {width: 100%; margin: 0 0 15px;}
+  .card-style-seven a {padding: 12px 18px;}
+  .g-control-nav li {margin: 10px 10px 0 !important;}
+  .grid-3column {margin: 0 -12px;}
+  .grid-3column .grid-sizer, .grid-3column .isotop-item {padding: 0 12px;}
+  .expert-slider-two .slick-dots {margin-top: 40px;}
+  .feedback-section-four .bg-wrapper {padding: 45px 15px 100px;}
+  .feedback-section-four .bg-wrapper p {font-size: 25px; margin: 30px 0 40px;}
+  .feedback-section-four .slider-wrapper {width: 100%; position: static;}
+  .feedback-section-four .bg-wrapper .slider-arrows {right: 0;}
+  .feedback-section-four .slider-wrapper .slick-dots {position: static; margin-top: 30px; justify-content: center;}
+  .blog-meta-two .blog-title {font-size: 18px;}
+  .theme-main-menu .login-btn-three {padding: 10px 22px;}
+  .inner-banner-one {padding: 120px 0 70px;}
+  .filter-area-tab.offcanvas {position: fixed; overflow-y: auto;}
+  .filter-area-tab.offcanvas .main-title {margin-top: 30px; text-align: center;}
+  .job-list-one.style-two {padding: 25px 20px;}
+  .job-list-one.style-two .logo {position: static;}
+  .inner-banner-one .page-pagination li {font-size: 15px;}
+  .inner-banner-one .candidate-profile-card .cv-download-btn {font-size: 14px; padding: 0 12px;}
+  .feedback-block-four {padding: 20px;}
+  .text-feature-three .video-post {height: 350px;}
+  .hero-banner-one .img-box,.title-one span img,.card-style-two.arrow:after,
+  .card-style-two.arrow:before,.hero-banner-two .shape_04,.hero-banner-two .img-box,
+  .feedback-section-two .shape_01,.fancy-banner-five .bg-wrapper .shape_01,
+  .hero-banner-seven .screen01,.hero-banner-seven .screen02,
+  .card-style-five.arrow-style:before, .card-style-five.arrow-style:after {display: none !important;}
+  
+}
+/*(max-width: 991px)*/
+/*Grid md Start*/
+@media (min-width: 992px) {
+  .filter-area-tab.offcanvas {
+    position: relative;
+    transform: none !important;
+    visibility: visible;
+    border: none;
+    z-index: 0;
+  }
+
+}
+
+
+
+/*Between Grid md*/
+@media (min-width: 768px) and (max-width: 991px) {
+  .category-section-one .card-style-one {width: 33.333%;}
+  .expert-section-one .slick-arrow-one,.feedback-section-one .slick-arrow-one{top:32px;}
+  .blog-section-one .explore-btn {top:5px;}
+  .feedback-section-two .slider-wrapper {width: calc(100% + 40vw);}
+  .category-section-three .slider-arrows {top:4px;}
+  .grid-3column .grid-sizer, .grid-3column .isotop-item {width: 50%;}
+  .feedback-section-five .slider-arrows {top:30px;}
+  .job-list-one .split-box1 .title {margin-bottom: 0;}
+  
+}
+/*(min-width: 768px) and (max-width: 991px)*/
+
+
+
+/*Grid sm Start*/
+@media (max-width: 767px) {
+  .menu-style-one .job-post-btn {
+    border: none; 
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;
+    line-height: 40px;
+    border-radius: 50px;
+    padding: 0 5px;
+    background: #244034;
+  }
+  .expert-section-one .slick-arrow-one ,.feedback-section-one .slick-arrow-one,
+  .blog-section-one .explore-btn,.category-section-three .slider-arrows,
+  .feedback-section-five .slider-arrows,.related-job-section .slick-arrow-one {position: static;}
+  .job-search-one form .input-box.border-left {border-left: 0; border-top: 1px solid #e6e6e6; margin-top: 0; padding-top: 10px;}
+  .job-search-one form .search-btn,.job-search-one form .search-btn-two {margin: 0; padding: 15px 0; border-radius: 0 0 10px 10px;}
+  .job-search-one form .input-box {padding-left: 0;}
+  .user-data-form h2 {font-size: 35px;}
+  .user-data-form .social-use-btn {font-size: 14px; height: 50px;}
+  .hero-banner-three .img-box {position: relative; width: 100%; max-width: 350px; padding-left: 10%; margin: 0 auto 60px;}
+  .hero-banner-three .img-box .screen_02 {left: -5%;}
+  .job-search-one.style-two .input-box {border-bottom: 1px solid #e6e6e6;margin-bottom: 0;padding-bottom: 10px; border-top: none !important;}
+  .job-search-one .upload-btn {background: #fff; padding: 8px 15px; border: none; width: 180px; border-radius: 10px;}
+  .job-list-one.style-two .logo {margin-bottom: 15px;}
+  .candidate-profile-card.grid-layout {padding: 25px 15px;}
+  .candidate-profile-card.list-layout .save-btn {position: absolute; top:25px; right: 15px; margin: 0;}
+}
+/*(max-width: 767px)*/
+
+
+
+
+/*Between Grid sm*/
+@media (min-width: 576px) and (max-width: 767px) {
+  .category-section-one .card-style-one {width: 33.333%;}
+  .text-feature-two .big-circle {width: 370px; height: 370px;}
+  .theme-main-menu .header-search {width: 100%; margin: 0 15px;}
+  .grid-3column .grid-sizer, .grid-3column .isotop-item {width: 50%;}
+
+}
+/*(min-width: 576px) and (max-width: 767px)*/
+
+
+
+
+/*Extra Small breakpoints*/
+@media (max-width: 575px) {
+  .category-section-one .card-style-one {width: 100%; max-width: 200px;}
+  .text-feature-two .big-circle {width: 100%;}
+  .text-feature-two .big-circle .brand-icon.icon_02 {right: 1%;}
+  .text-feature-two .big-circle .brand-icon.icon_05 {left: 1%;}
+  .fancy-banner-one .bg-wrapper .shape_03 {right: 0; top:-30px;}
+  .category-section-two:before {height: 91%; width: 75%;}
+  .text-feature-three .img-box .screen_01 {left: 0;}
+  .feedback-section-two .slider-wrapper {width: 100%;}
+  .feedback-section-two .slick-dots {margin-top: 10px;}
+  .theme-main-menu .header-search .nice-select {width: 85px; padding: 0 10px;}
+  .theme-main-menu .header-search .nice-select:after {right: 12px;}
+  .theme-main-menu .header-search input {width: calc(100% - 85px);}
+  .theme-main-menu .header-search {width: 100%;}
+  .hero-banner-three .partner-title {font-size: 18px;}
+  .accordion-style-two .accordion-button {font-size: 16px;}
+  .hero-banner-five .img-meta {background: none;}
+  .hero-banner-five .chat-btn {border: 1px solid #f5f5f5;}
+  .grid-3column .grid-sizer, .grid-3column .isotop-item,
+  .card-style-eight .img-meta img {width: 100%;}
+  .expert-slider-two .slick-dots:after, .expert-slider-two .slick-dots::before {width: 33%;}
+  .job-list-three {padding: 25px 15px;}
+  .job-details p, .job-details .list-type-one li, .job-details .list-type-two li {font-size: 15px;}
+  .cadidate-profile-sidebar .email-form input,
+  .cadidate-profile-sidebar .email-form textarea {width: 100%; margin-top: 5px;}
+  .btn-eleven {height: 50px;}
+  .hero-banner-four .shapes {display: none !important;}
+  .blog-details-page .blog-comment-area .comment .comment-text .reply-btn {position: static;}
+}
+/*(max-width: 575px)*/
+
+
+
+/* Dashboard Responsive */
+@media (max-width: 1399px) {  
+  .dashboard-body .dash-card-one {padding: 18px 20px 22px;}
+  .dashboard-body .dash-card-one .icon {width: 50px; height: 50px; padding: 15px;}
+  .dashboard-body .dash-card-one .value {font-size: 30px;}
+  .dashboard-body .message-wrapper .message-sidebar .message_filter button {font-size: 14px;}
+
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .dashboard-body {padding: 120px 40px 30px;}
+  .dashboard-body .dashboard-header {left: 300px; padding: 20px 0;}
+  .dashboard-body .main-title {font-size: 30px; margin-bottom: 35px;}
+  .dashboard-body .card-box {padding: 40px 45px;}
+  .dashboard-body .intro-video-post {height: 300px;}
+  .compose-mail-offcanvas {right:40px;}
+  .dashboard-body .membership-plan-wrapper .column {padding: 30px 30px;}
+
+}
+
+@media (max-width: 1199px) { 
+  .dash-aside-navbar {padding: 20px 10px 10px;}
+  .dash-aside-navbar .user-data .user-avatar {width: 55px; height: 55px; margin-top: 30px;}
+  .dash-aside-navbar .user-data .user-name {font-size: 16px; margin: 12px 0 25px;}
+  .dash-aside-navbar .user-data .user-name-data .dropdown-menu .dropdown-item {font-size: 14px; line-height: 40px;}
+  .dash-aside-navbar .user-data .user-name-data .dropdown-menu .dropdown-item img {width: 17px;}
+  .dash-aside-navbar .dasboard-main-nav li a img {width: 17px;}
+  .dash-aside-navbar .dasboard-main-nav li a {font-size: 15px; padding: 15px 5px 15px 15px; border-radius: 10px; margin-bottom: 2px;}
+  .dash-aside-navbar .profile-complete-status {margin: 35px 0 40px 15px;}
+  .dash-aside-navbar .logout-btn {font-size: 15px;}
+  .dashboard-body {padding: 100px 15px 30px; border-radius: 15px 0 0 15px;}
+  .dashboard-body .dashboard-header {padding: 15px 0;}
+  .dashboard-body .main-title {font-size: 24px; margin-bottom: 25px;}
+  .dashboard-body .dash-card-one .value {font-size: 22px;}
+  .dashboard-body .border-30,.dashboard-body .dash-card-one:before {border-radius: 15px;}
+  .dashboard-body .dash-title-two {font-size: 18px; padding: 18px 0 18px 20px;}
+  .dashboard-body .recent-job-tab .wrapper {padding: 0 20px 0 20px;}
+  .dashboard-body .card-box {padding: 25px 20px;}
+  .dashboard-body .dash-title-three {font-size: 20px; margin-bottom: 25px;}
+  .dashboard-body .dash-input-wrapper label {font-size: 14px; margin-bottom: 5px;}
+  .dashboard-body .intro-video-post {height: 250px; font-size: 15px;}
+  .dashboard-body .intro-video-post .video-icon {width: 50px; height: 50px; line-height: 50px; font-size: 30px; padding-left: 4px;}
+  .dashboard-body .dash-input-wrapper .skills-wrapper {padding: 15px 15px 4px; border-radius: 10px;}
+  .dashboard-body .dash-input-wrapper .skills-wrapper ul li.is_tag button {font-size: 14px;}
+  .dashboard-body .message-wrapper .message-sidebar .message_filter button span {left: 0;}
+  .dashboard-body .message-wrapper .message-sidebar .email-list-item .email-short-preview {padding-left: 20px;}
+  .dashboard-body .message-wrapper .open-email-container .email-header .logo {width: 35px; height: 35px;}
+  .dashboard-body .message-wrapper .open-email-container .email-header .sender-name {font-size: 16px; margin-bottom: -2px;}
+  .dashboard-body .message-wrapper .open-email-container .email-header .sender-email {font-size: 15px;}
+  .dashboard-body .message-wrapper .open-email-container .email-body h2 {font-size: 20px;}
+  .compose-mail-offcanvas {right: 15px;}
+  .dashboard-body .job-alert-table td {font-size: 14px;}
+  .dashboard-body .dash-pagination li a {width: 36px; height: 36px; line-height: 34px;}
+  .dashboard-body .dash-pagination li {font-size: 15px;}
+  .dashboard-body .membership-plan-wrapper .column {padding: 25px 15px;}
+  .dashboard-body .membership-plan-wrapper h4 {font-size: 18px;}
+  .dashboard-body .membership-plan-wrapper h3 {font-size: 45px;}
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) { 
+  .dashboard-body .dashboard-header {right:15px; left: 275px;}
+  
+}
+
+@media (min-width: 768px) and (max-width: 991px) { 
+  .dashboard-body .dashboard-header {right:15px; left: 275px;}
+
+}
+
+@media (max-width: 991px) { 
+  .dashboard-body .dash-accordion-one .accordion-item .accordion-button {font-size: 14px; padding: 15px;}
+  .dashboard-body .dash-accordion-one .accordion-item .accordion-body {padding: 8px 15px 0;}
+  .dashboard-body .message-wrapper .open-email-container {background: #f0f5f3; margin: 20px 10px; border-radius: 10px;}
+  .dashboard-body .message-wrapper .message-sidebar {border-right: none; border-bottom: 1px solid #e3e1e1; max-height: 500px; overflow-y: auto;}
+  .dashboard-body .message-wrapper .message-sidebar .email-list-item {padding-top: 15px; padding-bottom: 15px;}
+  .dashboard-body .message-wrapper .message-sidebar .email-list-item .email-short-preview .sender-name,
+  .dashboard-body .message-wrapper .message-sidebar .email-list-item .email-short-preview .mail-text {font-size: 14px;}
+  .dashboard-body .message-wrapper .message-sidebar .email-list-item .email-short-preview .mail-sub {font-size: 15px; margin-bottom: 5px;}
+  .dashboard-body .job-list-one .title {margin: 0 0 0 15px;}
+  .dashboard-body .job-list-one .job-title {margin-bottom: 15px;}
+  .dashboard-body .job-list-one .action-dots {position: absolute; top:20px; right: 10px;}
+  .dashboard-body .membership-plan-wrapper .column.border-left {border-left: none; border-top: 1px solid #254035;}
+}
+@media (max-width: 767px) { 
+  .dash-aside-navbar {transform: translateX(-100%); opacity: 0; visibility: hidden; transition: all 0.3s ease;}
+  .dash-aside-navbar.show {transform: translateX(0); box-shadow: 15px 0 25px rgba(35,35,35,0.09); opacity: 1; visibility: visible;}
+  .dashboard-body {margin: 0; border-radius: 0;}
+  .dashboard-body .dashboard-header {left: 0; right: 0; border-bottom: 1px solid #e5e5e5; padding: 12px 15px;}
+  .dashboard-body .dashboard-header .search-form {width: auto; height: 40px;}
+  .dashboard-body .dashboard-header .job-post-btn {width: 110px; line-height: 40px; font-size: 14px;}
+  .compose-mail-offcanvas {left: 15px; width: auto;}
+  .dashboard-body .candidate-profile-card.list-layout .save-btn {position: static; margin-top: 10px;}
+  .dashboard-body .candidate-profile-card .action-dots {position: absolute; top:10px; right: 10px;}
+}
+
+@media (max-width: 575px) {
+  .dashboard-body .dashboard-header .search-form {display: none;}
+  .dashboard-body .dash-card-one {text-align: center;}
+  .dashboard-body .dash-card-one .icon {margin: 0 auto 15px;}
+  .dashboard-body .dashboard-header .profile-notification .dropdown-menu {max-width: 300px; padding: 20px 15px 20px 15px;}
+  .dashboard-body .user-avatar-setting .upload-btn,.dashboard-body .user-avatar-setting .delete-btn {font-size: 14px;}
+}

@@ -1,0 +1,373 @@
+// Card One
+.card-style-one .wrapper {
+    display: block;
+    background: #fff;
+    border-radius: 60px;
+    padding: 50px 15px 30px;
+    border: 1px solid rgba($color: #D1ECE7, $alpha: 0.8);
+    @include transition(0.3s);
+    &.bg {
+        border:1px solid #ffff;
+        &:hover, &.active {
+            background: $color-two;
+            border-color: #B9D640;
+        }
+    }
+    &:hover, &.active {
+        transform: translateY(-5px);
+        border-color: $color-three;
+    }
+    .icon {
+        height: 25px;
+        img {
+            max-height: 100%;
+        }
+    }
+    .title {
+        font-size: 18px;
+        color:$heading;
+        margin: 40px 0 50px;
+    }
+    .total-job {
+        font-size: 14px;
+        color: rgba($color: #09321C, $alpha: 0.6);
+    }
+}
+// Card Two
+.card-style-two .icon {
+    width: 80px;
+    height: 80px;
+    background: $color-two;
+}
+.card-style-two .title {font-size: 22px; margin: 25px 0 12px;}
+.card-style-two p {color:#81B197;}
+.card-style-two.arrow:before,
+.card-style-two.arrow:after {
+    content: url(../images/shape/arrow_01.svg);
+    position: absolute;
+    top:25px;
+    left: -150px;
+}
+.card-style-two.arrow:after {
+    left: auto;
+    right:-150px;
+}
+// Card Three
+.card-style-three .img-meta img {
+    border-radius: 200px;
+}
+.card-style-three .name:hover {
+    color: $color-one;
+    text-decoration: underline;
+}
+.card-style-three .post {color: rgba($color: #000000, $alpha: 0.5);}
+// Card Four
+.card-style-four {
+    background: #FFFFFF;
+    box-shadow: 0px 20px 50px rgba(1, 20, 44, 0.0356);
+    border-radius: 10px;
+    &:hover {
+        transform: translateY(-5px);
+    }
+    a {
+        padding: 40px 38px 50px;
+    }
+    .icon {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        border: 1px solid #F0F0F0;
+    }
+    &:hover .icon {
+        background: $color-two;
+    }
+    .title {
+        color:$heading;
+        margin: 28px 0 25px;
+    }
+    &:hover .title {
+        color: $color-three;
+    }
+    .total-job {
+        font-size: 16px;
+        color: rgba($color: #09321C, $alpha: 0.4);
+    }
+    &.bg-color {
+        box-shadow: none;
+        background: $color-three;
+        a {
+            padding: 10px 40px 20px;
+        }
+        .title {
+            font-family: var(--eb_garamond-font);
+            font-size: 72px;
+            line-height: initial;
+            margin: 0 0 5px;
+        }
+        .icon {
+            border-color: #fff;
+        }
+    }
+}
+// Card Five
+.card-style-five:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: $color-three;
+    left: 0;
+    bottom: 0;
+    @include transition(0.2s);
+    opacity: 0;
+}
+.card-style-five:hover:before {
+    opacity: 1;
+}
+.card-style-five.arrow-style:before,
+.card-style-five.arrow-style:after {
+    content: url(../images/shape/arrow_02.svg);
+    position: absolute;
+    top:7%;
+    bottom: auto;
+    width: auto;
+    height: auto;
+    opacity: 1;
+    left: -90px;
+    background: transparent;
+}
+.card-style-five.arrow-style:after {
+    right: -90px;
+    left: auto;
+}
+.card-style-five .numb {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: $color-three;
+    color: #fff;
+    font-size: 15px;
+    line-height: initial;
+}
+.card-style-five .icon {
+    width: 80px;
+    height: 80px;
+    background: $color-three;
+}
+// Card Six
+.card-style-six {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+    height: 350px;
+    &:before {
+        content: '';
+        width: 100%;
+        height: 30%;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        position: absolute;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+        @include transition(0.2s);
+    }
+    &:hover:before {
+        height: 100%;
+    }
+}
+// Card Seven
+.card-style-seven a {
+    padding: 16px 38px;
+    border-radius: 60px;
+    @include transition(0.2s);
+    .title {
+        color: #000;
+        margin-left: 12px;
+    }
+}
+.card-style-seven.bg-color a {
+    background: #F2F8F4;
+    border: 1px solid #F2F8F4;
+    .title {
+        color: #35764B;
+    }
+    &:hover {
+        border-color: #35764B;
+        background: #fff;
+    }
+}
+// Card Eight
+.card-style-eight .img-meta {
+    position: relative;
+    overflow: hidden;
+    &::before {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background: #fff;
+        right: -25px;
+        bottom: -25px;
+        transform: rotate(45deg);
+    }
+}
+.card-style-eight .name {
+    font-size: 18px;
+    color: #000;
+    &:hover {
+        color: $color-three;
+    }
+}
+// Card Nine
+.card-style-nine {
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px 25px;
+    .icon {
+        width: 52px;
+        height: 52px;
+        background: $color-three;
+    }
+    .text {
+        width: calc(100% - 52px);
+        a {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: $color-three;
+            margin-top: auto;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+// Card Ten
+.card-style-ten {
+    background: #fff;
+    border-radius: 50px;
+    padding: 40px 20px 35px;
+    &:hover {
+        box-shadow: 0px 20px 50px rgba(1, 20, 44, 0.0356);
+    }
+    .open-job-btn {
+        font-size: 15px;
+        color: $color-three;
+        padding: 4px 20px;
+        border: 1px solid $color-three;
+        border-radius: 30px;
+        &:hover {
+            background: $color-three;
+            color: #fff;
+        }
+    }
+}
+// Pricing Card
+.pricing-section.bg-color {
+    background: $light-bg;
+}
+.pricing-card-one {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #244034;
+    border-radius: 30px;
+    padding: 38px 20px 38px;
+    .pack-name {
+        font-size: 17px;
+        color: rgba($color: #000000, $alpha: 0.35);
+    }
+    .price {
+        font-family: var(--eb_garamond-font);
+        font-size: 72px;
+        letter-spacing: -1px;
+        color: $color-five;
+        line-height: initial;
+        margin: -4px 0 36px;
+        sub {
+            font-size: 0.333em;
+            bottom: 1em;
+        }
+        sup {
+            font-size: 0.333em;
+            top: -1.2em;
+        }
+    }
+    ul li {
+        font-size: 18px;
+        color: $color-five;
+        margin-bottom: 17px;
+    }
+    .get-plan-btn {
+        line-height: 54px;
+        background: $color-five;
+        border-radius: 30px;
+        font-weight: 500;
+        letter-spacing: -0.36px;
+        color: #fff;
+        max-width: 270px;
+        &:hover {
+            background: $color-two;
+            color: $color-five;
+        }
+    }
+    .popular-badge {
+        position: absolute;
+        left: 0;
+        line-height: 28px;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 500;
+        color: $color-five;
+        left: -5px;
+        top:35px;
+        padding: 0 12px 0 20px;
+        z-index: 1;
+        &::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            background: #D2F34C;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            transform: skew(25deg);
+        }
+        &::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            background: #D2F34C;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            transform: skew(-25deg);
+        }
+    }
+    &.popular {
+        background: #FAFFE5;
+        border-color: #BAE800;
+        .get-plan-btn {
+            background: $color-two;
+            color: $color-five;
+        }
+    }
+    &.popular-two {
+        border-color: $color-five;
+        .get-plan-btn {
+            background: $color-two;
+            color: $color-five;
+        }
+        .popular-badge {
+            color: #fff;
+            &:before,
+            &:after {
+                background: $color-five;
+            }
+        }
+        
+    }
+}

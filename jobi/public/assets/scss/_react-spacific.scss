@@ -1,0 +1,163 @@
+.hero-banner-one {
+  & .img-box {
+    & .main-img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+.hero-banner-two {
+  & .img-box {
+    & .main-img {
+      width: auto;
+      height: 100%;
+    }
+    & .screen_01 .screen_02 {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+.hero-banner-three {
+  & .img-box {
+    & .main-img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+// media
+@media (max-width: 1199px) {
+  .hero-banner-two .img-box .screen_01,
+  .hero-banner-two .img-box .screen_02 {
+    height: auto;
+  }
+}
+
+.blog-meta-one {
+  & .post-img {
+    & .blog-img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.slick-slide {
+  & > div {
+    margin: 0 15px;
+  }
+}
+
+.text-feature-one {
+  & .img-data {
+    & .img {
+      height: auto;
+    }
+  }
+}
+
+.feedback-section-two {
+  & .slider-wrapper {
+    & .feedback-slider-two {
+      & .slick-slide {
+        & > div {
+          margin: 50px 25px;
+        }
+      }
+    }
+  }
+}
+
+.text-feature-three {
+  & .img-box {
+    & img {
+      height: auto;
+    }
+  }
+}
+
+.feedback-section-three {
+  & .carousel-indicators {
+    & .user {
+      height: auto;
+    }
+  }
+}
+
+.text-feature-one{
+  & .img-data{
+    & .lazy-img{
+      height: auto;
+    }
+  }
+}
+
+.slick-slider {
+  &.expert-slider-two{
+    & .slick-dots{
+      display: flex !important;
+    }
+  }
+}
+
+.slick-slide .item:focus,
+img:focus-visible,img:focus {
+  // box-shadow: none;
+  outline: none;
+}
+
+.feedback-slider-one{
+  & .slick-slide {
+    & > div {
+      margin: 0 35px;
+    }
+  }
+}
+
+.pagination-one {
+  & li {
+    &.previous{
+      &.disabled{
+        display: none;
+      }
+      & a{
+        width: auto;
+        height: auto;
+      }
+    }
+    &.next{
+      &.disabled{
+        display: none;
+      }
+    }
+  }
+}
+
+.nice-select {
+  &.category{
+    & .list{
+      max-height: 250px;
+      overflow-y: auto;
+    }
+  }
+  &.location{
+    & .list{
+      max-height: 250px;
+      overflow-y: auto;
+    }
+  }
+}
+
+.nice-select:after {
+  right: 0px;
+}
+
+
+.save-btn{
+    &.active{
+      background: #31795A !important;
+      color: #fff !important;
+    }
+}

@@ -1,0 +1,41 @@
+@mixin transition($time) {
+	-webkit-transition: all $time ease-in-out 0s;
+	-moz-transition: all $time ease-in-out 0s;
+	-ms-transition: all $time ease-in-out 0s;
+	-o-transition: all $time ease-in-out 0s;
+	transition: all $time ease-in-out 0s;
+}
+
+@mixin transform($value) {
+  -webkit-transform: $value;
+      -ms-transform: $value;
+          transform: $value;
+}
+
+
+
+
+@function _rgba($color, $opacity: 1) {
+	@return unquote("rgba(#{red($color)}, #{green($color)}, #{blue($color)}, #{$opacity})");
+}
+
+
+
+@mixin placeholder {
+	&::-webkit-input-placeholder {
+		@content;
+	}
+
+	&:-moz-placeholder {
+		@content;
+	}
+
+	&::-moz-placeholder {
+		@content;
+	}
+
+	&:-ms-input-placeholder {
+		@content;
+	}
+}
+

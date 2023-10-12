@@ -1,0 +1,428 @@
+// Font import
+// @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap');
+@import '../fonts/gordita/stylesheet';
+@import '../fonts/bootstrap-icons-1.10.2/font';
+
+// Global Style
+::-webkit-scrollbar{ width: 5px; }
+::-webkit-scrollbar-track { background: #fff;}
+::-webkit-scrollbar-thumb { background: $color-two;border-radius: 0;}
+body {
+  font-family: var(--gorditas-font);
+  font-weight: normal;
+  font-size: 16px;
+  position: relative;
+  color: $text-color;
+}
+.main-page-wrapper {
+  overflow-x: hidden;
+}
+.h1,
+h1,
+.h2,
+h2,
+.h3,
+h3,
+.h4,
+h4,
+.h5,
+h5,
+.h6,
+h6 {
+  font-family: var(--eb_garamond-font);
+  font-weight: 500;
+  color: $text-dark;
+}
+.h1,h1 {font-size: 85px; letter-spacing: -1px; line-height: 1.058em;}
+.h2,h2 {font-size: 70px; line-height: 1.041em;}
+p {line-height: 2em;}
+.text-lg {font-size: 22px;}
+.text-md {font-size: 20px;}
+hr {opacity: 0.09; margin: 5px 0;}
+.fw-600 {font-weight: 600;}
+.fw-500 {font-weight: 500;}
+.shapes {position: absolute;}
+//  Preloader
+.ctn-preloader {
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 999999;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .icon {
+    animation: rotated 8s infinite linear;
+  }
+  .txt-loading {
+    user-select: none;
+    margin-top: 30px;
+    .letters-loading {
+      font-family: var(--eb_garamond-font);
+      font-weight: 700;
+      letter-spacing: 8px;
+      display: inline-block;
+      color: rgba($color: $color-three, $alpha: 0.12);
+      position: relative;
+      font-size: 50px;
+      line-height: 30px;
+      &::before {
+        animation: letters-loading 4s infinite;
+        color: $color-three;
+        content: attr(data-text-preloader);
+        left: 0;
+        opacity: 0;
+        top:0;
+        line-height: 30px;
+        position: absolute;
+      }
+      &:nth-child(2):before {animation-delay: 0.2s;}
+      &:nth-child(3):before {animation-delay: 0.4s;}
+      &:nth-child(4):before {animation-delay: 0.6s;}
+      &:nth-child(5):before {animation-delay: 0.8s;}
+      &:nth-child(6):before { animation-delay: 1s;}
+      &:nth-child(7):before { animation-delay: 1.2s;}
+      &:nth-child(8):before { animation-delay: 1.4s;}
+    }
+  }
+}
+@keyframes spinner {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+@keyframes letters-loading {
+  0%,
+  75%,
+  100% {
+    opacity: 0;
+    transform: rotateY(-90deg);
+  }
+
+  25%,
+  50% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+}
+// Scroll Top
+.scroll-top {
+  width:35px;
+  height:35px;
+  line-height: 35px;
+  position: fixed;
+  bottom: 20px;
+  right: 5px;
+  z-index: 99;
+  text-align: center;
+  color: #fff;
+  font-size: 25px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: $color-three;
+  transition: all 0.3s ease-in-out;
+    &:after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    top: 100%;
+    left: 5%;
+    height: 10px;
+    width: 90%;
+    opacity: 1;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0) 80%);
+    }
+}
+// Prefix Classes
+.tran3s {
+  transition: all 0.3s ease-in-out;
+}
+
+.tran4s {
+  transition: all 0.4s ease-in-out;
+}
+
+.tran5s {
+  transition: all 0.5s ease-in-out;
+}
+
+.tran6s {
+  transition: all 0.6s ease-in-out;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+// Button Style
+.btn-one {
+  text-transform: capitalize;
+  font-weight: 500;
+  padding: 8px 26px;
+  text-align: center;
+  border-radius: 50px;
+  color: #000;
+  background-color: $color-two;
+  border:2px solid transparent;
+  @include transition(0.3s);
+  &.lg {
+    padding: 8px 32px;
+  }
+  &:hover {
+    background-color: $color-one;
+    color: $color-two;
+    border-color: $color-two;
+  }
+}
+.btn-two {
+  font-weight: 500;
+  color: #98BD00;
+  position: relative;
+  padding-right: 12px;
+  border-bottom: 2px solid #98BD00;
+  @include transition(0.3s);
+  &:hover {
+    color: #98BD00;
+    letter-spacing: 0.2px;
+  }
+
+  &:after {
+    border-bottom: 2px solid #98BD00;
+    border-right: 2px solid #98BD00;
+    content: "";
+    display: block;
+    margin-top: -4px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: rotate(-45deg);
+    transition: all .15s ease-in-out;
+    height: 8px;
+    width: 8px;
+  }
+}
+.btn-three {
+  font-weight: 500;
+  padding: 13px 26px;
+  text-align: center;
+  border-radius: 6px;
+  color: $color-one;
+  border:2px solid $color-one;
+  @include transition(0.3s);
+  &:hover {
+    background: $color-one;
+    color: #fff;
+  }
+}
+.btn-four {
+  font-weight: 500;
+  padding: 15px 26px;
+  min-width: 150px;
+  text-align: center;
+  border-radius: 6px;
+  color: $color-one;
+  background: $color-two;
+  @include transition(0.3s);
+  &:hover {
+    background: $color-one;
+    color: #fff;
+  }
+}
+.btn-five {
+  font-weight: 500;
+  padding: 13px 26px;
+  min-width: 150px;
+  text-align: center;
+  border-radius: 50px;
+  color: #fff;
+  background: $color-three;
+  @include transition(0.3s);
+  &:hover {
+    background: $color-one;
+    color: #fff;
+  }
+}
+.btn-five.border6 {
+  border-radius: 6px;
+}
+.btn-six {
+  font-weight: 500;
+  color: $color-three;
+  position: relative;
+  padding-right: 12px;
+  border-bottom: 2px solid $color-three;
+  @include transition(0.3s);
+  &:hover {
+    color: $color-three;
+    letter-spacing: 0.2px;
+  }
+  &:after {
+    border-bottom: 2px solid $color-three;
+    border-right: 2px solid $color-three;
+    content: "";
+    display: block;
+    margin-top: -4px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: rotate(-45deg);
+    transition: all .15s ease-in-out;
+    height: 8px;
+    width: 8px;
+  }
+  &.dark {
+    color: #000;
+    border-bottom-color: #000;
+    &:after {
+      border-bottom: 2px solid #000;
+      border-right: 2px solid #000;
+    }
+  }
+}
+.btn-seven {
+  font-weight: 500;
+  padding: 13px 28px;
+  min-width: 150px;
+  text-align: center;
+  border-radius: 50px;
+  color: $color-three;
+  border: 1px solid $color-three;
+  @include transition(0.3s);
+  &:hover {
+    background: $color-one;
+    border-color: $color-one;
+    color: #fff;
+  }
+}
+.btn-seven.border6 {
+  border-radius: 6px;
+}
+.btn-eight {
+  display: inline-block;
+  padding: 3px 25px;
+  color: #000;
+  border-radius: 30px;
+  background: #F1F6F3;
+  border: 1px solid #D6ECE0;
+  &.style-two {
+    border: 2px solid $color-three;
+    background: transparent;
+  }
+  span {
+    color: $color-three;
+  }
+  a {
+    font-weight: normal;
+    color: $color-three;
+    text-decoration: underline;
+  }
+}
+.btn-nine {
+  font-size: 16px;
+  color: #000;
+  letter-spacing: -1px;
+  &:hover {
+      color: $color-three; 
+  }
+  i {
+    font-size: 1.4em;
+    line-height: 0;
+  }
+}
+.btn-ten {
+  line-height: 50px;
+  border-radius: 10px;
+  background: $color-five;
+  padding: 0 26px;
+  &:hover {
+      background: $color-three;
+  }
+}
+.btn-eleven {
+  height: 60px;
+  border-radius: 7px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.88px;
+  color: #fff;
+  background: $color-five;
+  width: 100%;
+  &:hover,&:focus {
+      background: $color-three;
+  }
+}
+// Title Style
+.title-one h2 {
+  color: $heading;
+  margin: 0;
+  &.main-font {
+    font-family: var(--gorditas-font);
+    font-size: 60px;
+    color: #000;
+    line-height: 1.333em;
+    &.color-blue {
+      color: #005025;
+    }
+  }
+}
+.title-one span img {
+  top:-28px;
+  right: -112px;
+}
+.title-one .line {
+  height: 1px;
+  background: #E5E5E5;
+  flex: 1 1 auto!important;
+}
+.title-one .sub-title {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba($color: #000000, $alpha: 0.3);
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+.title-two h2 {
+  font-size: 64px;
+  line-height: 1.062em;
+  color: $heading;
+  margin: 0;
+  &.color-blue {
+    color: $color-four;
+  }
+  span {
+    color: $color-two;
+  }
+  &.main-font {
+    font-family: var(--gorditas-font);
+    font-size: 58px;
+  }
+}
+.title-two .sub-title {
+  color: $color-three;
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.title-three h2 {
+  font-size: 48px;
+  line-height: 1.062em;
+  color: $heading;
+  margin: 0;
+  &.main-font {
+    font-family: var(--gorditas-font);
+    color: #000;
+  }
+  &.color-blue {
+    color: $color-four;
+  }
+}
+.title-four h2 {
+  font-family: var(--gorditas-font);
+  font-size: 32px;
+  color: #000;
+  margin: 0;
+}

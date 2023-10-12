@@ -1,0 +1,118 @@
+// Footer One
+.footer-with-bg {
+    background: #F4FAF7;
+}
+.footer-one {
+    padding-top: 100px;
+    .email {
+        font-size: 18px;
+        color: $color-three;
+        text-decoration: underline;
+    }
+    .footer-title {
+        font-family: var(--gorditas-font);
+        font-size: 22px;
+        margin-bottom: 30px;
+    }
+    .footer-nav-link a {
+        color: $text-color;
+        margin-bottom: 18px;
+        @include transition(0.1s);
+
+        &:hover {
+            color: $color-three;
+        }
+    }
+    .footer-newsletter form {
+        position: relative;
+        height: 60px;
+        background: rgba($color: #000000, $alpha: 0.04);
+        border-radius: 7px;
+        input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            padding: 0 50px 0 20px;
+            border-radius: 7px;
+        }
+        button {
+            font-size: 15px;
+            font-weight: 500;
+            position: absolute;
+            width: 75px;
+            top:10px;
+            right: 10px;
+            bottom: 10px;
+            border-radius: 6px;
+            background: $color-one;
+            color: #fff;
+            @include transition(0.2s);
+            &:hover {
+                background: $color-two;
+                color: $color-one;
+            }
+        }
+        &.border-style {
+            border: 1px solid #000;
+            button {
+                background: $color-three;
+                color: #fff;
+                &:hover {
+                    background: $color-one;
+                }
+            }
+        }
+    }
+    .note {
+        font-size: 14px;
+        color: #979797;
+        margin: 8px 0 0;
+    }
+    .bottom-footer {
+        padding: 40px 0 25px;
+        .social-icon a {
+            color: rgba($color: #000000, $alpha: 0.6);
+            font-size: 16px;
+            margin-left: 22px;
+            @include transition(0.2s);
+            &:hover {
+                color: $color-three;
+            }
+        }
+        .bottom-nav a {
+            font-weight: 500;
+            color:#000;
+            margin-right: 15px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &.bg-two {
+        background: $color-one;
+    }
+    &.white-version .footer-nav-link a {
+        color: rgba($color: #fff, $alpha: 0.7);
+        &:hover {
+            text-decoration: underline;
+            color: #fff;
+        }
+    }
+    &.white-version .footer-newsletter form input {
+        background: rgba($color: #fff, $alpha: 0.04);
+        color: #fff;
+    }
+    &.white-version .footer-newsletter form button {
+        background: rgba($color: #fff, $alpha: 0.2);
+        color: #fff;
+    }
+    &.white-version .note {
+        color: rgba($color: #fff, $alpha: 0.7); 
+    }
+    &.white-version .bottom-footer .bottom-nav a,
+    &.white-version .bottom-footer .social-icon a {
+        color: #fff;
+    }
+}
