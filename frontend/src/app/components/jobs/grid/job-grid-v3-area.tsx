@@ -4,7 +4,7 @@ import slugify from "slugify";
 import job_data from "@/data/job-data";
 import { IJobType } from "@/types/job-data-type";
 import Pagination from "@/ui/pagination";
-import JobGridItem from "../grid/job-grid-item";
+import JobGridItem from "./job-grid-item";
 import { useAppSelector } from "@/redux/hook";
 import NiceSelect from "@/ui/nice-select";
 import ListItemTwo from "../list/list-item-2";

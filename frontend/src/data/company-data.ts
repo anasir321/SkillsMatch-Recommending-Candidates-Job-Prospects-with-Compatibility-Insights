@@ -7,7 +7,7 @@ import img_6 from '@/assets/images/logo/media_40.png';
 import img_7 from '@/assets/images/logo/media_41.png';
 import img_8 from '@/assets/images/logo/media_32.png';
 import img_9 from '@/assets/images/logo/media_42.png';
-import { ICompany } from './../types/company-type';
+import { ICompany } from '../types/company-type';
 
 const company_data:ICompany[] = [
   {
