@@ -40,15 +40,15 @@ export default function Home() {
       {/* expert one section end */}
 
       {/* feedback one start */}
-      <FeedbackOne/>
+      {/* <FeedbackOne/> */}
       {/* feedback one end */}
 
       {/* text feature two start */}
-      <FeatureTwo/>
+      {/* <FeatureTwo/> */}
       {/* text feature two end */}
 
       {/* blog section one start */}
-      <BlogOne/>
+      {/* <BlogOne/> */}
       {/* blog section one end */}
 
       {/* fancy banner start */}
@@ -60,7 +60,7 @@ export default function Home() {
       {/* job portal intro end */}
 
       {/* footer start */}
-      <FooterOne/>
+      {/* <FooterOne/> */}
       {/* footer end */}
     </Wrapper>
   );

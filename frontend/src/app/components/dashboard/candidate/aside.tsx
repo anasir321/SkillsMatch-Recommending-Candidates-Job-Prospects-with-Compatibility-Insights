@@ -25,6 +25,8 @@ import nav_7 from "@/assets/dashboard/images/icon/icon_7.svg";
 import nav_7_active from "@/assets/dashboard/images/icon/icon_7_active.svg";
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 // nav data
 const nav_data: {
@@ -89,6 +91,18 @@ type IProps = {
   isOpenSidebar: boolean,
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+// const [userData, setUserData] = useState({firstname: '', lastname: ''});
+
+// useEffect(() => {
+//   async function getUserName() {
+//     try {
+//       const response = await axios.get('http://localhost:5000/api/auth/:id', );
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// })
 
 const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
   const pathname = usePathname();

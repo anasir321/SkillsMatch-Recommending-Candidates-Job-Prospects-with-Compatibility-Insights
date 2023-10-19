@@ -18,7 +18,7 @@ const Header = () => {
           <div className="d-flex align-items-center">
             <div className="logo order-lg-0">
               <Link href="/" className="d-flex align-items-center">
-                <Image src={logo} alt="logo" priority />
+                {/* <Image src={logo} alt="logo" priority /> */}
               </Link>
             </div>
             <div className="right-widget ms-auto order-lg-3">
@@ -67,7 +67,7 @@ const Header = () => {
                     </div>
                   </li>
                   <li className="nav-item dropdown category-btn mega-dropdown-sm">
-                    <a
+                    {/* <a
                       className="nav-link dropdown-toggle"
                       href="#"
                       role="button"
@@ -76,7 +76,7 @@ const Header = () => {
                       aria-expanded="false"
                     >
                       <i className="bi bi-grid-fill"></i> Category
-                    </a>
+                    </a> */}
                     {/* CategoryDropdown start */}
                     <CategoryDropdown />
                     {/* CategoryDropdown end */}

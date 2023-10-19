@@ -94,14 +94,14 @@ const ExpertsOne = () => {
               <h2>
                 Find the best{" "}
                 <span className="position-relative">
-                  talented{" "}
+                  talent{" "}
                   <Image
                     src={shape}
                     alt="shape"
                     className="lazy-img shapes shapes"
                   />
                 </span>{" "}
-                expert in jobi.
+                on SkillsMatch.
               </h2>
             </div>
           </div>

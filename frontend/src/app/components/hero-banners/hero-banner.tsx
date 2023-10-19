@@ -17,9 +17,9 @@ const HeroBanner = () => {
           <div className="row">
             <div className="col-lg-6">
               <h1 className="wow fadeInUp"
-              data-wow-delay="0.3s">Find & Hire <span>Top 3% of expert on jobi.</span></h1>
+              data-wow-delay="0.3s">Get Matched <span>With SkillsMatch.</span></h1>
               <p className="text-lg text-white mt-40 md-mt-30 mb-50 md-mb-30 wow fadeInUp"
-              data-wow-delay="0.4s">We delivered blazing fast & striking work solution</p>
+              data-wow-delay="0.4s">SkillsMatch is an innovative platform that combines AI-driven job matching, personalized learning pathways, and streamlined recruitment processes to empower candidates and companies for success in today's dynamic job market.</p>
             </div>
           </div>
           <div className="position-relative">
@@ -28,15 +28,15 @@ const HeroBanner = () => {
                 <div className="job-search-one position-relative me-xl-5 wow fadeInUp"
               data-wow-delay="0.5s">
                   {/* search form start */}
-                  <SearchForm/>
+                  {/* <SearchForm/> */}
                   {/* search form end */}
-                  <ul className="tags d-flex flex-wrap style-none mt-20">
+                  {/* <ul className="tags d-flex flex-wrap style-none mt-20">
                     <li className="fw-500 text-white me-2">Popular:</li>
                     <li><a href="#">Design</a></li>
                     <li><a href="#">Art</a></li>
                     <li><a href="#">Business</a></li>
                     <li><a href="#">Video Editing</a></li>
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
             </div>

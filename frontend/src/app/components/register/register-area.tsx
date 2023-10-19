@@ -52,7 +52,7 @@ const RegisterArea = () => {
               </div>
             </div>
 
-            <div className="d-flex align-items-center mt-30 mb-10">
+            {/* <div className="d-flex align-items-center mt-30 mb-10">
               <div className="line"></div>
               <span className="pe-3 ps-3">OR</span>
               <div className="line"></div>
@@ -76,7 +76,7 @@ const RegisterArea = () => {
                   <span className="ps-2">Signup with Facebook</span>
                 </a>
               </div>
-            </div>
+            </div> */}
             <p className="text-center mt-10">
               Have an account?{" "}
               <a

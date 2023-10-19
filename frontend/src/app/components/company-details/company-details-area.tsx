@@ -72,13 +72,13 @@ const CompanyDetailsArea = () => {
                   <i className="bi bi-play-fill"></i>
                 </a>
               </div>
-              <div className="position-relative">
-                <h3>Company Reviews</h3>
+              {/* <div className="position-relative"> */}
+                {/* <h3>Company Reviews</h3> */}
 
                 {/* CompanyReviews */}
-                <CompanyReviews/>
+                {/* <CompanyReviews/> */}
                 {/* CompanyReviews */}
-              </div>
+              {/* </div> */}
 
               <div className="share-option mt-60">
                 <ul className="style-none d-flex align-items-center">

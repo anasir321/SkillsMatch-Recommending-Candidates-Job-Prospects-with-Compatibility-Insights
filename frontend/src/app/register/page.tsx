@@ -30,7 +30,7 @@ const RegisterPage = () => {
         {/* register area end */}
 
         {/* footer start */}
-        <FooterOne />
+        {/* <FooterOne /> */}
         {/* footer end */}
       </div>
     </Wrapper>

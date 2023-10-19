@@ -5,6 +5,8 @@ import * as Yup from "yup";
 import { Resolver, useForm } from "react-hook-form";
 import ErrorMsg from "../common/error-msg";
 import icon from "@/assets/images/icon/icon_60.svg";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 // form data type
 type IFormData = {
@@ -46,12 +48,25 @@ const LoginForm = () => {
     formState: { errors },
     reset,
   } = useForm<IFormData>({ resolver });
+  
+  const router = useRouter();
   // on submit
-  const onSubmit = (data: IFormData) => {
-    if (data) {
-      alert("Login successfully!");
+  const onSubmit = async (data: IFormData) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/login", data);
+      const { token } = response.data;
+      if (response.data.status >= 200 && response.data.status < 300) {
+        alert("Login successfully!");
+        console.log(response.data);
+        localStorage.setItem("token", token);
+        router.push("http://localhost:3000/dashboard/candidate-dashboard");
+      } else {
+        alert("Login failed!");
+      }
+    } catch (error) {
+      alert(`Login failed!:  ${error}`);
+      console.log(error);
     }
-    reset();
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-10">

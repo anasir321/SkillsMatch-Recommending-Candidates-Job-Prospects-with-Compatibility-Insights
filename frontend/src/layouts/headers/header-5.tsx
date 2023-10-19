@@ -6,6 +6,8 @@ import logo from '@/assets/images/logo/logo_04.png';
 import Menus from './component/menus';
 import useSticky from '@/hooks/use-sticky';
 import LoginModal from '@/app/components/common/popup/login-modal';
+import CandidateAside from '@/app/components/dashboard/candidate/aside';
+import Wrapper from '@/layouts/wrapper';
 
 const HeaderFive = () => {  
 	const {sticky} = useSticky();
@@ -17,7 +19,10 @@ const HeaderFive = () => {
 					<div className="d-flex align-items-center">
 						<div className="logo order-lg-0">
 							<Link href="/" className="d-flex align-items-center">
-								<Image src={logo} alt="logo"/>
+								{/* <Image src={logo} alt="logo"/> */}
+								{/*write skillsmatch here*/}
+								<h3>SkillsMatch</h3>
+
 							</Link>
 						</div>
 						<div className="right-widget ms-auto ms-lg-0 order-lg-2">
@@ -61,3 +66,4 @@ const HeaderFive = () => {
 };
 
 export default HeaderFive;
+
