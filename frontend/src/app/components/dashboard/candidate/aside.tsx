@@ -58,6 +58,13 @@ const nav_data: {
     title: "Resume",
   },
   {
+    id: 8,
+    icon: nav_3,
+    icon_active: nav_3_active,
+    link: "/dashboard/candidate-dashboard/resume-generator",
+    title: "Resume Generator",
+  },
+  {
     id: 4,
     icon: nav_4,
     icon_active: nav_4_active,
