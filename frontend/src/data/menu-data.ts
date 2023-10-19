@@ -82,11 +82,11 @@ const menu_data:IMenuData[] = [
   //     // {link:'/blog-details',title:'Blog Details'},
   //   ]
   // },
-  {
-    id:5,
-    link:'/contact',
-    title:'Contact'
-  },
+  // {
+  //   id:5,
+  //   link:'/contact',
+  //   title:'Contact'
+  // },
   {
     id:6,
     link:'/dashboard/employer-dashboard',

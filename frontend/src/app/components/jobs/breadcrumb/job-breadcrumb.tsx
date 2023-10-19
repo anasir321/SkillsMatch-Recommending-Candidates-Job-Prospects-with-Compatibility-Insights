@@ -7,7 +7,7 @@ import SearchForm from "../../forms/search-form";
 
 const JobBreadcrumb = ({
   title = "Job Listing",
-  subtitle = "We delivered blazing fast & striking work solution",
+  subtitle = "Subtitle",
 }: {
   title?: string;
   subtitle?: string;

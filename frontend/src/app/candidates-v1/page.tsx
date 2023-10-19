@@ -21,7 +21,7 @@ const CandidatePage = () => {
         {/* header end */}
 
         {/* search breadcrumb start */}
-        <JobBreadcrumb title='Candidates' subtitle='Find you desire talents & make your work done' />
+        <JobBreadcrumb title='Candidates' subtitle='Subtitle' />
         {/* search breadcrumb end */}
 
         {/* candidate area start */}

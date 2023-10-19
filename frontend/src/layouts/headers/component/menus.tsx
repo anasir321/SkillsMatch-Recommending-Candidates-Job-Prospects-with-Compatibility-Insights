@@ -7,7 +7,7 @@ const Menus = () => {
     <>
       {menu_data.map((menu) =>
         menu.sub_menus ? (
-          <li key={menu.id} className={`nav-item dropdown ${menu.title === 'Dashboard' ? 'dashboard-menu' : ''}`}>
+          <li key={menu.id} className={`nav-item dropdown ${menu.title === 'Dashboar' ? 'dashboard-menu' : ''}`}>
             <a
               className="nav-link dropdown-toggle"
               href="#"

@@ -68,14 +68,15 @@ const FeatureOne = () => {
               <div className="title-one">
                 <h2>Get over 50.000+ talented experts on SkillsMatch.</h2>
               </div>
-              <p className="mt-40 md-mt-20 mb-40 md-mb-20">
+              {/* <p className="mt-40 md-mt-20 mb-40 md-mb-20">
                 A full hybrid workforce management tools are yours to use, as
                 well as access to our top 1% of talent.{" "}
-              </p>
+              </p> */}
               <ul className="list-style-one style-none">
-                <li>AI-Driven Matching</li>
+                <li>AI-Driven Candidate to Job & Vice-Versa Matching</li>
                 <li>Personalized Learning Pathways</li>
                 <li>Resume Builder</li>
+                <li>Resume Parser</li>
               </ul>
               <Link href='/register' className="btn-one lg mt-50 md-mt-30">
                 Post a Job

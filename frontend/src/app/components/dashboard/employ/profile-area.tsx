@@ -146,7 +146,7 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
           </div>
         </div>
 
-        <div className="bg-white card-box border-20 mt-40">
+        {/* <div className="bg-white card-box border-20 mt-40">
           <h4 className="dash-title-three">Members</h4>
           <div className="dash-input-wrapper">
             <label htmlFor="">Add & Remove Member</label>
@@ -204,7 +204,7 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
             </div>
           </div>
           <a href="#" className="dash-btn-one"><i className="bi bi-plus"></i> Add Another Member</a>
-        </div>
+        </div> */}
 
 
         <div className="button-group d-inline-flex align-items-center mt-30">
