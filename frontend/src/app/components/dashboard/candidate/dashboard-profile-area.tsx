@@ -20,7 +20,7 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
         <DashboardHeader setIsOpenSidebar={setIsOpenSidebar} />
         {/* header end */}
 
-        <h2 className="main-title">My Profile</h2>
+        <h2 className="main-title">Personal Information</h2>
 
         <div className="bg-white card-box border-20">
           <div className="user-avatar-setting d-flex align-items-center mb-30">
@@ -32,13 +32,29 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
             <button className="delete-btn tran3s">Delete</button>
           </div>
           <div className="dash-input-wrapper mb-30">
-            <label htmlFor="">Full Name*</label>
-            <input type="text" placeholder="Md James Brower" />
+            <label htmlFor="">First Name*</label>
+            <input type="text" placeholder="James" />
           </div>
-          <div className="dash-input-wrapper">
+          <div className="dash-input-wrapper mb-30">
+            <label htmlFor="">Last Name*</label>
+            <input type="text" placeholder="Brower" />
+          </div>
+          <div className="dash-input-wrapper mb-30">
+            <label htmlFor="">Gender*</label>
+            <input type="text" placeholder='Male/Female' />
+          </div>
+          {/* <div className="dash-input-wrapper">
             <label htmlFor="">Bio*</label>
             <textarea className="size-lg" placeholder="Write something interesting about you...."></textarea>
             <div className="alert-text">Brief description for your profile. URLs are hyperlinked.</div>
+          </div> */}
+          <div className="dash-input-wrapper mb-30">
+            <label htmlFor="">Email*</label>
+            <input type="text" placeholder="arham@gmail.com" />
+          </div>
+          <div className="dash-input-wrapper mb-30">
+            <label htmlFor="">Phone*</label>
+            <input type="text" placeholder="+92 123 456 78" />
           </div>
         </div>
 
@@ -96,11 +112,11 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
                   <input type="text" placeholder="XC23+6XC, Moiran, N105" />
                   <button className="location-pin tran3s"><Image src={search} alt="icon" className="lazy-img m-auto" /></button>
                 </div>
-                <div className="map-frame mt-30">
+                {/* <div className="map-frame mt-30">
                   <div className="gmap_canvas h-100 w-100">
                     <iframe className="gmap_iframe h-100 w-100" src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=bass hill plaza medical centre&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
