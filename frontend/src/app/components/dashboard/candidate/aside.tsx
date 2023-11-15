@@ -99,19 +99,40 @@ type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-// const [userData, setUserData] = useState({firstname: '', lastname: ''});
-
-// useEffect(() => {
-//   async function getUserName() {
-//     try {
-//       const response = await axios.get('http://localhost:5000/api/auth/:id', );
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
-// })
+const tokenA = localStorage.getItem("token");
 
 const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
+  // extract user details from jwt token
+  const [userDetails, setUserDetails] = useState<any>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/auth/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 200) {
+          const { firstname, lastname } = response.data;
+          setUserDetails({ firstname, lastname });
+        }
+      } catch (error) {
+        // Handle errors
+        console.error('Error fetching user details:', error);
+      }
+    };
+
+    getUserDetails();
+  }, []);
+
   const pathname = usePathname();
   return (
     <>
@@ -130,16 +151,21 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
             <Image src={avatar} alt="avatar" className="lazy-img" style={{height:'auto'}} />
           </div>
           <div className="user-name-data">
-            <button
-              className="user-name dropdown-toggle"
-              type="button"
-              id="profile-dropdown"
-              data-bs-toggle="dropdown"
-              data-bs-auto-close="outside"
-              aria-expanded="false"
-            >
-              James Brower
-            </button>
+            {userDetails.firstname && userDetails.lastname ? (
+              <button
+                className="user-name dropdown-toggle"
+                type="button"
+                id="profile-dropdown"
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+              >
+                {userDetails.firstname} {userDetails.lastname}
+              </button>
+
+            ): (
+              <p>Loading</p>
+            )}
             <ul className="dropdown-menu" aria-labelledby="profile-dropdown">
               <li>
                 <Link

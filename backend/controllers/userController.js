@@ -63,5 +63,26 @@ async function getUser(req, res) {
     }
 };
 
-module.exports = { createUser, getUser };
+const jwt = require('jsonwebtoken');
+
+const getUserDetails = (req, res) => {
+  const token = req.header('Authorization');
+  if (!token) {
+    return res.status(401).json({ message: 'No token, authorization denied' });
+  }
+
+  const tokenValue = token.split(' ')[1]; // Extract the token value
+
+  try {
+    const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET);
+    const { email, firstname, lastname } = decoded;
+    res.status(200).json({ email, firstname, lastname });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Token is not valid' });
+  }
+};
+
+
+module.exports = { createUser, getUserDetails };
 

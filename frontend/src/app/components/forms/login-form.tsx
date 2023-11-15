@@ -55,7 +55,7 @@ const LoginForm = () => {
     try {
       const response = await axios.post("http://localhost:5000/api/auth/login", data);
       const { token } = response.data;
-      if (response.data.status >= 200 && response.data.status < 300) {
+      if (response) {
         alert("Login successfully!");
         console.log(response.data);
         localStorage.setItem("token", token);
@@ -64,7 +64,6 @@ const LoginForm = () => {
         alert("Login failed!");
       }
     } catch (error) {
-      alert(`Login failed!:  ${error}`);
       console.log(error);
     }
   };

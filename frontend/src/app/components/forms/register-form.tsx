@@ -110,7 +110,7 @@ const RegisterForm = () => {
       }
 
     } catch (error){
-
+      console.log(error);
     }
   }
   return (
