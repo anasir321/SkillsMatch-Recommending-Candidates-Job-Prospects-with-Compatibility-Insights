@@ -99,7 +99,7 @@ type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const tokenA = localStorage.getItem("token");
+// const tokenA = localStorage.getItem("token");
 
 const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
   // extract user details from jwt token

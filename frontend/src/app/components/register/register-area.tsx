@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import RegisterForm from "../forms/register-form";
+import RegisterForm from "../forms/register-form-candidate";
 import google from "@/assets/images/icon/google.png";
 import facebook from "@/assets/images/icon/facebook.png";
 

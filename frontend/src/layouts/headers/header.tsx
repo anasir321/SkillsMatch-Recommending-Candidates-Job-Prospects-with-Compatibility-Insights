@@ -25,7 +25,7 @@ const Header = () => {
               <ul className="d-flex align-items-center style-none">
                 <li className="d-none d-md-block">
                   <Link href="/register" className="job-post-btn tran3s">
-                    Post Job
+                    Register
                   </Link>
                 </li>
                 <li>

@@ -40,6 +40,10 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
             <input type="text" placeholder="Brower" />
           </div>
           <div className="dash-input-wrapper mb-30">
+            <label htmlFor="">Date of Birth*</label>
+            <input type="text" placeholder="DD/MM/YYYY" />
+          </div>
+          <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Gender*</label>
             <input type="text" placeholder='Male/Female' />
           </div>
@@ -55,6 +59,14 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Phone*</label>
             <input type="text" placeholder="+92 123 456 78" />
+          </div>
+        </div>
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Education</h4>
+
+          <div className="dash-input-wrapper mb-20">
+            
           </div>
         </div>
 

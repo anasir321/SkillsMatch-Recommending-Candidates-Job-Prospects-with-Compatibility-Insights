@@ -14,8 +14,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   CompanyHR.init({
-    company_id: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER
+    company_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Companies',
+        key: 'id',
+      },
+    },
+    firstname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'CompanyHR',
