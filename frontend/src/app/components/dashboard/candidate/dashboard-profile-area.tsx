@@ -7,12 +7,40 @@ import DashboardHeader from './dashboard-header';
 import CountrySelect from './country-select';
 import CitySelect from './city-select';
 import StateSelect from './state-select';
+import JobTypeSelect from './jobType-select';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 // props type 
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
 }
 const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
+
+  const [userDetails, setUserDetails] = useState<any>({});
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/auth/candidateDetails', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 200) {
+          setUserDetails(response.data.data.candidate);
+        }
+      } catch (error) {
+        // Handle errors
+        console.error('Error fetching user details:', error);
+      }
+    };
+
+    getUserDetails();
+  }, []);
+
   return (
     <div className="dashboard-body">
       <div className="position-relative">
@@ -33,19 +61,19 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
           </div>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">First Name*</label>
-            <input type="text" placeholder="James" />
+            <input type="text" placeholder="James" value={userDetails.firstname} />
           </div>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Last Name*</label>
-            <input type="text" placeholder="Brower" />
+            <input type="text" placeholder="Brower" value={userDetails.lastname} />
           </div>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Date of Birth*</label>
-            <input type="text" placeholder="DD/MM/YYYY" />
+            <input type="text" placeholder="DD/MM/YYYY" value={userDetails.dateOfBirth} />
           </div>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Gender*</label>
-            <input type="text" placeholder='Male/Female' />
+            <input type="text" placeholder='Male/Female' value={userDetails.gender} />
           </div>
           {/* <div className="dash-input-wrapper">
             <label htmlFor="">Bio*</label>
@@ -54,7 +82,7 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
           </div> */}
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Email*</label>
-            <input type="text" placeholder="arham@gmail.com" />
+            <input type="text" placeholder="arham@gmail.com" value={userDetails.email} />
           </div>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Phone*</label>
@@ -66,23 +94,51 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
           <h4 className="dash-title-three">Education</h4>
 
           <div className="dash-input-wrapper mb-20">
-            
+            <input type="text" placeholder="Degree" value={userDetails.education} />
           </div>
+          <a href="#" className="dash-btn-one"><i className="bi bi-plus"></i>Add</a>
         </div>
 
         <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Social Media</h4>
+          <h4 className="dash-title-three">Skills</h4>
 
           <div className="dash-input-wrapper mb-20">
-            <label htmlFor="">Network 1</label>
-            <input type="text" placeholder="#" />
+            <input type="text" placeholder="Javascript" value={userDetails.skills} />
+          </div>
+          <a href="#" className="dash-btn-one"><i className="bi bi-plus"></i>Add</a>
+        </div>
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Soft Skills</h4>
+
+          <div className="dash-input-wrapper mb-20">
+            <input type="text" placeholder="Teamwork" value={userDetails.softSkills} />
+          </div>
+          <a href="#" className="dash-btn-one"><i className="bi bi-plus"></i>Add</a>
+        </div>
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Professional Links</h4>
+
+          <div className="dash-input-wrapper mb-20">
+            <label htmlFor="">Linkedin</label>
+            <input type="text" placeholder="#" value={userDetails.linkedinURL} />
           </div>
           <div className="dash-input-wrapper mb-20">
-            <label htmlFor="">Network 2</label>
-            <input type="text" placeholder="#" />
+            <label htmlFor="">Github</label>
+            <input type="text" placeholder="#" value={userDetails.githubURL} />
           </div>
-          <a href="#" className="dash-btn-one"><i className="bi bi-plus"></i> Add more link</a>
+          <a href="#" className="dash-btn-one"><i className="bi bi-plus"></i>Add</a>
         </div>
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Preferred Job Type</h4>
+
+          <div className="dash-input-wrapper mb-20">
+            <JobTypeSelect/>
+          </div>
+        </div>
+
 
         <div className="bg-white card-box border-20 mt-40">
           <h4 className="dash-title-three">Address & Location</h4>
@@ -90,7 +146,7 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
             <div className="col-12">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Address*</label>
-                <input type="text" placeholder="Cowrasta, Chandana, Gazipur Sadar" />
+                <input type="text" placeholder="Cowrasta, Chandana, Gazipur Sadar" value={userDetails.location} />
               </div>
             </div>
             <div className="col-lg-3">
@@ -105,7 +161,7 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
                 <CitySelect/>
               </div>
             </div>
-            <div className="col-lg-3">
+            {/* <div className="col-lg-3">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Zip Code*</label>
                 <input type="number" placeholder="1708" />
@@ -124,13 +180,13 @@ const DashboardProfileArea = ({setIsOpenSidebar}:IProps) => {
                   <input type="text" placeholder="XC23+6XC, Moiran, N105" />
                   <button className="location-pin tran3s"><Image src={search} alt="icon" className="lazy-img m-auto" /></button>
                 </div>
-                {/* <div className="map-frame mt-30">
+                <div className="map-frame mt-30">
                   <div className="gmap_canvas h-100 w-100">
                     <iframe className="gmap_iframe h-100 w-100" src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=bass hill plaza medical centre&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
                   </div>
-                </div> */}
+                </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

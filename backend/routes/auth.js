@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { signupCandidate, loginCandidate, getCandidateDetails } = require('../controllers/authControllerCandidate');
 const{ signupCompanyHR, loginCompanyHR, getCompanyHRDetails } = require('../controllers/authControllerCompanyHR');
-const { getUserDetails } = require('../controllers/userController');
 const jwtMiddleware = require('../middleware/jwtMiddleware');
 
 // USER LOGIN AND SIGNUP ROUTES
