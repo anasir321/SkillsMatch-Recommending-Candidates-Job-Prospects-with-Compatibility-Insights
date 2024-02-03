@@ -6,6 +6,7 @@ import Menus from "./component/menus";
 import logo from "@/assets/images/logo/logo_01.png";
 import CategoryDropdown from "./component/category-dropdown";
 import LoginModal from "@/app/components/common/popup/login-modal";
+import LoginModalCompanyHR from "@/app/components/common/popup/login-modal-companyHR";
 import useSticky from "@/hooks/use-sticky";
 
 const Header = () => {
@@ -35,7 +36,17 @@ const Header = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#loginModal"
                   >
-                    Login
+                    Candidate Login
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="login-btn-one"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginModalCompanyHR"
+                  >
+                    Company HR Login
                   </a>
                 </li>
                 <li className="d-none d-md-block ms-4">
@@ -104,6 +115,7 @@ const Header = () => {
 
     {/* login modal start */}
     <LoginModal/>
+    <LoginModalCompanyHR/>
     {/* login modal end */}
     </>
   );

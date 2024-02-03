@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Candidate.init({
-    id: {
+    candidate_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    work_experience: {
+    experience: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -56,17 +56,42 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    social_profile_link: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
+    resume: {
+      type: DataTypes.BLOB,
+      allowNull: true,
+    },
+    linkedinURL: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    githubURL: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    preferredJobType: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    softSkills: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    preferredJobTitle: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    profilePicture: {
+      type: DataTypes.BLOB,
+      allowNull: true,
+    },
   }, {
     sequelize,
     modelName: 'Candidate',
+    timestamps: false,
   });
   return Candidate;
 };

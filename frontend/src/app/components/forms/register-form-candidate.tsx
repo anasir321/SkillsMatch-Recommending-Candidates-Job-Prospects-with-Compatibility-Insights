@@ -102,7 +102,7 @@ const RegisterForm = () => {
     try {
       const response = await axios.post("http://localhost:5000/api/auth/signupCandidate", data);
       if(response) {
-        alert("Registered successfully!");
+        alert("Candidate Registered successfully!");
         reset();
       } else {
         // const errorData = response.data;
