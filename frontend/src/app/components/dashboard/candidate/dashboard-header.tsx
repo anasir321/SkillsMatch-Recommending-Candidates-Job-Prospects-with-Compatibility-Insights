@@ -92,10 +92,10 @@ const DashboardHeader = ({setIsOpenSidebar}:IProps) => {
         </div>
         <div>
           <Link
-            href="/dashboard/employ-dashboard/submit-job"
+            href="/page.tsx"
             className="job-post-btn tran3s"
           >
-            Post a Job
+            Homepage
           </Link>
         </div>
       </div>

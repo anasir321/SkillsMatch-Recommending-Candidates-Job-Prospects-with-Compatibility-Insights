@@ -14,6 +14,7 @@ const jwtMiddleware = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET);
+        console.log("decoded: ",decoded);
         req.user = {id: decoded.id};
         next();
     } catch (err) {

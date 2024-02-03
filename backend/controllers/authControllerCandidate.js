@@ -36,14 +36,42 @@ async function loginCandidate(req, res) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
     
-        const token = jwt.sign({ id:candidate.id, email: candidate.email, firstname: candidate.firstname, lastname: candidate.lastname }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign({ id:candidate.candidate_id, email: candidate.email, firstname: candidate.firstname, lastname: candidate.lastname }, process.env.JWT_SECRET, { expiresIn: '1d' });
         console.log(token);
-        res.status(200).json({ message: 'candidate logged in successfully', token, id: candidate.id ,firstname: candidate.firstname, lastname: candidate.lastname });
+        res.status(200).json({ message: 'candidate logged in successfully', token, id: candidate.candidate_id ,firstname: candidate.firstname, lastname: candidate.lastname });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Incorrect email or password!' });
     }
 };
 
-module.exports = { signupCandidate, loginCandidate }
+async function getCandidateDetails(req, res){
+    try {
+        console.log("req.user: ",req.user);
+        const { id } = req.user; // User ID from JWT payload
+        const candidate = await Candidate.findOne({ where: { candidate_id: id } });
+
+        if (!candidate) {
+            return res.status(404).json({
+                success: false,
+                message: 'Candidate not found',
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Candidate details retrieved successfully',
+            data: { candidate },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Error! Unable to retrieve candidate details.',
+            error: error.message,
+        });
+    }
+}
+
+module.exports = { signupCandidate, loginCandidate, getCandidateDetails }
 

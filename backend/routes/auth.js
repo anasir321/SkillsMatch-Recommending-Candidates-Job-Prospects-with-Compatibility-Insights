@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { signupCandidate, loginCandidate} = require('../controllers/authControllerCandidate');
+const { signupCandidate, loginCandidate, getCandidateDetails } = require('../controllers/authControllerCandidate');
 const{ signupCompanyHR, loginCompanyHR, getCompanyHRDetails } = require('../controllers/authControllerCompanyHR');
 const { getUserDetails } = require('../controllers/userController');
+const jwtMiddleware = require('../middleware/jwtMiddleware');
 
 // USER LOGIN AND SIGNUP ROUTES
 router.post('/signupCandidate', signupCandidate);
@@ -13,9 +14,9 @@ router.post('/signupCompanyHR', signupCompanyHR);
 router.post('/loginCompanyHR', loginCompanyHR);
 
 // GET CANIDATE DETAILS
-router.get('/me', getUserDetails);
+router.get('/candidateDetails', jwtMiddleware, getCandidateDetails);
 
 // GET COMPANY HR DETAILS
-router.get('/companyHRDetails', getCompanyHRDetails);
+router.get('/companyHRDetails', jwtMiddleware, getCompanyHRDetails);
 
 module.exports = router;
