@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import RegisterForm from "../forms/register-form-candidate";
+import RegisterFormCompanyHR from "../forms/register-form-companyhr";
 import google from "@/assets/images/icon/google.png";
 import facebook from "@/assets/images/icon/facebook.png";
 
@@ -48,7 +49,7 @@ const RegisterArea = () => {
                 <RegisterForm />
               </div>
               <div className="tab-pane fade" role="tabpanel" id="fc2">
-                <RegisterForm />
+                <RegisterFormCompanyHR />
               </div>
             </div>
 

@@ -39,7 +39,7 @@ const resolver: Resolver<IFormData> = async (values) => {
   };
 };
 
-const LoginForm = () => {
+const LoginFormCompanyHR = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
   // react hook form
   const {
@@ -53,13 +53,13 @@ const LoginForm = () => {
   // on submit
   const onSubmit = async (data: IFormData) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/loginCandidate", data);
+      const response = await axios.post("http://localhost:5000/api/auth/loginCompanyHR", data);
       const { token } = response.data;
       if (response) {
         alert("Login successfully!");
         console.log(response.data);
         localStorage.setItem("token", token);
-        router.push("http://localhost:3000/dashboard/candidate-dashboard");
+        router.push("http://localhost:3000/dashboard/employ-dashboard");
       } else {
         alert("Login failed!");
       }
@@ -129,4 +129,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default LoginFormCompanyHR;

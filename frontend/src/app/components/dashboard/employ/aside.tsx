@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -27,6 +27,7 @@ import nav_9 from "@/assets/dashboard/images/icon/icon_40.svg";
 import nav_9_active from "@/assets/dashboard/images/icon/icon_40_active.svg";
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
+import axios from "axios";
 
 // nav data
 const nav_data: {
@@ -99,6 +100,32 @@ type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
 }
 const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
+
+  const [companyHRDetails, setCompanyHRDetails] = useState<any>({});
+
+  useEffect(() => {
+    const getCompanyHRDetails = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/auth/companyHRDetails', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 200) {
+          const { firstname, lastname } = response.data;
+          setCompanyHRDetails({ firstname, lastname });
+        }
+      } catch (error) {
+        // Handle errors
+        console.error('Error fetching user details:', error);
+      }
+    };
+
+    getCompanyHRDetails();
+  }, []);
+
   const pathname = usePathname();
   return (
     <>
@@ -117,16 +144,21 @@ const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
             <Image src={avatar} alt="avatar" className="lazy-img" style={{height:'auto'}} />
           </div>
           <div className="user-name-data">
-            <button
-              className="user-name dropdown-toggle"
-              type="button"
-              id="profile-dropdown"
-              data-bs-toggle="dropdown"
-              data-bs-auto-close="outside"
-              aria-expanded="false"
-            >
-              John Doe
-            </button>
+          {companyHRDetails.firstname && companyHRDetails.lastname ? (
+              <button
+                className="user-name dropdown-toggle"
+                type="button"
+                id="profile-dropdown"
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+              >
+                {companyHRDetails.firstname} {companyHRDetails.lastname}
+              </button>
+
+            ): (
+              <p>Loading</p>
+            )}
             <ul className="dropdown-menu" aria-labelledby="profile-dropdown">
               <li>
                 <Link
