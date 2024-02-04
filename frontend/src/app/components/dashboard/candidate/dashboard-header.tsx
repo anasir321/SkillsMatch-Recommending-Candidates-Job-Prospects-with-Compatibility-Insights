@@ -92,7 +92,7 @@ const DashboardHeader = ({setIsOpenSidebar}:IProps) => {
         </div>
         <div>
           <Link
-            href="/page.tsx"
+            href="http://localhost:3000"
             className="job-post-btn tran3s"
           >
             Homepage
