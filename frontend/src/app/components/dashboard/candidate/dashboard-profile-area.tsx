@@ -411,33 +411,47 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
             />
           </div>
 
-          <div className="dash-input-wrapper mb-30">
+          {/* <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Phone*</label>
             <input
               type="text"
               placeholder="+92 123 456 78"
               readOnly={!isEditing}
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Additional Card Boxes */}
         {/* ... (similar updates for other sections) */}
 
         <div className="bg-white card-box border-20 mt-40">
-        <h4 className="dash-title-three">Preferred Job Type</h4>
-        <div className="dash-input-wrapper mb-20">
-          <JobTypeSelect
-            isEditing={isEditing}
-            selectedJobType={userDetails.preferredJobType}
-            onChange={handleJobTypeChange}
-          />
+          <h4 className="dash-title-three">Preferred Job Type</h4>
+          <div className="dash-input-wrapper mb-20">
+            <JobTypeSelect
+              isEditing={isEditing}
+              selectedJobType={userDetails.preferredJobType}
+              onChange={handleJobTypeChange}
+            />
+          </div>
         </div>
-      </div>
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Preferred Job Title</h4>
+          <div className="dash-input-wrapper mb-20">
+            <input
+              type="text"
+              placeholder="Software Engineer"
+              value={userDetails.preferredJobTitle}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, preferredJobTitle: e.target.value })
+              }
+              readOnly={!isEditing}
+            />
+          </div>
+        </div>
 
         <div className="bg-white card-box border-20 mt-40">
           <h4 className="dash-title-three">Education</h4>
-
           <div className="dash-input-wrapper mb-20">
             <input
               type="text"

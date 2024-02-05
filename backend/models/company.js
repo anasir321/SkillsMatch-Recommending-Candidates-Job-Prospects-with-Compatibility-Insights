@@ -14,7 +14,47 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Company.init({
-    company_name: DataTypes.STRING
+    company_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    company_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    companyHR_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Company_HR',
+        key: 'companyHR_id',
+      },
+    },
+    company_location: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    company_email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    company_website: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    company_linkedin: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    company_description: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    company_logo: {
+      type: DataTypes.BLOB,
+      allowNull: true,
+    }
   }, {
     sequelize,
     modelName: 'Company',
