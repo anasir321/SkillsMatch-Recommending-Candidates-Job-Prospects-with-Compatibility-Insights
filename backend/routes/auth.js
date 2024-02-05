@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const { signupCandidate, loginCandidate} = require('../controllers/authControllerCandidate');
+const { signupCandidate, loginCandidate, getCandidateDetails, updateCandidateDetails } = require('../controllers/authControllerCandidate');
 const{ signupCompanyHR, loginCompanyHR, getCompanyHRDetails } = require('../controllers/authControllerCompanyHR');
-const { getUserDetails } = require('../controllers/userController');
+const jwtMiddleware = require('../middleware/jwtMiddleware');
 
-// USER LOGIN AND SIGNUP ROUTES
+// CANDIDATE CRUD
 router.post('/signupCandidate', signupCandidate);
 router.post('/loginCandidate', loginCandidate);
+router.get('/candidateDetails', jwtMiddleware, getCandidateDetails);
+router.put('/updateCandidateDetails', jwtMiddleware, updateCandidateDetails);
+
 
 // COMPANY HR LOGIN AND SIGNUP ROUTES
 router.post('/signupCompanyHR', signupCompanyHR);
 router.post('/loginCompanyHR', loginCompanyHR);
+router.get('/companyHRDetails', jwtMiddleware, getCompanyHRDetails);
 
-// GET CANIDATE DETAILS
-router.get('/me', getUserDetails);
 
-// GET COMPANY HR DETAILS
-router.get('/companyHRDetails', getCompanyHRDetails);
 
 module.exports = router;

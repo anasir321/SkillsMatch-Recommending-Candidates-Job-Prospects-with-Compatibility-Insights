@@ -36,31 +36,41 @@ async function loginCompanyHR(req, res) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
     
-        const token = jwt.sign({ id:CompanyHR.id, email: CompanyHR.email, firstname: CompanyHR.firstname, lastname: CompanyHR.lastname }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign({ id:CompanyHR.companyHR_id, email: CompanyHR.email, firstname: CompanyHR.firstname, lastname: CompanyHR.lastname }, process.env.JWT_SECRET, { expiresIn: '1d' });
         console.log(token);
-        res.status(200).json({ message: 'Company_HR logged in successfully', token, id: CompanyHR.id ,firstname: CompanyHR.firstname, lastname: CompanyHR.lastname });
+        res.status(200).json({ message: 'Company_HR logged in successfully', token, id: CompanyHR.companyHR_id ,firstname: CompanyHR.firstname, lastname: CompanyHR.lastname });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Incorrect email or password!' });
     }
 };
 
-const getCompanyHRDetails = (req, res) => {
-    const token = req.header('Authorization');
-    if (!token) {
-        return res.status(401).json({ message: 'No token, authorization denied' });
+async function getCompanyHRDetails(req, res){
+    try{
+        console.log("req.user: ",req.user);
+        const { id } = req.user; // User ID from JWT payload
+        const companyHr = await Company_HR.findOne({ where: { companyHR_id: id } });
+        if (!companyHr) {
+            return res.status(404).json({
+                success: false,
+                message: 'Company HR not found',
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: 'Company HR details',
+            data: { companyHr }
+        });
     }
-    
-    const tokenValue = token.split(' ')[1]; // Extract the token value
-    
-    try {
-        const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET);
-        const { email, firstname, lastname } = decoded;
-        res.status(200).json({ email, firstname, lastname });
-    } catch (error) {
+    catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Token is not valid' });
+        res.status(500).json({
+            success: false,
+            message: 'Error! Unable to retrieve companyHR details.',
+            error: error.message,
+        });
     }
+
 }
 
 module.exports = { signupCompanyHR, loginCompanyHR, getCompanyHRDetails }

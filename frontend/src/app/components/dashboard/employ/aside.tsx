@@ -113,13 +113,15 @@ const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
           },
         });
 
+        console.log('Company HR details:', response.data);
+
         if (response.status === 200) {
-          const { firstname, lastname } = response.data;
+          const { firstname, lastname } = response.data.data.companyHr;
           setCompanyHRDetails({ firstname, lastname });
         }
       } catch (error) {
         // Handle errors
-        console.error('Error fetching user details:', error);
+        console.error('Error fetching candidate details:', error);
       }
     };
 

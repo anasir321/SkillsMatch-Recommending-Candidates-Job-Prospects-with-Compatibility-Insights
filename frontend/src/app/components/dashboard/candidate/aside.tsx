@@ -109,19 +109,19 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-
+  
   useEffect(() => {
     const getUserDetails = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/auth/me', {
+        const response = await axios.get('http://localhost:5000/api/auth/candidateDetails', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
         if (response.status === 200) {
-          const { firstname, lastname } = response.data;
+          const { firstname, lastname } = response.data.data.candidate;
           setUserDetails({ firstname, lastname });
         }
       } catch (error) {
