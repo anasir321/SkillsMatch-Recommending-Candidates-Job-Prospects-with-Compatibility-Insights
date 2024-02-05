@@ -289,25 +289,17 @@ async function getProfilePicture(req, res) {
       return res.status(404).json({ message: 'Profile picture not found' });
     }
 
-    // Assuming your root directory is 'D:\SkillsMatch - FYP\SkillsMatch\backend'
-    const rootDirectory = 'D:\\SkillsMatch - FYP\\SkillsMatch\\backend';
-    const filePath = path.join(rootDirectory, candidate.profilePicture);
-    console.log('filePath: ', filePath);
+    // Relative path from the static route or public directory
+    const relativePath = `${candidate.profilePicture}`;
 
-    // Check if the file exists
-    try {
-      await fs.promises.access(filePath, fs.constants.F_OK);
-    } catch (error) {
-      return res.status(404).json({ message: 'Profile picture file not found' });
-    }
-
-    // Send the file directly as a response
-    res.status(200).json({ filePath });
+    // Send the relative path directly as a response
+    res.status(200).json({ filePath: relativePath });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Error! Unable to retrieve profile picture.' });
   }
 }
+
 
 module.exports = {
   signupCandidate,

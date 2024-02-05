@@ -61,16 +61,19 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
         console.log('Profile Picture Path:', response.data.filePath);
 
         if (response.status === 200) {
-          // Update the profile picture state with the file path
-          setProfilePicture(response.data.filePath);
+          // Construct the full URL based on the relative path
+          const fullUrl = `http://localhost:5000${response.data.filePath}`;
+
+          // Update the profile picture state with the full URL
+          setProfilePicture(fullUrl);
         }
       } catch (error) {
         console.error('Error fetching profile picture:', error);
       }
     };
-  
+
     fetchProfilePicture();
-  }, []); // Empty dependency array to ensure the effect runs only once
+  }, []);
   
 
   const handleEditClick = () => {
@@ -188,7 +191,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
           <div className="user-avatar-setting d-flex align-items-center mb-30">
             {profilePicture ? (
               <img
-                src={`http://localhost:5000${profilePicture}`}
+                src={profilePicture}
                 alt="profile-picture"
                 className="lazy-img user-img"
                 width={100} // Set the desired width
