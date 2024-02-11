@@ -1,13 +1,39 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import candidate_data from "@/data/candidate-data";
 import CandidateGridItem from "./candidate-grid-item";
 import CandidateListItem from "./candidate-list-item";
 import CandidateV1FilterArea from "./filter/candidate-v1-filter-area";
 import ShortSelect from "../common/short-select";
+import axios from "axios";
 
 const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
   const [jobType, setJobType] = useState<string>(style_2 ? "list" : "grid");
+  const [candidateData, setCandidateData] = useState<any[]>([]);
+
+  // getting candidate data from the backend api
+  useEffect(() => {
+    const getAllCandidates = async () => {
+      try{
+        const response = await axios.get(
+          "http://localhost:5000/api/auth/getAllCandidates",
+          {
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if(response.status == 200){
+          setCandidateData(response.data.data.candidates);
+        }
+      } catch (error) {
+        console.log("Error fetching candidate data", error);
+      }
+    };
+    getAllCandidates();
+
+  },[]);
+
   return (
     <>
       <section className="candidates-profile pt-110 lg-pt-80 pb-160 xl-pb-150 lg-pb-80">
@@ -60,10 +86,17 @@ const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
                 <div
                   className={`accordion-box grid-style ${jobType === "grid" ? "show" : ""}`}
                 >
-                  <div className="row">
+                  {/* <div className="row">
                     {candidate_data.map((item) => (
                       <div key={item.id} className="col-xxl-4 col-sm-6 d-flex">
                         <CandidateGridItem item={item} />
+                      </div>
+                    ))}
+                  </div> */}
+                  <div className="row">
+                    {candidateData.map((item:any) => (
+                      <div key={item.id} className="col-xxl-4 col-sm-6 d-flex">
+                        <CandidateGridItem item={item} style_2={style_2} />
                       </div>
                     ))}
                   </div>

@@ -11,7 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      
+      Candidate.hasMany(models.WorkExperience, {
+        foreignKey: 'candidate_id',
+        onDelete: 'CASCADE',
+      });
+      Candidate.hasMany(models.Institute, {
+        foreignKey: 'candidate_id',
+        onDelete: 'CASCADE',
+      });
     }
   }
   Candidate.init({
@@ -33,10 +40,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     email: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    education: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -88,10 +91,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BLOB,
       allowNull: true,
     },
+    overview: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   }, {
     sequelize,
     modelName: 'Candidate',
     timestamps: false,
+    primaryKey: 'candidate_id'
   });
   return Candidate;
 };

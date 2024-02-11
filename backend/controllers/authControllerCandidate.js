@@ -29,7 +29,7 @@ function checkFileType(file, cb) {
   if (mimetype && extname) {
     return cb(null, true);
   } else {
-    cb('Error: Images Only!');
+    cb("Error: Images Only!");
   }
 }
 
@@ -126,6 +126,30 @@ async function getCandidateDetails(req, res) {
   }
 }
 
+async function getCandidateDetailsUsingId(req, res) {
+  try {
+    const { id } = req.params;
+    const candidate = await Candidate.findOne({ where: { candidate_id: id } });
+    if (!candidate) {
+      return res.status(404).json({
+        success: false,
+        message: "Candidate not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Candidate details retrieved successfully",
+      data: { candidate },
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Error! Unable to retrieve candidate details" });
+  }
+}
+
 async function updateCandidateDetails(req, res) {
   try {
     const errors = validationResult(req);
@@ -215,14 +239,16 @@ const uploadProfilePicture = (req, res) => {
       return res.status(500).json({ message: err });
     } else {
       if (req.file == undefined) {
-        return res.status(400).json({ message: 'No file selected' });
+        return res.status(400).json({ message: "No file selected" });
       } else {
         try {
           const { id } = req.user;
-          const candidate = await Candidate.findOne({ where: { candidate_id: id } });
+          const candidate = await Candidate.findOne({
+            where: { candidate_id: id },
+          });
 
           if (!candidate) {
-            return res.status(404).json({ message: 'Candidate not found' });
+            return res.status(404).json({ message: "Candidate not found" });
           }
 
           candidate.profilePicture = `/uploads/profile-pictures/${req.file.filename}`;
@@ -232,49 +258,19 @@ const uploadProfilePicture = (req, res) => {
           });
 
           return res.status(200).json({
-            message: 'Profile picture uploaded successfully',
+            message: "Profile picture uploaded successfully",
             profilePicture: candidate.profilePicture,
           });
         } catch (error) {
           console.error(error);
-          return res.status(500).json({ message: 'Error! Unable to upload profile picture.' });
+          return res
+            .status(500)
+            .json({ message: "Error! Unable to upload profile picture." });
         }
       }
     }
   });
 };
-
-// async function getProfilePicture(req, res) {
-//   try {
-//     const { id } = req.user;
-//     const candidate = await Candidate.findOne({ where: { candidate_id: id } });
-
-//     if (!candidate) {
-//       return res.status(404).json({ message: 'Candidate not found' });
-//     }
-
-//     if (!candidate.profilePicture) {
-//       return res.status(404).json({ message: 'Profile picture not found' });
-//     }
-
-//     const filePath = path.resolve(candidate.profilePicture);
-
-//     console.log('filePath Nigger: ', filePath);
-
-//     // Check if the file exists
-//     // try {
-//     //   await fs.promises.access(filePath, fs.constants.F_OK);
-//     // } catch (error) {
-//     //   return res.status(404).json({ message: 'Profile picture file not found' });
-//     // }
-
-//     // Send the file directly as a response
-//     res.sendFile(filePath);
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ message: 'Error! Unable to retrieve profile picture.' });
-//   }
-// }
 
 async function getProfilePicture(req, res) {
   try {
@@ -282,11 +278,11 @@ async function getProfilePicture(req, res) {
     const candidate = await Candidate.findOne({ where: { candidate_id: id } });
 
     if (!candidate) {
-      return res.status(404).json({ message: 'Candidate not found' });
+      return res.status(404).json({ message: "Candidate not found" });
     }
 
     if (!candidate.profilePicture) {
-      return res.status(404).json({ message: 'Profile picture not found' });
+      return res.status(404).json({ message: "Profile picture not found" });
     }
 
     // Relative path from the static route or public directory
@@ -296,10 +292,54 @@ async function getProfilePicture(req, res) {
     res.status(200).json({ filePath: relativePath });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Error! Unable to retrieve profile picture.' });
+    return res
+      .status(500)
+      .json({ message: "Error! Unable to retrieve profile picture." });
   }
 }
 
+async function getProfilePictureUsingId(req, res) {
+  try {
+    const { id } = req.params;
+    const candidate = await Candidate.findOne({ where: { candidate_id: id } });
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+    if (!candidate.profilePicture) {
+      return res.status(404).json({ message: "Profile picture not found" });
+    }
+    const relativePath = `${candidate.profilePicture}`;
+    res
+      .status(200)
+      .json({
+        message: "Profile picture retrieved successfully",
+        data: { filePath: relativePath },
+      });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Error! Unable to retrieve profile picture" });
+  }
+}
+
+async function getAllCandidates(req, res) {
+  try {
+    const candidates = await Candidate.findAll();
+    if (!candidates) {
+      return res.status(404).json({ message: "No candidates found" });
+    }
+    res
+      .status(200)
+      .json({
+        message: "Candidates retrieved successfully",
+        data: { candidates },
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error! Unable to retrieve candidates" });
+  }
+}
 
 module.exports = {
   signupCandidate,
@@ -308,4 +348,7 @@ module.exports = {
   updateCandidateDetails,
   uploadProfilePicture,
   getProfilePicture,
+  getAllCandidates,
+  getProfilePictureUsingId,
+  getCandidateDetailsUsingId,
 };
