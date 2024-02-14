@@ -113,7 +113,7 @@ const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
           },
         });
 
-        console.log('Company HR details:', response.data);
+        // console.log('Company HR details:', response.data);
 
         if (response.status === 200) {
           const { firstname, lastname } = response.data.data.companyHr;

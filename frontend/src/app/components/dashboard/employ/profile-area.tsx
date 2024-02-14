@@ -7,12 +7,104 @@ import CountrySelect from '../candidate/country-select';
 import CitySelect from '../candidate/city-select';
 import StateSelect from '../candidate/state-select';
 import DashboardHeader from '../candidate/dashboard-header';
+import { useEffect, useState} from "react";
+import axios from "axios";
 
 // props type 
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
 }
 const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [companyDetails, setCompanyDetails] = useState<any>({});
+
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleCancelClick = () => {
+    setIsEditing(false);
+  };
+
+  const handleSaveClick = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.put(
+        "http://localhost:5000/api/auth/saveCompanyDetails",
+        companyDetails,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        setCompanyDetails(response.data.data.company);
+        setIsEditing(false);
+      } else {
+        console.error("Failed to save Company details:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error saving company details:", error);
+    }
+  };
+
+  const renderSaveButton = () => {
+    if (isEditing) {
+      return (
+        <a
+          href="#"
+          className="dash-btn-two tran3s me-3"
+          onClick={handleSaveClick}
+        >
+          Save
+        </a>
+      );
+    }
+    return null;
+  };
+
+  const renderCancelButton = () => {
+    if (isEditing) {
+      return (
+        <a
+          href="#"
+          className="dash-cancel-btn tran3s"
+          onClick={handleCancelClick}
+        >
+          Cancel
+        </a>
+      );
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    const getCompanyDetails = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          "http://localhost:5000/api/auth/companyDetails",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if(response.status === 200) {
+          setCompanyDetails(response.data.data.company);
+        }
+      } catch (error) {
+        // Handle errors
+        console.log("Error fetching company details: ", error);
+      }
+    };
+
+    getCompanyDetails();
+  }, [])
+
   return (
     <div className="dashboard-body">
       <div className="position-relative">
@@ -32,102 +124,150 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
             <button className="delete-btn tran3s">Delete</button>
           </div>
           <div className="dash-input-wrapper mb-30">
-            <label htmlFor="">Employer Name*</label>
-            <input type="text" placeholder="John Doe" />
+            <label htmlFor="">Company Name*</label>
+            <input 
+              type="text" 
+              placeholder="John Doe" 
+              value={companyDetails.company_name}
+              onChange={(e) => {
+                setCompanyDetails({...companyDetails, company_name: e.target.value})
+              }}
+              readOnly={!isEditing}/>
           </div>
           <div className="row">
             <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Email*</label>
-                <input type="email" placeholder="companyinc@gmail.com" />
+                <input 
+                  type="email" 
+                  placeholder="companyinc@gmail.com"
+                  value={companyDetails.company_email}
+                  onChange={(e) => {
+                    setCompanyDetails({...companyDetails, company_email: e.target.value})
+                  }}
+                  readOnly={!isEditing}/>
               </div>
             </div>
             <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Website*</label>
-                <input type="text" placeholder="http://somename.come" />
+                <input 
+                type="text" 
+                placeholder="http://somename.come"
+                value={companyDetails.company_website}
+                onChange={(e) => {
+                  setCompanyDetails({...companyDetails, company_website: e.target.value})
+                }}
+                readOnly={!isEditing}/>
               </div>
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Founded Date*</label>
                 <input type="date" />
               </div>
-            </div>
-            <div className="col-md-6">
+            </div> */}
+            {/* <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Company Size*</label>
                 <input type="text" placeholder="700" />
               </div>
-            </div>
-            <div className="col-md-6">
+            </div> */}
+            {/* <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Phone Number*</label>
                 <input type="tel" placeholder="+880 01723801729" />
               </div>
-            </div>
-            <div className="col-md-6">
+            </div> */}
+            {/* <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Category*</label>
                 <input type="text" placeholder="Account, Finance, Marketing" />
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="dash-input-wrapper">
             <label htmlFor="">About Company*</label>
-            <textarea className="size-lg" placeholder="Write something interesting about you...."></textarea>
-            <div className="alert-text">Brief description for your company. URLs are hyperlinked.</div>
+            <textarea 
+            className="size-lg" 
+            placeholder="Write description of your company...."
+            value={companyDetails.company_description}
+            onChange={(e) => {
+              setCompanyDetails({...companyDetails, company_description: e.target.value})
+            }}
+            readOnly={!isEditing}></textarea>
+            <div className="alert-text">Brief description for your company.</div>
           </div>
         </div>
 
 
         <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Social Media</h4>
+          <h4 className="dash-title-three">Links & Social Media</h4>
+          {/* <div className="dash-input-wrapper mb-20">
+            <label htmlFor="">Website</label>
+            <input 
+            type="text" 
+            placeholder="https://www.facebook.com/"
+            value={companyDetails.company_website}
+            onChange={(e) => {
+              setCompanyDetails({...companyDetails, company_website: e.target.value}) 
+            }} />
+          </div> */}
           <div className="dash-input-wrapper mb-20">
-            <label htmlFor="">Network 1</label>
-            <input type="text" placeholder="https://www.facebook.com/" />
+            <label htmlFor="">Linkedin</label>
+            <input 
+            type="text" 
+            placeholder="https://twitter.com/FIFAcom"
+            value={companyDetails.company_linkedin}
+            onChange={(e) => {
+              setCompanyDetails({...companyDetails, company_linkedin: e.target.value}) 
+            }}
+            readOnly={!isEditing}/>
           </div>
-          <div className="dash-input-wrapper mb-20">
-            <label htmlFor="">Network 2</label>
-            <input type="text" placeholder="https://twitter.com/FIFAcom" />
-          </div>
-          <a href="#" className="dash-btn-one"><i className="bi bi-plus"></i> Add more link</a>
+          {/* <a href="#" className="dash-btn-one"><i className="bi bi-plus"></i> Add more link</a> */}
         </div>
 
         <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Address & Location</h4>
+          <h4 className="dash-title-three">Location</h4>
           <div className="row">
             <div className="col-12">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Address*</label>
-                <input type="text" placeholder="Cowrasta, Chandana, Gazipur Sadar" />
+                <input 
+                type="text" 
+                placeholder="Cowrasta, Chandana, Gazipur Sadar"
+                value={companyDetails.company_location} 
+                onChange={(e) => {
+                  setCompanyDetails({...companyDetails, company_location: e.target.value})
+                }}
+                readOnly={!isEditing}/>
               </div>
             </div>
-            <div className="col-lg-3">
+            {/* <div className="col-lg-3">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Country*</label>
                 <CountrySelect />
               </div>
-            </div>
-            <div className="col-lg-3">
+            </div> */}
+            {/* <div className="col-lg-3">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">City*</label>
                 <CitySelect />
               </div>
-            </div>
-            <div className="col-lg-3">
+            </div> */}
+            {/* <div className="col-lg-3">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Zip Code*</label>
                 <input type="number" placeholder="1708" />
               </div>
-            </div>
-            <div className="col-lg-3">
+            </div> */}
+            {/* <div className="col-lg-3">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">State*</label>
                 <StateSelect />
               </div>
-            </div>
-            <div className="col-12">
+            </div> */}
+            {/* <div className="col-12">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Map Location*</label>
                 <div className="position-relative">
@@ -142,7 +282,7 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -207,9 +347,21 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
         </div> */}
 
 
-        <div className="button-group d-inline-flex align-items-center mt-30">
+        {/* <div className="button-group d-inline-flex align-items-center mt-30">
           <a href="#" className="dash-btn-two tran3s me-3">Save</a>
           <a href="#" className="dash-cancel-btn tran3s">Cancel</a>
+        </div> */}
+                {/* Save and Cancel Buttons */}
+                <div className="button-group d-inline-flex align-items-center mt-30">
+          {renderSaveButton()}
+          <a
+            href="#"
+            className="dash-btn-two tran3s me-3"
+            onClick={handleEditClick}
+          >
+            Edit
+          </a>
+          {renderCancelButton()}
         </div>
       </div>
     </div>
