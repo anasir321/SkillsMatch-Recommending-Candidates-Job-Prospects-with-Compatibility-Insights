@@ -7,7 +7,7 @@ const { validationResult } = require('express-validator');
 
 
 dotenv.config();
-
+    // signup
 async function signupCompanyHR(req, res) {
     try {
         const { firstname, lastname, email, password } = req.body;
@@ -23,7 +23,7 @@ async function signupCompanyHR(req, res) {
         res.status(500).json({ message: 'Error! Unable to register Company_HR.' });
     }
 };
-
+    // login
 async function loginCompanyHR(req, res) {
     try {
         const { email, password } = req.body;
