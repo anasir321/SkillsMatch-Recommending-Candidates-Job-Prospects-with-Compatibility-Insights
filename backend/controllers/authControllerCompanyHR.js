@@ -115,8 +115,7 @@ async function getCompanyDetails(req, res) {
     }
   }
 
-//  save company details (if company exists, update the details) 
-//  - for MyProfile (company profile) page from dashboard
+//  save company details (if company exists, update the details) - for MyProfile (company profile) page from dashboard
 async function saveCompanyDetails(req, res) {
     try {
         const errors = validationResult(req);
@@ -277,6 +276,44 @@ async function getCompanyProfilePicture(req, res) {
     }
 }
 
+// get all companies
+async function getAllCompanies(req, res) {
+    try {
+        const companies = await Company.findAll();
+        if(!companies){
+            return res.status(404).json({ message: "No companies found" });
+        }
+        res.status(200).json({ message: "All companies retrieved successfully", data: { companies } })
+    } catch (error) {
+        console.log("getAllCompanies :: error getting companies ", error)
+        res.status(500).json({ message: "Error! Unable to get all companies." });
+    }
+}
+
+// get company profile picture by using id
+async function getCompanyProfilePictureUsingId(req, res){
+    try {
+        const {id} = req.params;
+        const company = await Company.findOne({ where: {companyHR_id: id}});
+        if(!company){
+            return res.status(404).json({ message: "Company not found" });
+        }
+        if (!company.company_logo) {
+            return res.status(404).json({ message: "Profile picture not found" });
+        }
+        // Relative path from the static route or public directory
+        const relativePath = `${company.company_logo}`;
+
+        // Send the relative path directly as a response
+        res.status(200).json({
+            message: "Company profile picture retrieved successfully",
+        data: { filePath: relativePath },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error! Unable to get company profile picture." });
+    }
+}
 
 module.exports = { 
     signupCompanyHR, 
@@ -285,6 +322,8 @@ module.exports = {
     getCompanyDetails, 
     saveCompanyDetails,
     uploadCompanyProfilePicture,
-    getCompanyProfilePicture
+    getCompanyProfilePicture,
+    getAllCompanies,
+    getCompanyProfilePictureUsingId
 }
 

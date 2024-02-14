@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import last_icon from "@/assets/images/icon/icon_50.svg";
 import CompanyV1Filter from "./filter/company-v1-filter";
@@ -8,9 +8,35 @@ import company_data from "@/data/company-data";
 import CompanyGridItem from "./company-grid-item";
 import CompanyListItem from "./company-list-item";
 import CompanyPagination from "./company-pagination";
+import axios from "axios";
 
 const CompanyV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
   const [jobType, setJobType] = useState<string>(style_2 ? "list" : "grid");
+  const [companyData, setCompanyData] = useState<any[]>([]);
+
+  // getting company data from backend api
+ useEffect(() => {
+  const getAllCompanies = async () => {
+    try {
+      const response = await axios.get(
+        'http://localhost:5000/api/auth/getAllCompanies',
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
+      if(response.status === 200){
+        setCompanyData(response.data.data.companies);
+      }
+
+    } catch(error) {
+      console.log("getAllCompanies :: error fetching all companies ", error)
+    }
+  };
+  getAllCompanies();
+ }, [])
+
   return (
     <section className="company-profiles pt-110 lg-pt-80 pb-160 xl-pb-150 lg-pb-80">
       <div className="container">
@@ -74,7 +100,7 @@ const CompanyV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
               <div
                 className={`accordion-box grid-style ${jobType === "grid" ? "show" : ""}`}
               >
-                <div className="row">
+                {/* <div className="row">
                   {company_data.slice(0,9).map((item) => (
                     <div
                       key={item.id}
@@ -83,15 +109,22 @@ const CompanyV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
                       <CompanyGridItem item={item} />
                     </div>
                   ))}
+                </div> */}
+                <div className="row">
+                  {companyData.map((item:any) => (
+                    <div key={item.id} className="col-xxl-4 col-sm-6 d-flex">
+                      <CompanyGridItem item={item} style_2={style_2} />
+                    </div>
+                  ))}
                 </div>
               </div>
 
               <div
                 className={`accordion-box list-style ${jobType === "list" ? "show" : ""}`}
               >
-                {company_data.slice(0,9).map((item) => (
+                {/* {company_data.map((item) => (
                   <CompanyListItem key={item.id} item={item} />
-                ))}
+                ))} */}
               </div>
 
               <div className="pt-50 lg-pt-20 d-sm-flex align-items-center justify-content-between">
