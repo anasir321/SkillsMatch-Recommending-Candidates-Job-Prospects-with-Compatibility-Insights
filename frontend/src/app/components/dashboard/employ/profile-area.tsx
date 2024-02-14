@@ -7,7 +7,7 @@ import CountrySelect from '../candidate/country-select';
 import CitySelect from '../candidate/city-select';
 import StateSelect from '../candidate/state-select';
 import DashboardHeader from '../candidate/dashboard-header';
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 // props type 
@@ -18,6 +18,7 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [companyDetails, setCompanyDetails] = useState<any>({});
+  const [profilePicture, setProfilePicture] = useState<string | null>(null);
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
@@ -103,7 +104,78 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
     };
 
     getCompanyDetails();
+    
   }, [])
+
+  useEffect(()=> {
+    const fetchCompanyProfilePicture = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(
+          'http://localhost:5000/api/auth/getCompanyProfilePicture',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }
+        );
+
+        console.log("company profile picture path: ", response.data.filePath);
+
+        if(response.status === 200){
+          // construct the full url based on relative path
+          const fullUrl = `http://localhost:5000/${response.data.filePath}`;
+
+          console.log("fetchCompanyProfilePicture :: fullUrl: ", fullUrl)
+
+          // update the company profile picture state with full url
+          setProfilePicture(fullUrl)
+        }
+
+      } catch (error) {
+        console.log("fetchCompanyProfilePicture :: error fetching profile picture", error)
+      }
+    };
+
+    fetchCompanyProfilePicture();
+  }, [])
+
+  // handleFileChange for upload new photo button
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if(file){
+      try{
+        const token = localStorage.getItem('token');
+
+        // create a formData object to send the file
+        const formData = new FormData();
+        formData.append('profilePicture', file)
+
+        // send the file to the upload endpoint
+        const uploadResponse = await axios.post(
+          'http://localhost:5000/api/auth/uploadCompanyProfilePicture',
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        );
+
+        if (uploadResponse.status === 200) {
+          // update company profile picture state
+          setProfilePicture(uploadResponse.data.profilePicture)
+        } else{
+          console.log("handleFileChange :: Error uploading profile picture ", uploadResponse.data.message)
+        }
+
+      } catch(error) {
+        console.log("HandleFileChange :: error ", error)
+      }
+    }
+  }
 
   return (
     <div className="dashboard-body">
@@ -112,14 +184,37 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
         <DashboardHeader setIsOpenSidebar={setIsOpenSidebar} />
         {/* header end */}
 
-        <h2 className="main-title">Profile</h2>
+        <h2 className="main-title">Company Profile</h2>
 
         <div className="bg-white card-box border-20">
           <div className="user-avatar-setting d-flex align-items-center mb-30">
-            <Image src={avatar} alt="avatar" className="lazy-img user-img" />
+          {profilePicture ? (
+              <img
+                src={profilePicture}
+                alt="profile-picture"
+                className="lazy-img user-img"
+                width={100} // Set the desired width
+                height={100} // Set the desired height
+              />
+            ) : (
+              <Image
+                src={avatar}
+                alt="avatar"
+                className="lazy-img user-img"
+                width={100} // Set the desired width
+                height={100} // Set the desired height
+              />
+            )}
+            {/* <Image src={avatar} alt="avatar" className="lazy-img user-img" /> */}
             <div className="upload-btn position-relative tran3s ms-4 me-3">
               Upload new photo
-              <input type="file" id="uploadImg" name="uploadImg" placeholder="" />
+              <input 
+                type="file" 
+                id="uploadImg" 
+                name="uploadImg" 
+                placeholder=""
+                onChange={handleFileChange}
+              />
             </div>
             <button className="delete-btn tran3s">Delete</button>
           </div>

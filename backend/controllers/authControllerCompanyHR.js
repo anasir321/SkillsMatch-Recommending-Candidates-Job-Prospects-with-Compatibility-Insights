@@ -4,7 +4,9 @@ const { Company_HR } = require('../models');
 const { Company } = require("../models");
 const dotenv = require('dotenv');
 const { validationResult } = require('express-validator');
-
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 dotenv.config();
 // COMPANY HR
@@ -177,6 +179,112 @@ async function saveCompanyDetails(req, res) {
     }
 }
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads/company-logo");
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname));
+    },
+  });
 
-module.exports = { signupCompanyHR, loginCompanyHR, getCompanyHRDetails, getCompanyDetails, saveCompanyDetails }
+  function checkFileType(file, cb) {
+    // Allowed ext
+    const filetypes = /jpeg|jpg|png|gif/;
+    // Check ext
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // Check mime
+    const mimetype = filetypes.test(file.mimetype);
+  
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb("Error: Images Only!");
+    }
+  }
+
+  const upload = multer({
+    storage: storage,
+    limits: { fileSize: 1000000 },
+    fileFilter: function (req, file, cb) {
+      checkFileType(file, cb);
+    },
+  }).single("profilePicture");
+
+// function to upload company profile picture
+const uploadCompanyProfilePicture = (req, res) => {
+    upload(req, res, async (err) => {
+        if(err) {
+            return res.status(500).json({ message: err });
+        } else{
+            if(req.file == undefined) {
+                return res.status(400).json({ message: 'No file selected' });
+            } else {
+                try{
+                    const { id } = req.user;
+                    console.log("trying to find pic of this user id: ", id)
+                    const company = await Company.findOne({ 
+                        where: { companyHR_id: id } 
+                    });
+                    if (!company) {
+                        return res.status(404).json({ message: 'Company not found' });
+                    }
+                    
+                    company.company_logo = `uploads/company-logo/${req.file.filename}`;
+
+                    await Company.sequelize.transaction(async (t) => {
+                        await company.save({ transaction: t });
+                    });
+
+                    return res.status(200).json({
+                        message: "Company logo uploaded successfully",
+                        profilePicture: company.company_logo,
+                    })
+
+                } catch (error) {
+                    console.error(error);
+                    return res
+                        .status(500)
+                        .json({ message: "Error! Unable to upload company profile picture." });
+                }
+            }
+        }
+    })
+}
+
+// function to get company profile picture
+async function getCompanyProfilePicture(req, res) {
+    try {
+        const {id} = req.user;
+        const company = await Company.findOne({ where: {companyHR_id: id}});
+
+        if(!company) {
+            return res.status(404).json({message: "Company not found :: getCompanyProfilePicture"});
+        }
+
+        if (!company.company_logo) {
+            return res.status(404).json({ message: "Profile picture not found :: getCompanyProfilePicture" });
+        }
+
+        // Relative path from the static route or public directory
+        const relativePath = `${company.company_logo}`;
+
+        // Send the relative path directly as a response
+        res.status(200).json({ filePath: relativePath });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error! Unable to get company profile picture." });
+    }
+}
+
+
+module.exports = { 
+    signupCompanyHR, 
+    loginCompanyHR, 
+    getCompanyHRDetails, 
+    getCompanyDetails, 
+    saveCompanyDetails,
+    uploadCompanyProfilePicture,
+    getCompanyProfilePicture
+}
 

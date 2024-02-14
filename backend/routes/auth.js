@@ -9,7 +9,15 @@ const { signupCandidate,
         getProfilePicture
     } = require('../controllers/authControllerCandidate');
 
-const{ signupCompanyHR, loginCompanyHR, getCompanyHRDetails, getCompanyDetails, saveCompanyDetails } = require('../controllers/authControllerCompanyHR');
+const{  signupCompanyHR, 
+        loginCompanyHR, 
+        getCompanyHRDetails, 
+        getCompanyDetails, 
+        saveCompanyDetails,
+        uploadCompanyProfilePicture,
+        getCompanyProfilePicture
+    } = require('../controllers/authControllerCompanyHR');
+
 const jwtMiddleware = require('../middleware/jwtMiddleware');
 
 // CANDIDATE CRUD
@@ -29,7 +37,7 @@ router.get('/companyHRDetails', jwtMiddleware, getCompanyHRDetails);
 //COMPANY
 router.get('/companyDetails', jwtMiddleware, getCompanyDetails);
 router.put('/saveCompanyDetails', jwtMiddleware, saveCompanyDetails);
-
-
+router.post('/uploadCompanyProfilePicture', jwtMiddleware, uploadCompanyProfilePicture);
+router.get('/getCompanyProfilePicture', jwtMiddleware, getCompanyProfilePicture);
 
 module.exports = router;
