@@ -7,7 +7,9 @@ const { validationResult } = require('express-validator');
 
 
 dotenv.config();
-    // signup
+// COMPANY HR
+
+// signup
 async function signupCompanyHR(req, res) {
     try {
         const { firstname, lastname, email, password } = req.body;
@@ -23,7 +25,8 @@ async function signupCompanyHR(req, res) {
         res.status(500).json({ message: 'Error! Unable to register Company_HR.' });
     }
 };
-    // login
+
+// login
 async function loginCompanyHR(req, res) {
     try {
         const { email, password } = req.body;
@@ -48,6 +51,7 @@ async function loginCompanyHR(req, res) {
     }
 };
 
+// get companyHR details
 async function getCompanyHRDetails(req, res){
     try{
         console.log("req.user: ",req.user);
@@ -77,6 +81,8 @@ async function getCompanyHRDetails(req, res){
 }
 
 // COMPANY 
+
+// get company details
 async function getCompanyDetails(req, res) {
     try {
       console.log("req.user in getCompanyDetails: ", req.user);
@@ -107,56 +113,8 @@ async function getCompanyDetails(req, res) {
     }
   }
 
-//incomplete saveCompanyDetails
-// async function saveCompanyDetails(req, res) {
-//     try {
-//         const errors = validationResult(req);
-//         if (!errors.isEmpty()) {
-//           return res.status(400).json({
-//             success: false,
-//             message: "Validation Failed",
-//             errors: errors.array(),
-//           });
-//         }
-//     const { id } = req.user;
-
-//     //Extract and validate fields from req.body
-
-//     const {
-//         company_name,
-//     } = req.body;
-
-//     const company = await Company.findOne({ where: { companyHR_id: id } });
-
-//     if (!company) {
-//         return res.status(404).json({
-//             success: false,
-//             message: "Company not found",
-//         });
-//     }
-
-//     // Update company fields
-//     company.company_name = company_name;
-
-//     await company.sequelize.transaction(async (t) => {
-//         await company.save({transaction: t});
-//     });
-
-//     res.status(2000).json({
-//         success: true,
-//         message: "Company details saved sucessfully",
-//         data: { company },
-//     });
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({
-//             success: false,
-//             message: "Error! Unable to save company details.",
-//             error: error.message,
-//         })
-//     }
-// };
-
+//  save company details (if company exists, update the details) 
+//  - for MyProfile (company profile) page from dashboard
 async function saveCompanyDetails(req, res) {
     try {
         const errors = validationResult(req);
