@@ -315,6 +315,24 @@ async function getCompanyProfilePictureUsingId(req, res){
     }
 }
 
+// get company details by using id
+async function getCompanyDetailsUsingId(req, res) {
+    try {
+        const {id} = req.params;
+        const company = await Company.findOne({ where: {companyHR_id: id}});
+        if(!company){
+            return res.status(404).json({ message: "Company not found" });
+        }
+        res.status(200).json({
+            message: "Company details retrieved successfully",
+            data: { company },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error! Unable to get company details." });
+    }
+}
+
 module.exports = { 
     signupCompanyHR, 
     loginCompanyHR, 
@@ -324,6 +342,7 @@ module.exports = {
     uploadCompanyProfilePicture,
     getCompanyProfilePicture,
     getAllCompanies,
-    getCompanyProfilePictureUsingId
+    getCompanyProfilePictureUsingId,
+    getCompanyDetailsUsingId
 }
 

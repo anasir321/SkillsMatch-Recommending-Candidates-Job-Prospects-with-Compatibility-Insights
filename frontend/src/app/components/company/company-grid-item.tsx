@@ -46,7 +46,6 @@ interface CompanyModel {
   company_linkedin: string | null;
   company_description: string | null;
   company_logo: string | null;
-
 }
 
 const CompanyGridItem = ({ item, style_2=false }: { item: CompanyModel; style_2?:boolean}) => {
@@ -93,7 +92,7 @@ const CompanyGridItem = ({ item, style_2=false }: { item: CompanyModel; style_2?
       </h5>
       <p className="text-center mb-auto">{item.company_location}</p>
       <div className="bottom-line d-flex">
-        <Link href="/company-details">{item.companyHR_id} Vacancy</Link>
+        <Link href={`/company-details?id=${item.companyHR_id}`}>{item.companyHR_id} Vacancy</Link>
         <Link href="/company-details">
           <i className="bi bi-bookmark-dash"></i> Save
         </Link>

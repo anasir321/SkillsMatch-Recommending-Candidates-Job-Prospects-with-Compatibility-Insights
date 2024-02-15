@@ -17,7 +17,8 @@ const{  signupCompanyHR,
         uploadCompanyProfilePicture,
         getCompanyProfilePicture,
         getAllCompanies,
-        getCompanyProfilePictureUsingId
+        getCompanyProfilePictureUsingId,
+        getCompanyDetailsUsingId
     } = require('../controllers/authControllerCompanyHR');
 
 const jwtMiddleware = require('../middleware/jwtMiddleware');
@@ -43,5 +44,6 @@ router.post('/uploadCompanyProfilePicture', jwtMiddleware, uploadCompanyProfileP
 router.get('/getCompanyProfilePicture', jwtMiddleware, getCompanyProfilePicture);
 router.get('/getAllCompanies', jwtMiddleware, getAllCompanies);
 router.get('/getCompanyProfilePictureUsingId/:id', getCompanyProfilePictureUsingId);
+router.get('/getCompanyDetailsUsingId/:id', getCompanyDetailsUsingId);
 
 module.exports = router;
