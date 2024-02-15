@@ -5,6 +5,8 @@ const { signupCandidate,
         loginCandidate,
         getCandidateDetails, 
         updateCandidateDetails,
+        updateCandidateEducationDetails,
+        updateCandidateWorkExperience,
         uploadProfilePicture,
         getProfilePicture,
         getAllCandidates,
@@ -20,6 +22,8 @@ router.post('/signupCandidate', signupCandidate);
 router.post('/loginCandidate', loginCandidate);
 router.get('/candidateDetails', jwtMiddleware, getCandidateDetails);
 router.put('/updateCandidateDetails', jwtMiddleware, updateCandidateDetails);
+router.put('/updateCandidateEducationDetails', jwtMiddleware, updateCandidateEducationDetails);
+router.put('/updateCandidateWorkExperience', jwtMiddleware, updateCandidateWorkExperience);
 router.post('/uploadProfilePicture', jwtMiddleware, uploadProfilePicture);
 router.get('/getProfilePicture', jwtMiddleware, getProfilePicture);
 router.get('/getAllCandidates', jwtMiddleware, getAllCandidates);
