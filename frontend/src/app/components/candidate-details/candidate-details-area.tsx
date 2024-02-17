@@ -63,22 +63,16 @@ const CandidateDetailsArea = () => {
                 </div> */}
                 <div className="inner-card border-style mb-75 lg-mb-50">
                   <h3 className="title">Education</h3>
-                  {institute.map((educationItem: any, index: number) => (
                     <div className="time-line-data position-relative pt-15">
-                      <div className="info position-relative">
-                        <div className="numb fw-500 rounded-circle d-flex align-items-center justify-content-center">1</div>
-                        <div className="text_1 fw-500">{educationItem.institute_name}</div>
-                        <h4>{educationItem.degree_program}</h4>
-                        <p>{educationItem.duration}</p>
-                      </div>
-                      {/* <div className="info position-relative">
-                        <div className="numb fw-500 rounded-circle d-flex align-items-center justify-content-center">2</div>
-                        <div className="text_1 fw-500">Design Collage</div>
-                        <h4>UI/UX Design Course</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-                      </div> */}
+                      {institute.map((educationItem: any, index: number) => (
+                        <div className="info position-relative">
+                          <div className="numb fw-500 rounded-circle d-flex align-items-center justify-content-center">{index+1}</div>
+                          <div className="text_1 fw-500">{educationItem.institute_name}</div>
+                          <h4>{educationItem.degree_program}</h4>
+                          <p>{educationItem.duration}</p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
                 </div>
                 <div className="inner-card border-style mb-75 lg-mb-50">
                   <h3 className="title">Skills</h3>
@@ -109,7 +103,7 @@ const CandidateDetailsArea = () => {
                   <h3 className="cadidate-name text-center">{userDetails.firstname} {userDetails.lastname}</h3>
                   <div className="text-center pb-25"><a href="#" className="invite-btn fw-500">Invite</a></div>
                   {/* CandidateBio */}
-                  <CandidateBio />
+                  <CandidateBio userDetails={userDetails} workExperience={workExperience} institute={institute} />
                   {/* CandidateBio */}
                   <a href="#" className="btn-ten fw-500 text-white w-100 text-center tran3s mt-15">Download CV</a>
                 </div>
