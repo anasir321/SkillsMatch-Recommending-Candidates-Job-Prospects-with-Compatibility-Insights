@@ -133,6 +133,151 @@ async function getCandidateDetails(req, res) {
   }
 }
 
+async function getInstituteDetails (req, res){
+  try{
+    const { id } = req.user;
+    const institute = await Institute.findAll({ where: { candidate_id: id } });
+    if (!institute){
+      return res.status(404).json({ 
+        success: false,
+        message: "Institute Details not found"
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Institute details retrieved successfully",
+      data: { institute },
+    });
+
+  } catch (error){
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve institute details.",
+      error: error.message,
+    });
+  }
+}
+
+const getWorkExperienceDetails = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const workExperience = await WorkExperience.findAll({
+      where: { candidate_id: id },
+    });
+    if (!workExperience) {
+      return res.status(404).json({
+        success: false,
+        message: "Work Experience not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Work Experience details retrieved successfully",
+      data: { workExperience },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve work experience details.",
+      error: error.message,
+    });
+  }
+}
+
+async function createCandidateWorkExperience(req, res) {
+  try {
+    const { id } = req.user;
+    const workExperience = req.body;
+
+    const candidate = await Candidate.findOne({
+      where: { candidate_id: id },
+    });
+
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+
+    for(const detail of workExperience){
+      const { company_name, position, duration } = detail;
+      const existingDetail = await WorkExperience.findOne({
+        where: { candidate_id: id, company_name },
+      });
+
+      if (existingDetail) {
+        await existingDetail.update({ company_name, position, duration });
+      } else {
+        await WorkExperience.create({
+          company_name,
+          position,
+          duration,
+          candidate_id: id,
+        });
+      }
+    }
+
+    return res.status(200).json({
+      message: "Work experience created successfully",
+      data: { workExperience },
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Error! Unable to create work experience" });
+  }
+}
+
+async function createCandidateEducationDetails(req, res) {
+  try {
+    const { id } = req.user;
+    const educationDetails = req.body; // Assuming req.body contains an array of education details
+
+    const candidate = await Candidate.findOne({
+      where: { candidate_id: id },
+    });
+
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+
+    // Loop through each education detail in the array
+    for (const detail of educationDetails) {
+      const { institute_name, degree_program, duration } = detail;
+
+      // Check if an education detail with the same institute_id exists for the candidate
+      const existingDetail = await Institute.findOne({
+        where: { candidate_id: id, institute_name },
+      });
+
+      if (existingDetail) {
+        // Update the existing education detail
+        await existingDetail.update({ institute_name, degree_program, duration });
+      } else {
+        // Create a new education detail
+        await Institute.create({
+          institute_name,
+          degree_program,
+          duration,
+          candidate_id: id,
+        });
+      }
+    }
+
+    return res.status(200).json({
+      message: "Education details created successfully",
+      data: { educationDetails },
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Error! Unable to create education details" });
+  }  
+}
+
+
 async function getCandidateDetailsUsingId(req, res) {
   try {
     const { id } = req.params;
@@ -241,10 +386,10 @@ async function updateCandidateDetails(req, res) {
   }
 }
 
-const updateCandidateEducationDetails = async (req, res) => {
+async function updateCandidateEducationDetails(req, res) {
   try {
     const { id } = req.user;
-    const { institute_name, degree_program, duration } = req.body;
+    const educationDetails = req.body; // Assuming req.body contains an array of education details
 
     const candidate = await Candidate.findOne({
       where: { candidate_id: id },
@@ -254,27 +399,29 @@ const updateCandidateEducationDetails = async (req, res) => {
       return res.status(404).json({ message: "Candidate not found" });
     }
 
-    let institute = await Institute.findOne({
-      where: { candidate_id: id, institute_name, degree_program },
-    });
+    // Loop through each education detail in the array
+    for (const detail of educationDetails) {
+      const { institute_name, degree_program, duration } = detail;
 
-    if (!institute) {
-      institute = await Institute.create({
-        institute_name,
-        degree_program,
-        duration,
-        candidate_id: id,
+      const institute = await Institute.findOne({
+        where: { candidate_id: id },
       });
-    } else {
+
+      if (!institute) {
+        return res.status(404).json({ message: "Education detail not found" });
+      }
+
+      // Update the education detail
       institute.institute_name = institute_name;
       institute.degree_program = degree_program;
       institute.duration = duration;
+
       await institute.save();
     }
 
     return res.status(200).json({
       message: "Education details updated successfully",
-      data: { institute },
+      data: { educationDetails },
     });
   } catch (error) {
     console.error(error);
@@ -282,7 +429,8 @@ const updateCandidateEducationDetails = async (req, res) => {
       .status(500)
       .json({ message: "Error! Unable to update education details" });
   }
-};
+}
+
 
 async function updateCandidateWorkExperience(req, res) {
   try {
@@ -435,12 +583,16 @@ module.exports = {
   signupCandidate,
   loginCandidate,
   getCandidateDetails,
+  createCandidateEducationDetails,
+  createCandidateWorkExperience,
   updateCandidateDetails,
   updateCandidateEducationDetails,
   updateCandidateWorkExperience,
   uploadProfilePicture,
   getProfilePicture,
+  getWorkExperienceDetails,
   getAllCandidates,
   getProfilePictureUsingId,
   getCandidateDetailsUsingId,
+  getInstituteDetails,
 };
