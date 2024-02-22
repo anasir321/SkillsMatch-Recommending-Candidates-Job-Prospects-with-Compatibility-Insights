@@ -212,7 +212,7 @@ const CompanyDetailsArea = () => {
                       <a href="#" className="me-3"><i className="bi bi-facebook"></i></a>
                       <a href="#" className="me-3"><i className="bi bi-instagram"></i></a>
                       <a href="#" className="me-3"><i className="bi bi-twitter"></i></a>
-                      <a href="#"><i className="bi bi-linkedin"></i></a>
+                      <a href={companyDetails?.company_linkedin ?? undefined}><i className="bi bi-linkedin"></i></a>
                     </div>
                   </li>
                 </ul>
@@ -227,13 +227,13 @@ const CompanyDetailsArea = () => {
               <p>{companyDetails?.company_description}</p>
               {/* <p> Nulla at volutpat diam ut. Lobortis feugiat vivamus at augue eget arcu. Urna condimentum mattis pellentesque id nibh tortor id aliquet. Dignissim cras tincidunt lobortis feugiat. Est sit amet facilisis magna etiam tempor. Eu augue ut lectus arcu bibendum at varius vel pharetra. Vel facilisis volutpat est velit egestas dui id. Ut pharetra sit amet aliquam. Elit at imperdiet dui accumsan sit amet nulla facilisi morbi. Tellus in metus vulputate eu scelerisque felis imperdiet proin. Magna fringilla urna porttitor rhoncus. Et odio pellentesque diam volutpat. Congue eu consequat ac felis donec et odio pellentesque diam. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. </p>
               <p>Felis eget velit aliquet sagittis id. Massa placerat duis ultricies lacus sed turpis tincidunt id. Vel eros donec ac odio tempor orci dapibus ultrices. Ipsum consequat nisl vel pretium lectus quam. Dignissim sodales ut eu sem. </p> */}
-              <h3>Intro</h3>
+              {/* <h3>Intro</h3>
               <div className="video-post d-flex align-items-center justify-content-center mb-50">
                 <a className="fancybox rounded-circle video-icon tran3s text-center"
                 onClick={() => setIsVideoOpen(true)} style={{ cursor: 'pointer' }}>
                   <i className="bi bi-play-fill"></i>
                 </a>
-              </div>
+              </div> */}
               {/* <div className="position-relative"> */}
                 {/* <h3>Company Reviews</h3> */}
 
