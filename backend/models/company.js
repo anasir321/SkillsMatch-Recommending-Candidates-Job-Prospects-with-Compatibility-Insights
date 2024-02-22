@@ -52,7 +52,31 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     company_logo: {
-      type: DataTypes.BLOB,
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    company_size: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    company_facebook: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    company_instagram: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    company_twitter: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    company_phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    company_founded_date: {
+      type: DataTypes.STRING,
       allowNull: true,
     }
   }, {
