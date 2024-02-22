@@ -77,7 +77,7 @@ const CompanyGridItem = ({ item, style_2=false }: { item: CompanyModel; style_2?
       className={`company-grid-layout ${true ? "favourite" : ""} mb-30`}
     >
       <Link 
-        href="/company-details"
+        href={`/company-details?id=${item.companyHR_id}`}
         className="company-logo me-auto ms-auto rounded-circle">
 
         {profilePicture && (
@@ -86,14 +86,15 @@ const CompanyGridItem = ({ item, style_2=false }: { item: CompanyModel; style_2?
         
       </Link>
       <h5 className="text-center">
-        <Link href="/company-details" className="company-name tran3s">
+        <Link href={`/company-details?id=${item.companyHR_id}`} className="company-name tran3s">
           {item.company_name}
         </Link>
       </h5>
       <p className="text-center mb-auto">{item.company_location}</p>
       <div className="bottom-line d-flex">
-        <Link href={`/company-details?id=${item.companyHR_id}`}>{item.companyHR_id} Vacancy</Link>
-        <Link href="/company-details">
+      {/* displaying company id for now but later will have to add actual number of jobs (vacancy) */}
+        <Link href={`/company-details?id=${item.companyHR_id}`}>{item.companyHR_id} Vacancy</Link> 
+        <Link href={`/company-details?id=${item.companyHR_id}`}>
           <i className="bi bi-bookmark-dash"></i> Save
         </Link>
       </div>
