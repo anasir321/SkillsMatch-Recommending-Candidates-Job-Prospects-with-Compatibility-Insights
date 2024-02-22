@@ -123,6 +123,12 @@ interface CompanyModel {
   company_linkedin: string | null;
   company_description: string | null;
   company_logo: string | null;
+  company_size: string | null;
+  company_facebook: string | null;
+  company_instagram: string | null;
+  company_twitter: string | null;
+  company_phone: string | null;
+  company_founded_date: string | null;
 }
 
 const CompanyDetailsArea = () => {
@@ -188,7 +194,7 @@ const CompanyDetailsArea = () => {
                   </li>
                   <li className="col-12">
                     <span>Size:</span>
-                    <div>7000-8000, Worldwide</div>
+                    <div>{companyDetails?.company_size}</div>
                   </li>
                   <li className="col-12">
                     <span>Email: </span>
@@ -196,11 +202,11 @@ const CompanyDetailsArea = () => {
                   </li>
                   <li className="col-12">
                     <span>Founded: </span>
-                    <div>13 Jan, 1997</div>
+                    <div>{companyDetails?.company_founded_date}</div>
                   </li>
                   <li className="col-12">
                     <span>Phone:</span>
-                    <div><a href="#">(990) 234 112 779,</a> <a href="#">+770 723801870</a></div>
+                    <div><a href="#">{companyDetails?.company_phone}</a></div>
                   </li>
                   <li className="col-12">
                     <span>Category: </span>
@@ -209,9 +215,9 @@ const CompanyDetailsArea = () => {
                   <li className="col-12">
                     <span>Social: </span>
                     <div>
-                      <a href="#" className="me-3"><i className="bi bi-facebook"></i></a>
-                      <a href="#" className="me-3"><i className="bi bi-instagram"></i></a>
-                      <a href="#" className="me-3"><i className="bi bi-twitter"></i></a>
+                      <a href={companyDetails?.company_facebook ?? undefined} className="me-3"><i className="bi bi-facebook"></i></a>
+                      <a href={companyDetails?.company_instagram ?? undefined} className="me-3"><i className="bi bi-instagram"></i></a>
+                      <a href={companyDetails?.company_twitter ?? undefined} className="me-3"><i className="bi bi-twitter"></i></a>
                       <a href={companyDetails?.company_linkedin ?? undefined}><i className="bi bi-linkedin"></i></a>
                     </div>
                   </li>

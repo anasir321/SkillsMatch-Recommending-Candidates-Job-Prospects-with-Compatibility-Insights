@@ -256,24 +256,48 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
                 readOnly={!isEditing}/>
               </div>
             </div>
-            {/* <div className="col-md-6">
+            <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Founded Date*</label>
-                <input type="date" />
+                <input 
+                type="text"
+                placeholder="10 Feb 2020"
+                value={companyDetails.company_founded_date}
+                onChange={(e) => {
+                  setCompanyDetails({...companyDetails, company_founded_date: e.target.value})
+                }}
+                readOnly={!isEditing}
+                />
               </div>
-            </div> */}
-            {/* <div className="col-md-6">
+            </div>
+            <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Company Size*</label>
-                <input type="text" placeholder="700" />
+                <input 
+                type="text" 
+                placeholder="35"
+                value={companyDetails.company_size}
+                onChange={(e) => {
+                  setCompanyDetails({...companyDetails, company_size: e.target.value})
+                }}
+                readOnly={!isEditing}
+                />
               </div>
-            </div> */}
-            {/* <div className="col-md-6">
+            </div>
+            <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Phone Number*</label>
-                <input type="tel" placeholder="+880 01723801729" />
+                <input 
+                type="tel" 
+                placeholder="+92 333 1234567" 
+                value={companyDetails.company_phone}
+                onChange={(e) => {
+                  setCompanyDetails({...companyDetails, company_phone: e.target.value})
+                }}
+                readOnly={!isEditing}
+                />
               </div>
-            </div> */}
+            </div>
             {/* <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Category*</label>
@@ -312,10 +336,43 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
             <label htmlFor="">Linkedin</label>
             <input 
             type="text" 
-            placeholder="https://twitter.com/FIFAcom"
+            placeholder="https://linkedin.com/companyname"
             value={companyDetails.company_linkedin}
             onChange={(e) => {
               setCompanyDetails({...companyDetails, company_linkedin: e.target.value}) 
+            }}
+            readOnly={!isEditing}/>
+          </div>
+          <div className="dash-input-wrapper mb-20">
+            <label htmlFor="">Twitter</label>
+            <input 
+            type="text" 
+            placeholder="https://twitter.com/companyname"
+            value={companyDetails.company_twitter}
+            onChange={(e) => {
+              setCompanyDetails({...companyDetails, company_twitter: e.target.value}) 
+            }}
+            readOnly={!isEditing}/>
+          </div>
+          <div className="dash-input-wrapper mb-20">
+            <label htmlFor="">Instagram</label>
+            <input 
+            type="text" 
+            placeholder="https://instagram.com/companyname"
+            value={companyDetails.company_instagram}
+            onChange={(e) => {
+              setCompanyDetails({...companyDetails, company_instagram: e.target.value}) 
+            }}
+            readOnly={!isEditing}/>
+          </div>
+          <div className="dash-input-wrapper mb-20">
+            <label htmlFor="">Facebook</label>
+            <input 
+            type="text" 
+            placeholder="https://facebook.com/companyname"
+            value={companyDetails.company_facebook}
+            onChange={(e) => {
+              setCompanyDetails({...companyDetails, company_facebook: e.target.value}) 
             }}
             readOnly={!isEditing}/>
           </div>

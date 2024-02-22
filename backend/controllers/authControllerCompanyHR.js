@@ -128,7 +128,20 @@ async function saveCompanyDetails(req, res) {
         }
 
         const { id } = req.user;
-        const { company_name, company_location, company_email, company_website, company_linkedin, company_description } = req.body;
+        const { 
+            company_name, 
+            company_location, 
+            company_email, 
+            company_website, 
+            company_linkedin, 
+            company_description,
+            company_size,
+            company_facebook,
+            company_instagram,
+            company_twitter,
+            company_phone,
+            company_founded_date
+        } = req.body;
         console.log("req.body from saveCompanyDetails: ", req.body);
 
         // Check if company exists for the given companyHR_id
@@ -144,6 +157,12 @@ async function saveCompanyDetails(req, res) {
                 company_website,
                 company_linkedin,
                 company_description,
+                company_size,
+                company_facebook,
+                company_instagram,
+                company_twitter,
+                company_phone,
+                company_founded_date
             });
 
             return res.status(201).json({
@@ -160,6 +179,12 @@ async function saveCompanyDetails(req, res) {
         company.company_website = company_website || '';
         company.company_linkedin = company_linkedin || '';
         company.company_description = company_description || '';
+        company.company_size = company_size || '';
+        company.company_facebook = company_facebook || '';
+        company.company_instagram = company_instagram || '';
+        company.company_twitter = company_twitter || '';
+        company.company_phone = company_phone || '';
+        company.company_founded_date = company_founded_date || '';
 
         await company.save();
 
