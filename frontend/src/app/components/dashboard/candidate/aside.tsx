@@ -104,11 +104,12 @@ type IProps = {
 const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
   // extract user details from jwt token
   const [userDetails, setUserDetails] = useState<any>({});
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [isShow, setIsShow] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
+  const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [isError, setIsError] = useState<boolean>(false);
+  // const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  // const [isShow, setIsShow] = useState<boolean>(false);
+  // const [message, setMessage] = useState<string>("");
   
   useEffect(() => {
     const getUserDetails = async () => {
@@ -130,7 +131,34 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
       }
     };
 
-    getUserDetails();
+    const fetchProfilePicture = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(
+          'http://localhost:5000/api/auth/getProfilePicture',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // console.log('Profile Picture Path:', response.data.filePath);
+
+        if (response.status === 200) {
+          // Construct the full URL based on the relative path
+          const fullUrl = `http://localhost:5000${response.data.filePath}`;
+
+          // Update the profile picture state with the full URL
+          setProfilePicture(fullUrl);
+        }
+      } catch (error) {
+        console.error('Error fetching profile picture:', error);
+      }
+    };
+
+
+    getUserDetails(), fetchProfilePicture();
   }, []);
 
   const pathname = usePathname();
@@ -148,7 +176,22 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
         </div>
         <div className="user-data">
           <div className="user-avatar online position-relative rounded-circle">
-            <Image src={avatar} alt="avatar" className="lazy-img" style={{height:'auto'}} />
+            {/* <Image src={profilePicture} alt="avatar" className="lazy-img" style={{height:'auto'}} /> */}
+            {profilePicture ? (
+              <img
+                src={profilePicture}
+                alt="profile-picture"
+                className="lazy-img"
+                style={{ height: 'auto' }}
+              />
+            ) : (
+              <Image
+                src={avatar}
+                alt="avatar"
+                className="lazy-img "
+                style={{ height: 'auto' }}
+              />
+            )}
           </div>
           <div className="user-name-data">
             {userDetails.firstname && userDetails.lastname ? (

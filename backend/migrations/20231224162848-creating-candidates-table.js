@@ -39,10 +39,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      experience: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
       password: {
         type: Sequelize.STRING,
         allowNull: false,

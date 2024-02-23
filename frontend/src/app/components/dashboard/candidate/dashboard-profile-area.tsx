@@ -4,27 +4,41 @@ import Image from "next/image";
 import avatar from "@/assets/dashboard/images/avatar_02.jpg";
 import search from "@/assets/dashboard/images/icon/icon_16.svg";
 import DashboardHeader from "./dashboard-header";
-import CountrySelect from "./country-select";
-import CitySelect from "./city-select";
-import StateSelect from "./state-select";
 import JobTypeSelect from "./jobType-select";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 
 // props type
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+type EducationDetail = {
+  institute_name: string;
+  degree_program: string;
+  duration: string;
+};
+
+type workExperience = {
+  company_name: string;
+  position: string;
+  duration: string;
+};
+
 const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
   const [userDetails, setUserDetails] = useState<any>({});
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const [educationDetails, setEducationDetails] = useState<EducationDetail[]>([]);
+  const [workExperience, setWorkExperience] = useState<workExperience[]>([]);
+
 
   useEffect(() => {
     const getUserDetails = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(
+        const responseCandidate = await axios.get(
           "http://localhost:5000/api/auth/candidateDetails",
           {
             headers: {
@@ -33,8 +47,29 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
           }
         );
 
-        if (response.status === 200) {
-          setUserDetails(response.data.data.candidate);
+        const responseInstitute = await axios.get(
+          "http://localhost:5000/api/auth/getInstituteDetails",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+
+        const responseWorkExperience = await axios.get(
+          "http://localhost:5000/api/auth/getWorkExperienceDetails",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+
+        if (responseCandidate.status === 200 && responseInstitute.status === 200 && responseWorkExperience.status === 200) {
+          console.log(responseInstitute.data.data.institute);
+          setEducationDetails(responseInstitute.data.data.institute || []);
+          setUserDetails(responseCandidate.data.data.candidate);
+          setWorkExperience(responseWorkExperience.data.data.workExperience);
         }
       } catch (error) {
         // Handle errors
@@ -58,7 +93,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
           }
         );
 
-        console.log('Profile Picture Path:', response.data.filePath);
+        // console.log('Profile Picture Path:', response.data.filePath);
 
         if (response.status === 200) {
           // Construct the full URL based on the relative path
@@ -84,15 +119,11 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.put(
-        "http://localhost:5000/api/auth/updateCandidateDetails",
-        userDetails,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.put("http://localhost:5000/api/auth/updateCandidateDetails", userDetails, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 200) {
         setUserDetails(response.data.data.candidate);
@@ -100,10 +131,41 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
       } else {
         console.error("Failed to update user details:", response.data.message);
       }
+
+      setEducationDetails([]);
+
+      const createEducationResponse = await axios.post("http://localhost:5000/api/auth/createCandidateEducationDetails", educationDetails, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (createEducationResponse.status === 200) {
+        console.log("Education details saved successfully");
+        setEducationDetails(createEducationResponse.data.data.educationDetails);
+      } else {
+        console.error("Failed to save education details:", createEducationResponse.data.message);
+      }
+
+      setWorkExperience([]);
+
+      const createWorkExperienceResponse = await axios.post("http://localhost:5000/api/auth/createCandidateWorkExperience", workExperience, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (createWorkExperienceResponse.status === 200) {
+        console.log("Work Experience details saved successfully");
+        setWorkExperience(createWorkExperienceResponse.data.data.workExperience);
+      } else {
+        console.error("Failed to save work experience details:", createWorkExperienceResponse.data.message);
+      }
     } catch (error) {
       console.error("Error saving user details:", error);
     }
   };
+  
 
   const handleCancelClick = () => {
     setIsEditing(false);
@@ -176,8 +238,38 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
         console.error('Error uploading profile picture:', error);
       }
     }
-  };  
+  };
 
+  const handleAddEducation = () => {
+    const newEducation = {
+      institute_name: "",
+      degree_program: "",
+      duration: "",
+    };
+    setEducationDetails([...educationDetails, newEducation]);
+  };
+
+  const handleAddWorkExperience = () => {
+    const newWorkExperience = {
+      company_name: "",
+      position: "",
+      duration: "",
+    };
+    setWorkExperience([...workExperience, newWorkExperience]);
+  }
+  
+  const handleWorkExperienceChange = (index: number, key: keyof workExperience, value: string) => {
+    const updatedDetails = [...workExperience];
+    updatedDetails[index][key] = value;
+    setWorkExperience(updatedDetails);
+  }
+
+  const handleEducationChange = (index: number, key: keyof EducationDetail, value: string) => {
+    const updatedDetails = [...educationDetails];
+    updatedDetails[index][key] = value;
+    setEducationDetails(updatedDetails);
+  };
+  
   return (
     <div className="dashboard-body">
       <div className="position-relative">
@@ -278,6 +370,9 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
               type="text"
               placeholder="arham@gmail.com"
               value={userDetails.email}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, email: e.target.value })
+              }
               readOnly={!isEditing}
             />
           </div>
@@ -294,6 +389,22 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
 
         {/* Additional Card Boxes */}
         {/* ... (similar updates for other sections) */}
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Profile Overview</h4>
+          <div className="dash-input-wrapper mb-20">
+            <label htmlFor="">Summary</label>
+            <textarea
+              className="size-lg"
+              placeholder="Write something interesting about you...."
+              value={userDetails.overview}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, overview: e.target.value })
+              }
+              readOnly={!isEditing}
+            ></textarea>
+          </div>
+        </div>
 
         <div className="bg-white card-box border-20 mt-40">
           <h4 className="dash-title-three">Preferred Job Type</h4>
@@ -323,20 +434,66 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
 
         <div className="bg-white card-box border-20 mt-40">
           <h4 className="dash-title-three">Education</h4>
-          <div className="dash-input-wrapper mb-20">
-            <input
-              type="text"
-              placeholder="Degree"
-              value={userDetails.education}
-              onChange={(e) =>
-                setUserDetails({ ...userDetails, education: e.target.value })
-              }
-              readOnly={!isEditing}
-            />
-          </div>
-          <a href="#" className="dash-btn-one">
+          {educationDetails.map((education: EducationDetail, index: number) => (
+            <div key={`education-${index}`} className="dash-input-wrapper mb-20">
+              <input
+                type="text"
+                placeholder="Institute Name"
+                value={education.institute_name}
+                onChange={(e) => handleEducationChange(index, 'institute_name', e.target.value)}
+                readOnly={!isEditing}
+              />
+              <input
+                type="text"
+                placeholder="Degree Program"
+                value={education.degree_program}
+                onChange={(e) => handleEducationChange(index, 'degree_program', e.target.value)}
+                readOnly={!isEditing}
+              />
+              <input
+                type="text"
+                placeholder="Duration"
+                value={education.duration}
+                onChange={(e) => handleEducationChange(index, 'duration', e.target.value)}
+                readOnly={!isEditing}
+              />
+            </div>
+          ))}
+          <button className="dash-btn-one" onClick={handleAddEducation}>
             <i className="bi bi-plus"></i>Add
-          </a>
+          </button>
+        </div>
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Work Experience</h4>
+          {workExperience.map((experience: workExperience, index: number) => (
+            <div key={`experience-${index}`} className="dash-input-wrapper mb-20">
+              <input
+                type="text"
+                placeholder="Company Name"
+                value={experience.company_name}
+                onChange={(e) => handleWorkExperienceChange(index, 'company_name', e.target.value)}
+                readOnly={!isEditing}
+              />
+              <input
+                type="text"
+                placeholder="Position"
+                value={experience.position}
+                onChange={(e) => handleWorkExperienceChange(index, 'position', e.target.value)}
+                readOnly={!isEditing}
+              />
+              <input
+                type="text"
+                placeholder="Duration"
+                value={experience.duration}
+                onChange={(e) => handleWorkExperienceChange(index, 'duration', e.target.value)}
+                readOnly={!isEditing}
+              />
+            </div>
+          ))}
+          <button className="dash-btn-one" onClick={handleAddWorkExperience}>
+            <i className="bi bi-plus"></i>Add
+          </button>
         </div>
 
         <div className="bg-white card-box border-20 mt-40">

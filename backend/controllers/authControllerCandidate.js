@@ -1,7 +1,10 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { Candidate } = require("../models");
+
+const { Candidate, Institute, WorkExperience } = require("../models");
+
 const dotenv = require("dotenv");
+
 const { validationResult } = require("express-validator");
 const multer = require("multer");
 const path = require("path");
@@ -29,7 +32,7 @@ function checkFileType(file, cb) {
   if (mimetype && extname) {
     return cb(null, true);
   } else {
-    cb('Error: Images Only!');
+    cb("Error: Images Only!");
   }
 }
 
@@ -103,6 +106,10 @@ async function getCandidateDetails(req, res) {
     console.log("req.user: ", req.user);
     const { id } = req.user; // User ID from JWT payload
     const candidate = await Candidate.findOne({ where: { candidate_id: id } });
+    const institute = await Institute.findAll({ where: { candidate_id: id } });
+    const workExperience = await WorkExperience.findAll({
+      where: { candidate_id: id },
+    });    
 
     if (!candidate) {
       return res.status(404).json({
@@ -114,7 +121,7 @@ async function getCandidateDetails(req, res) {
     res.status(200).json({
       success: true,
       message: "Candidate details retrieved successfully",
-      data: { candidate },
+      data: { candidate, institute, workExperience},
     });
   } catch (error) {
     console.error(error);
@@ -123,6 +130,180 @@ async function getCandidateDetails(req, res) {
       message: "Error! Unable to retrieve candidate details.",
       error: error.message,
     });
+  }
+}
+
+async function getInstituteDetails (req, res){
+  try{
+    const { id } = req.user;
+    const institute = await Institute.findAll({ where: { candidate_id: id } });
+    if (!institute){
+      return res.status(404).json({ 
+        success: false,
+        message: "Institute Details not found"
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Institute details retrieved successfully",
+      data: { institute },
+    });
+
+  } catch (error){
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve institute details.",
+      error: error.message,
+    });
+  }
+}
+
+const getWorkExperienceDetails = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const workExperience = await WorkExperience.findAll({
+      where: { candidate_id: id },
+    });
+    if (!workExperience) {
+      return res.status(404).json({
+        success: false,
+        message: "Work Experience not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Work Experience details retrieved successfully",
+      data: { workExperience },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve work experience details.",
+      error: error.message,
+    });
+  }
+}
+
+async function createCandidateWorkExperience(req, res) {
+  try {
+    const { id } = req.user;
+    const workExperience = req.body;
+
+    const candidate = await Candidate.findOne({
+      where: { candidate_id: id },
+    });
+
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+
+    for(const detail of workExperience){
+      const { company_name, position, duration } = detail;
+      const existingDetail = await WorkExperience.findOne({
+        where: { candidate_id: id, company_name },
+      });
+
+      if (existingDetail) {
+        await existingDetail.update({ company_name, position, duration });
+      } else {
+        await WorkExperience.create({
+          company_name,
+          position,
+          duration,
+          candidate_id: id,
+        });
+      }
+    }
+
+    return res.status(200).json({
+      message: "Work experience created successfully",
+      data: { workExperience },
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Error! Unable to create work experience" });
+  }
+}
+
+async function createCandidateEducationDetails(req, res) {
+  try {
+    const { id } = req.user;
+    const educationDetails = req.body; // Assuming req.body contains an array of education details
+
+    const candidate = await Candidate.findOne({
+      where: { candidate_id: id },
+    });
+
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+
+    // Loop through each education detail in the array
+    for (const detail of educationDetails) {
+      const { institute_name, degree_program, duration } = detail;
+
+      // Check if an education detail with the same institute_id exists for the candidate
+      const existingDetail = await Institute.findOne({
+        where: { candidate_id: id, institute_name },
+      });
+
+      if (existingDetail) {
+        // Update the existing education detail
+        await existingDetail.update({ institute_name, degree_program, duration });
+      } else {
+        // Create a new education detail
+        await Institute.create({
+          institute_name,
+          degree_program,
+          duration,
+          candidate_id: id,
+        });
+      }
+    }
+
+    return res.status(200).json({
+      message: "Education details created successfully",
+      data: { educationDetails },
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Error! Unable to create education details" });
+  }  
+}
+
+
+async function getCandidateDetailsUsingId(req, res) {
+  try {
+    const { id } = req.params;
+    const candidate = await Candidate.findOne({ where: { candidate_id: id } });
+    const institute = await Institute.findAll({ where: { candidate_id: id } });
+    const workExperience = await WorkExperience.findAll({
+      where: { candidate_id: id },
+    });
+
+    if (!candidate) {
+      return res.status(404).json({
+        success: false,
+        message: "Candidate not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Candidate details retrieved successfully",
+      data: { candidate, institute, workExperience},
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Error! Unable to retrieve candidate details" });
   }
 }
 
@@ -145,10 +326,7 @@ async function updateCandidateDetails(req, res) {
       lastname,
       dateOfBirth,
       email,
-      education,
       skills,
-      experience,
-      password,
       location,
       softSkills,
       linkedinURL,
@@ -156,6 +334,7 @@ async function updateCandidateDetails(req, res) {
       preferredJobType,
       preferredJobTitle,
       gender,
+      overview
     } = req.body;
 
     const candidate = await Candidate.findOne({
@@ -174,9 +353,7 @@ async function updateCandidateDetails(req, res) {
     candidate.lastname = lastname;
     candidate.dateOfBirth = dateOfBirth;
     candidate.email = email;
-    candidate.education = education;
     candidate.skills = skills;
-    candidate.experience = experience;
     candidate.location = location;
     candidate.softSkills = softSkills;
     candidate.linkedinURL = linkedinURL;
@@ -184,6 +361,7 @@ async function updateCandidateDetails(req, res) {
     candidate.preferredJobType = preferredJobType;
     candidate.preferredJobTitle = preferredJobTitle;
     candidate.gender = gender;
+    candidate.overview = overview;
 
     // if (password) {
     //   const hashedPassword = await bcrypt.hashSync(password, 8);
@@ -209,20 +387,111 @@ async function updateCandidateDetails(req, res) {
   }
 }
 
+async function updateCandidateEducationDetails(req, res) {
+  try {
+    const { id } = req.user;
+    const educationDetails = req.body; // Assuming req.body contains an array of education details
+
+    const candidate = await Candidate.findOne({
+      where: { candidate_id: id },
+    });
+
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+
+    // Loop through each education detail in the array
+    for (const detail of educationDetails) {
+      const { institute_name, degree_program, duration } = detail;
+
+      const institute = await Institute.findOne({
+        where: { candidate_id: id },
+      });
+
+      if (!institute) {
+        return res.status(404).json({ message: "Education detail not found" });
+      }
+
+      // Update the education detail
+      institute.institute_name = institute_name;
+      institute.degree_program = degree_program;
+      institute.duration = duration;
+
+      await institute.save();
+    }
+
+    return res.status(200).json({
+      message: "Education details updated successfully",
+      data: { educationDetails },
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Error! Unable to update education details" });
+  }
+}
+
+
+async function updateCandidateWorkExperience(req, res) {
+  try {
+    const { id } = req.user;
+    const { company_name, position, duration } = req.body;
+
+    const candidate = await Candidate.findOne({
+      where: { candidate_id: id },
+    });
+
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+
+    let workExperience = await WorkExperience.findOne({
+      where: { candidate_id: id, company_name, position },
+    });
+
+    if (!workExperience) {
+      workExperience = await WorkExperience.create({
+        company_name,
+        position,
+        duration,
+        candidate_id: id,
+      });
+    } else {
+      workExperience.company_name = company_name;
+      workExperience.position = position;
+      workExperience.duration = duration;
+      await workExperience.save();
+    }
+
+    return res.status(200).json({
+      message: "Work experience updated successfully",
+      data: { workExperience },
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Error! Unable to update work experience" });
+  }
+}
+
 const uploadProfilePicture = (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
       return res.status(500).json({ message: err });
     } else {
       if (req.file == undefined) {
-        return res.status(400).json({ message: 'No file selected' });
+        return res.status(400).json({ message: "No file selected" });
       } else {
         try {
           const { id } = req.user;
-          const candidate = await Candidate.findOne({ where: { candidate_id: id } });
+          const candidate = await Candidate.findOne({
+            where: { candidate_id: id },
+          });
 
           if (!candidate) {
-            return res.status(404).json({ message: 'Candidate not found' });
+            return res.status(404).json({ message: "Candidate not found" });
           }
 
           candidate.profilePicture = `/uploads/profile-pictures/${req.file.filename}`;
@@ -232,49 +501,19 @@ const uploadProfilePicture = (req, res) => {
           });
 
           return res.status(200).json({
-            message: 'Profile picture uploaded successfully',
+            message: "Profile picture uploaded successfully",
             profilePicture: candidate.profilePicture,
           });
         } catch (error) {
           console.error(error);
-          return res.status(500).json({ message: 'Error! Unable to upload profile picture.' });
+          return res
+            .status(500)
+            .json({ message: "Error! Unable to upload profile picture." });
         }
       }
     }
   });
 };
-
-// async function getProfilePicture(req, res) {
-//   try {
-//     const { id } = req.user;
-//     const candidate = await Candidate.findOne({ where: { candidate_id: id } });
-
-//     if (!candidate) {
-//       return res.status(404).json({ message: 'Candidate not found' });
-//     }
-
-//     if (!candidate.profilePicture) {
-//       return res.status(404).json({ message: 'Profile picture not found' });
-//     }
-
-//     const filePath = path.resolve(candidate.profilePicture);
-
-//     console.log('filePath Nigger: ', filePath);
-
-//     // Check if the file exists
-//     // try {
-//     //   await fs.promises.access(filePath, fs.constants.F_OK);
-//     // } catch (error) {
-//     //   return res.status(404).json({ message: 'Profile picture file not found' });
-//     // }
-
-//     // Send the file directly as a response
-//     res.sendFile(filePath);
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ message: 'Error! Unable to retrieve profile picture.' });
-//   }
-// }
 
 async function getProfilePicture(req, res) {
   try {
@@ -282,11 +521,11 @@ async function getProfilePicture(req, res) {
     const candidate = await Candidate.findOne({ where: { candidate_id: id } });
 
     if (!candidate) {
-      return res.status(404).json({ message: 'Candidate not found' });
+      return res.status(404).json({ message: "Candidate not found" });
     }
 
     if (!candidate.profilePicture) {
-      return res.status(404).json({ message: 'Profile picture not found' });
+      return res.status(404).json({ message: "Profile picture not found" });
     }
 
     // Relative path from the static route or public directory
@@ -296,16 +535,65 @@ async function getProfilePicture(req, res) {
     res.status(200).json({ filePath: relativePath });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Error! Unable to retrieve profile picture.' });
+    return res
+      .status(500)
+      .json({ message: "Error! Unable to retrieve profile picture." });
   }
 }
 
+async function getProfilePictureUsingId(req, res) {
+  try {
+    const { id } = req.params;
+    const candidate = await Candidate.findOne({ where: { candidate_id: id } });
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+    if (!candidate.profilePicture) {
+      return res.status(404).json({ message: "Profile picture not found" });
+    }
+    const relativePath = `${candidate.profilePicture}`;
+    res.status(200).json({
+      message: "Profile picture retrieved successfully",
+      data: { filePath: relativePath },
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Error! Unable to retrieve profile picture" });
+  }
+}
+
+async function getAllCandidates(req, res) {
+  try {
+    const candidates = await Candidate.findAll();
+    if (!candidates) {
+      return res.status(404).json({ message: "No candidates found" });
+    }
+    res.status(200).json({
+      message: "Candidates retrieved successfully",
+      data: { candidates },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error! Unable to retrieve candidates" });
+  }
+}
 
 module.exports = {
   signupCandidate,
   loginCandidate,
   getCandidateDetails,
+  createCandidateEducationDetails,
+  createCandidateWorkExperience,
   updateCandidateDetails,
+  updateCandidateEducationDetails,
+  updateCandidateWorkExperience,
   uploadProfilePicture,
   getProfilePicture,
+  getWorkExperienceDetails,
+  getAllCandidates,
+  getProfilePictureUsingId,
+  getCandidateDetailsUsingId,
+  getInstituteDetails,
 };
