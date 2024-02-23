@@ -9,40 +9,53 @@ import WorkExperience from './work-experience';
 import CandidateBio from './bio';
 import EmailSendForm from '../forms/email-send-form';
 import axios from 'axios';
+import { useSearchParams } from 'next/navigation';
 import { set } from 'react-hook-form';
+import { profile } from 'console';
 
 const CandidateDetailsArea = () => {
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState<any>({});
   const [institute, setInstitute] = useState<any>([]);
   const [workExperience, setWorkExperience] = useState<any>([]);
+  const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+
+  const id = searchParams.get('id');
 
   useEffect(() => {
-    const getUserDetails = async () => {
-      try{
-        const token = localStorage.getItem('token');
-        const response = await axios.get(
-          "http://localhost:5000/api/auth/candidateDetails",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }          
-        );
+    const getCandidateDetailsUsingId = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/auth/getCandidateDetailsUsingId/${id}`);
+        console.log("Candidate details: ", response.data.data);
         if(response.status === 200){
-          console.log("User details: ", response.data.data.candidate);
-          console.log("Institute: ", response.data.data.institute);
-          console.log("Work Experience: ", response.data.data.workExperience);
           setUserDetails(response.data.data.candidate);
           setInstitute(response.data.data.institute);
           setWorkExperience(response.data.data.workExperience);
         }
-      } catch (error) {
-        console.log(error);
-        console.log("Error fetching user details: ", error);
+
+      } catch (error){
+        console.error("Error fetching candidate details: ", error);
+        console.log("Error fetching candidate details: ", error);
       }
-    }
-    getUserDetails();
+    };
+
+    const fetchProfilePicture = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/auth/getProfilePictureUsingId/${id}`);
+        console.log("Response: ", response.data.data.filePath);
+        if (response.status === 200) {
+          // Construct the full URL based on the relative path
+          const fullUrl = `http://localhost:5000${response.data.data.filePath}`;
+
+          // Update the profile picture state with the full URL
+          setProfilePicture(fullUrl);
+        }
+      } catch (error) {
+        console.error("Error fetching profile picture:", error);
+      }
+    };
+    getCandidateDetailsUsingId(), fetchProfilePicture();
   }, [])
   return (
     <>
@@ -97,7 +110,10 @@ const CandidateDetailsArea = () => {
                 <div className="cadidate-bio bg-wrapper bg-color mb-60 md-mb-40">
                   <div className="pt-25">
                     <div className="cadidate-avatar m-auto">
-                      <Image src={avatar} alt="avatar" className="lazy-img rounded-circle w-100" />
+                      {/* {profilePicture && (<img src={profilePicture} alt="avatar" className="lazy-img rounded-circle w-100" />)} */}
+                      {profilePicture && (
+                        <img src={profilePicture} alt="Profile Picture" className="lazy-img rounded-circle" />
+                      )}                      
                     </div>
                   </div>
                   <h3 className="cadidate-name text-center">{userDetails.firstname} {userDetails.lastname}</h3>

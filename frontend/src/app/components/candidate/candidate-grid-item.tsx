@@ -134,7 +134,7 @@ const CandidateGridItem = ({ item, style_2 = false }: { item: CandidateModel; st
         <i className="bi bi-heart"></i>
       </Link>
       <div className="cadidate-avatar online position-relative d-block m-auto">
-        <Link href="/candidate-profile-v1" className="rounded-circle">
+        <Link href={`/candidate-profile-v1?id=${item.candidate_id}`} className="rounded-circle">
           {profilePicture && (
             <img src={profilePicture} alt="Profile Picture" className="lazy-img rounded-circle" />
           )}
@@ -147,12 +147,12 @@ const CandidateGridItem = ({ item, style_2 = false }: { item: CandidateModel; st
       </h4>
       <div className="candidate-post">{item.preferredJobTitle}</div>
       <div className="row gx-1">
-        <div className="col-md-6">
+        {/* <div className="col-md-6">
           <div className="candidate-info mt-10">
             <span>Skills</span>
             <div>{item.skills}</div>
           </div>
-        </div>
+        </div> */}
         <div className="col-md-6">
           <div className="candidate-info mt-10">
             <span>Location</span>

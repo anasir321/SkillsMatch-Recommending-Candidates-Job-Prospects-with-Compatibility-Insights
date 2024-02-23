@@ -370,6 +370,9 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
               type="text"
               placeholder="arham@gmail.com"
               value={userDetails.email}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, email: e.target.value })
+              }
               readOnly={!isEditing}
             />
           </div>
@@ -386,6 +389,22 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
 
         {/* Additional Card Boxes */}
         {/* ... (similar updates for other sections) */}
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Profile Overview</h4>
+          <div className="dash-input-wrapper mb-20">
+            <label htmlFor="">Summary</label>
+            <textarea
+              className="size-lg"
+              placeholder="Write something interesting about you...."
+              value={userDetails.overview}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, overview: e.target.value })
+              }
+              readOnly={!isEditing}
+            ></textarea>
+          </div>
+        </div>
 
         <div className="bg-white card-box border-20 mt-40">
           <h4 className="dash-title-three">Preferred Job Type</h4>

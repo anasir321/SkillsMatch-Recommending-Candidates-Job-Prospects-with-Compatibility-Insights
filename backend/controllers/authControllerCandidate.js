@@ -327,7 +327,6 @@ async function updateCandidateDetails(req, res) {
       dateOfBirth,
       email,
       skills,
-      password,
       location,
       softSkills,
       linkedinURL,
@@ -335,6 +334,7 @@ async function updateCandidateDetails(req, res) {
       preferredJobType,
       preferredJobTitle,
       gender,
+      overview
     } = req.body;
 
     const candidate = await Candidate.findOne({
@@ -361,6 +361,7 @@ async function updateCandidateDetails(req, res) {
     candidate.preferredJobType = preferredJobType;
     candidate.preferredJobTitle = preferredJobTitle;
     candidate.gender = gender;
+    candidate.overview = overview;
 
     // if (password) {
     //   const hashedPassword = await bcrypt.hashSync(password, 8);
