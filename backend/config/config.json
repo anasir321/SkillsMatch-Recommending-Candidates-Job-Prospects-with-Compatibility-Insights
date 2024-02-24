@@ -1,9 +1,10 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "arham123",
-    "database": "skillsmatch3",
+    "username": "faris",
+    "password": "12345",
+    "database": "skillsmatch",
     "host": "127.0.0.1",
+    "port": "5432",
     "dialect": "postgres"
   },
   "test": {
