@@ -43,7 +43,7 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
           <div className="row align-items-end">
             <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
-                <label htmlFor="">Job Category</label>
+                <label htmlFor="">Work type</label>
                 <NiceSelect
                   options={[
                     { value: "Designer", label: "Designer" },
@@ -74,7 +74,17 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
               </div>
             </div>
             <div className="col-md-6">
-              <div className="dash-input-wrapper mb-30">
+              <div className="row">
+              <div className="col-md-6">
+                <div className="dash-input-wrapper mb-30">
+                  <label htmlFor="">Salary</label>
+                  <input 
+                    type="salary" 
+                    placeholder="80000"/>
+                </div>
+              </div>
+          </div>
+              {/* <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Salary*</label>
                 <NiceSelect
                   options={[
@@ -85,9 +95,9 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
                   onChange={(item) => handleSalary(item)}
                   name="Salary"
                 />
-              </div>
+              </div> */}
             </div>
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
               <div className="dash-input-wrapper mb-30">
                 <input type="text" placeholder="Min" />
               </div>
@@ -96,41 +106,53 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
               <div className="dash-input-wrapper mb-30">
                 <input type="text" placeholder="Max" />
               </div>
-            </div>
+            </div> */}
           </div>
 
           <h4 className="dash-title-three pt-50 lg-pt-30">
-            Skills & Experience
+            Skills, Experience & Education
           </h4>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Skills*</label>
             <input type="text" placeholder="Add Skills" />
             <div className="skill-input-data d-flex align-items-center flex-wrap">
-              <button>Design</button>
+              {/* <button>Design</button>
               <button>UI</button>
-              <button>Digital</button>
-              <button>Graphics</button>
-              <button>Developer</button>
-              <button>Product</button>
-              <button>Microsoft</button>
-              <button>Brand</button>
-              <button>Photoshop</button>
-              <button>Business</button>
-              <button>IT & Technology</button>
-              <button>Marketing</button>
-              <button>Article</button>
-              <button>Engineer</button>
-              <button>HTML5</button>
-              <button>Figma</button>
-              <button>Automobile</button>
-              <button>Account</button>
+              <button>Account</button> */}
+            </div>
+          </div>
+
+          <div className="dash-input-wrapper mb-30">
+            <label htmlFor="">Soft skills required*</label>
+            <input type="text" placeholder="Add soft Skills" />
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="dash-input-wrapper mb-30">
+                <label htmlFor="">Work experience required*</label>
+                <input 
+                  type="experience" 
+                  placeholder="4"/>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="dash-input-wrapper mb-30">
+                <label htmlFor="">Education required*</label>
+                <input 
+                  type="education" 
+                  placeholder="Intermediate"/>
+              </div>
             </div>
           </div>
 
           {/* employ experience start */}
-          <EmployExperience />
+          {/* <EmployExperience /> */}
           {/* employ experience end */}
-          <h4 className="dash-title-three pt-50 lg-pt-30">File Attachment</h4>
+          {/* <h4 className="dash-title-three pt-50 lg-pt-30">File Attachment</h4>
           <div className="dash-input-wrapper mb-20">
             <label htmlFor="">File Attachment*</label>
             <div className="attached-file d-flex align-items-center justify-content-between mb-15">
@@ -145,39 +167,39 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
             Upload File
             <input type="file" id="uploadCV" name="uploadCV" placeholder="" />
           </div>
-          <small>Upload file .pdf, .doc, .docx</small>
+          <small>Upload file .pdf, .doc, .docx</small> */}
           <h4 className="dash-title-three pt-50 lg-pt-30">
-            Address & Location
+            Location
           </h4>
           <div className="row">
             <div className="col-12">
               <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Address*</label>
+                <label htmlFor="">Location*</label>
                 <input
                   type="text"
                   placeholder="Cowrasta, Chandana, Gazipur Sadar"
                 />
               </div>
             </div>
-            <div className="col-lg-4">
+            {/* <div className="col-lg-4">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Country*</label>
                 <CountrySelect />
               </div>
-            </div>
-            <div className="col-lg-4">
+            </div> */}
+            {/* <div className="col-lg-4">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">City*</label>
                 <CitySelect />
               </div>
-            </div>
-            <div className="col-lg-4">
+            </div> */}
+            {/* <div className="col-lg-4">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">State*</label>
                 <StateSelect />
               </div>
-            </div>
-            <div className="col-12">
+            </div> */}
+            {/* <div className="col-12">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Map Location*</label>
                 <div className="position-relative">
@@ -195,7 +217,7 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

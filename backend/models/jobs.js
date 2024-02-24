@@ -63,6 +63,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    salary: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    job_status: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    date_posted: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   }, {
     sequelize,
     modelName: 'Jobs',
