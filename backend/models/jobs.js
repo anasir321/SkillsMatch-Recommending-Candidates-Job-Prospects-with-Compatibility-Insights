@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     job_description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     job_location: {
       type: DataTypes.STRING,
