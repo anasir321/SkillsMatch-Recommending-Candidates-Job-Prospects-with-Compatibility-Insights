@@ -78,7 +78,7 @@ async function submitJob(req, res) {
 async function getJobsbyCompanyHR(req, res) {
     try {
         const { id } = req.user;
-        console.log("req.user from getJobs: ", req.user);
+        // console.log("req.user from getJobs: ", req.user);
         const jobs = await Jobs.findAll({
             where: {
                 companyHR_id: id
@@ -96,7 +96,24 @@ async function getJobsbyCompanyHR(req, res) {
     }
 }
 
+// code of API to get all jobs posted by all companyHRs
+async function getAllJobs(req, res) {
+    try {
+        const jobs = await Jobs.findAll();
+        console.log("jobs from getAllJobs: ", jobs);
+        return res.status(200).json({
+            success: true,
+            message: "Jobs fetched successfully",
+            data: { jobs },
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "getAllJobs :: Internal Server Error" });
+    }
+}
+
 module.exports = { 
     submitJob,
-    getJobsbyCompanyHR
+    getJobsbyCompanyHR,
+    getAllJobs
 }
