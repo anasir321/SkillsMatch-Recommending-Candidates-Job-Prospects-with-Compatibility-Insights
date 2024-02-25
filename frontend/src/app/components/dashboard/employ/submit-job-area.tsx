@@ -8,6 +8,9 @@ import CountrySelect from "../candidate/country-select";
 import EmployExperience from "./employ-experience";
 import icon from "@/assets/dashboard/images/icon/icon_16.svg";
 import NiceSelect from "@/ui/nice-select";
+import { useState } from "react";
+import axios from "axios";
+import { set } from "react-hook-form";
 
 // props type 
 type IProps = {
@@ -18,6 +21,89 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
   const handleCategory = (item: { value: string; label: string }) => {};
   const handleJobType = (item: { value: string; label: string }) => {};
   const handleSalary = (item: { value: string; label: string }) => {};
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [jobDetails, setJobDetails] = useState<any>({});
+
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+  }
+
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setJobDetails({
+      job_title: "",
+      job_description: "",
+      work_type: "select work type",
+      job_type: "",
+      salary: "",
+      date_posted: "",
+      job_status: "",
+      skills_required: "",
+      soft_skills_required: "",
+      work_experience_required: "",
+      education_required: "",
+      job_location: ""
+    });
+  };
+
+  const renderSaveButton = () => {
+    if (isEditing) {
+      return (
+        <a
+          href="#"
+          className="dash-btn-two tran3s me-3"
+          onClick={handleSaveClick}
+        >
+          Save
+        </a>
+      );
+    }
+    return null;
+  };
+
+  const handleSaveClick = async () => {
+    try {
+
+      console.log("handleSaveClick :: jobDetails: ", jobDetails)
+      const token = localStorage.getItem("token");
+
+      const response = await axios.put(
+        "http://localhost:5000/api/auth/submitJob",
+        jobDetails,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
+      );
+      console.log("handleSaveClick :: response: ", response.data.data);
+
+      if(response.status === 200) {
+        setIsEditing(false);
+        setJobDetails({
+          job_title: "",
+          job_description: "",
+          work_type: "select work type",
+          job_type: "",
+          salary: "",
+          date_posted: "",
+          job_status: "",
+          skills_required: "",
+          soft_skills_required: "",
+          work_experience_required: "",
+          education_required: "",
+          job_location: ""
+        });
+      } else {
+        console.log("handleSaveClick :: error while saving job", response.data.message);
+      }
+
+    } catch (error) {
+      console.log("handleSaveClick :: error while saving job: ", error);
+    }
+  }
+
   return (
     <div className="dashboard-body">
       <div className="position-relative">
@@ -31,50 +117,113 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
           <h4 className="dash-title-three">Job Details</h4>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Job Title*</label>
-            <input type="text" placeholder="Ex: Product Designer" />
+            <input 
+            type="text" 
+            placeholder={!isEditing ? "Ex: Software Engineer" : ""}
+            readOnly={!isEditing}
+            onChange={(e) => {
+              setJobDetails({...jobDetails, job_title: e.target.value});
+            }}
+            value={jobDetails.job_title}
+            />
           </div>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Job Description*</label>
             <textarea
               className="size-lg"
               placeholder="Write about the job in details..."
+              readOnly={!isEditing}
+              onChange={(e) => {
+                setJobDetails({...jobDetails, job_description: e.target.value});
+              }}
+              value={jobDetails.job_description}
             ></textarea>
           </div>
           <div className="row align-items-end">
             <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
-                <label htmlFor="">Job Category</label>
+                <label htmlFor="">Work type</label>
                 <NiceSelect
                   options={[
-                    { value: "Designer", label: "Designer" },
-                    { value: "It & Development", label: "It & Development" },
-                    { value: "Web & Mobile Dev", label: "Web & Mobile Dev" },
-                    { value: "Writing", label: "Writing" },
+                    { value: "Remote", label: "Remote" },
+                    { value: "Onsite", label: "Onsite" },
                   ]}
                   defaultCurrent={0}
-                  onChange={(item) => handleCategory(item)}
+                  onChange={(e) => {
+                    setJobDetails({...jobDetails, work_type: e.value});
+                  }}
                   name="Job Category"
                 />
               </div>
+              
             </div>
             <div className="col-md-6">
               <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Job Type</label>
                 <NiceSelect
                   options={[
-                    { value: "Full time", label: "Full time" },
-                    { value: "Part time", label: "Part time" },
-                    { value: "Hourly-Contract", label: "Hourly-Contract" },
-                    { value: "Fixed-Price", label: "Fixed-Price" },
+                    { value: "Full-time", label: "Full-time" },
+                    { value: "Part-time", label: "Part-time" },
+                    { value: "Contract", label: "Contract" },
+                    { value: "Internship", label: "Internship" },
                   ]}
                   defaultCurrent={0}
-                  onChange={(item) => handleJobType(item)}
+                  onChange={(e) => {
+                    setJobDetails({...jobDetails, job_type: e.value});
+                  }}
                   name="Job Type"
                 />
               </div>
+              
             </div>
             <div className="col-md-6">
-              <div className="dash-input-wrapper mb-30">
+              <div className="row">
+              <div className="col-md-6">
+                <div className="dash-input-wrapper mb-30">
+                  <label htmlFor="">Salary</label>
+                  <input 
+                    type="salary" 
+                    placeholder="80000"
+                    readOnly={!isEditing}
+                    onChange={(e) => {
+                      setJobDetails({...jobDetails, salary: e.target.value});
+                    }}
+                    value={jobDetails.salary}
+                    />
+                  
+                </div>
+                
+                <div className="dash-input-wrapper mb-30">
+                <label htmlFor="">Date Posted</label>
+                  <input 
+                    type="date_posted" 
+                    placeholder="23 Feb 2024"
+                    readOnly={!isEditing}
+                    onChange={(e) => {
+                      setJobDetails({...jobDetails, date_posted: e.target.value});
+                    }}
+                    value={jobDetails.date_posted}
+                    />
+                </div>
+                
+
+                <div className="dash-input-wrapper mb-30">
+                <label htmlFor="">Job Status</label>
+                <NiceSelect
+                  options={[
+                    { value: "Active", label: "Active" },
+                    { value: "Inactive", label: "Inactive" },
+                  ]}
+                  defaultCurrent={0}
+                  onChange={(e) => {
+                    setJobDetails({...jobDetails, job_status: e.value});
+                  }}
+                  name="Job Category"
+                />
+              </div>
+              </div>
+          </div>
+              {/* <div className="dash-input-wrapper mb-30">
                 <label htmlFor="">Salary*</label>
                 <NiceSelect
                   options={[
@@ -85,9 +234,9 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
                   onChange={(item) => handleSalary(item)}
                   name="Salary"
                 />
-              </div>
+              </div> */}
             </div>
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
               <div className="dash-input-wrapper mb-30">
                 <input type="text" placeholder="Min" />
               </div>
@@ -96,41 +245,81 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
               <div className="dash-input-wrapper mb-30">
                 <input type="text" placeholder="Max" />
               </div>
-            </div>
+            </div> */}
           </div>
 
           <h4 className="dash-title-three pt-50 lg-pt-30">
-            Skills & Experience
+            Skills, Experience & Education
           </h4>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Skills*</label>
-            <input type="text" placeholder="Add Skills" />
+            <input 
+            type="text" 
+            placeholder="Add Skills" 
+            readOnly={!isEditing}
+            onChange={(e) => {
+              setJobDetails({...jobDetails, skills_required: e.target.value});
+            }}
+            value={jobDetails.skills_required}
+            />
             <div className="skill-input-data d-flex align-items-center flex-wrap">
-              <button>Design</button>
+              {/* <button>Design</button>
               <button>UI</button>
-              <button>Digital</button>
-              <button>Graphics</button>
-              <button>Developer</button>
-              <button>Product</button>
-              <button>Microsoft</button>
-              <button>Brand</button>
-              <button>Photoshop</button>
-              <button>Business</button>
-              <button>IT & Technology</button>
-              <button>Marketing</button>
-              <button>Article</button>
-              <button>Engineer</button>
-              <button>HTML5</button>
-              <button>Figma</button>
-              <button>Automobile</button>
-              <button>Account</button>
+              <button>Account</button> */}
+            </div>
+          </div>
+
+          <div className="dash-input-wrapper mb-30">
+            <label htmlFor="">Soft skills required*</label>
+            <input 
+            type="text" 
+            placeholder="Add soft Skills" 
+            readOnly={!isEditing}
+            onChange={(e) => {
+              setJobDetails({...jobDetails, soft_skills_required: e.target.value});
+            }}
+            value={jobDetails.soft_skills_required}
+            />
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="dash-input-wrapper mb-30">
+                <label htmlFor="">Work experience required*</label>
+                <input 
+                  type="experience" 
+                  placeholder="4"
+                  readOnly={!isEditing}
+                  onChange={(e) => {
+                    setJobDetails({...jobDetails, work_experience_required: e.target.value});
+                  }}
+                  value={jobDetails.work_experience_required}
+                  />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="dash-input-wrapper mb-30">
+                <label htmlFor="">Education required*</label>
+                <input 
+                  type="education" 
+                  placeholder="Intermediate"
+                  readOnly={!isEditing}
+                  onChange={(e) => {
+                    setJobDetails({...jobDetails, education_required: e.target.value});
+                  }}
+                  value={jobDetails.education_required}
+                  />
+              </div>
             </div>
           </div>
 
           {/* employ experience start */}
-          <EmployExperience />
+          {/* <EmployExperience /> */}
           {/* employ experience end */}
-          <h4 className="dash-title-three pt-50 lg-pt-30">File Attachment</h4>
+          {/* <h4 className="dash-title-three pt-50 lg-pt-30">File Attachment</h4>
           <div className="dash-input-wrapper mb-20">
             <label htmlFor="">File Attachment*</label>
             <div className="attached-file d-flex align-items-center justify-content-between mb-15">
@@ -145,39 +334,44 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
             Upload File
             <input type="file" id="uploadCV" name="uploadCV" placeholder="" />
           </div>
-          <small>Upload file .pdf, .doc, .docx</small>
+          <small>Upload file .pdf, .doc, .docx</small> */}
           <h4 className="dash-title-three pt-50 lg-pt-30">
-            Address & Location
+            Location
           </h4>
           <div className="row">
             <div className="col-12">
               <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Address*</label>
+                <label htmlFor="">Location*</label>
                 <input
                   type="text"
                   placeholder="Cowrasta, Chandana, Gazipur Sadar"
+                  readOnly={!isEditing}
+                  onChange={(e) => {
+                    setJobDetails({...jobDetails, job_location: e.target.value});
+                  }}
+                  value={jobDetails.job_location}
                 />
               </div>
             </div>
-            <div className="col-lg-4">
+            {/* <div className="col-lg-4">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Country*</label>
                 <CountrySelect />
               </div>
-            </div>
-            <div className="col-lg-4">
+            </div> */}
+            {/* <div className="col-lg-4">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">City*</label>
                 <CitySelect />
               </div>
-            </div>
-            <div className="col-lg-4">
+            </div> */}
+            {/* <div className="col-lg-4">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">State*</label>
                 <StateSelect />
               </div>
-            </div>
-            <div className="col-12">
+            </div> */}
+            {/* <div className="col-12">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Map Location*</label>
                 <div className="position-relative">
@@ -195,15 +389,24 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
         <div className="button-group d-inline-flex align-items-center mt-30">
-          <a href="#" className="dash-btn-two tran3s me-3">
-            Next
+          {renderSaveButton()}
+          <a 
+          href="#" 
+          className="dash-btn-two tran3s me-3"
+          onClick={handleEditClick}
+          >
+            Edit
           </a>
-          <a href="#" className="dash-cancel-btn tran3s">
+          <a 
+          href="#" 
+          className="dash-cancel-btn tran3s"
+          onClick={handleCancelClick}
+          >
             Cancel
           </a>
         </div>

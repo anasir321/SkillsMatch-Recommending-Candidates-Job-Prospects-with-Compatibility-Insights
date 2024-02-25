@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     job_description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     job_location: {
       type: DataTypes.STRING,
@@ -59,9 +59,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    work_type: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    salary: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    job_status: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    date_posted: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   }, {
     sequelize,
     modelName: 'Jobs',
+    timestamps: false,
   });
   return Jobs;
 };
