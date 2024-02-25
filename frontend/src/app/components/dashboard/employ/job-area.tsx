@@ -2,12 +2,58 @@ import React from "react";
 import DashboardHeader from "../candidate/dashboard-header";
 import EmployJobItem from "./job-item";
 import EmployShortSelect from "./short-select";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+
+interface jobDetails {
+  job_id: number;
+  job_title: string;
+  companyHR_id: number;
+  job_description: string;
+  job_location: string;
+  soft_skills_required: string;
+  work_experience_required: string;
+  education_required: string;
+  job_type: string;
+  skills_required: string;
+  work_type: string;
+  salary: number;
+  job_status: string;
+  date_posted: string;
+}
 
 // props type 
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
 }
 const EmployJobArea = ({setIsOpenSidebar}:IProps) => {
+
+  const [jobData, setJobData] = useState<jobDetails[]>([]);
+
+  useEffect(() => {
+    // get all jobs posted by this particular companyHR_id
+    const getJobsbyCompanyHR = async () => {
+      try {
+        const response = await axios.get(
+          'http://localhost:5000/api/auth/getJobsbyCompanyHR',
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+        );
+        if(response.status === 200){
+          setJobData(response.data.data.jobs);
+          console.log("getJobsbyCompanyHR :: all jobs ", response.data.data.jobs)
+        }
+      } catch(error) {
+        console.log("getJobsbyCompanyHR :: error fetching all jobs ", error)
+      }
+    };
+    getJobsbyCompanyHR();
+  }, [])
+
   return (
     <div className="dashboard-body">
       <div className="position-relative">
@@ -66,37 +112,48 @@ const EmployJobArea = ({setIsOpenSidebar}:IProps) => {
                     </tr>
                   </thead>
                   <tbody className="border-0">
-                    <EmployJobItem
+                    {/* <EmployJobItem
                       title="Brand & Producr Designer"
                       info="Fulltime . Spain"
                       application="130"
                       date="05 Jun, 2023"
                       status="active"
-                    />
+                    /> */}
 
-                    <EmployJobItem
+                    {/* <EmployJobItem
+                      title="Marketing Specialist"
+                      info="Part-time . Uk"
+                      application="20"
+                      date="13 Aug, 2023"
+                      status="pending"
+                    /> */}
+
+                    {jobData.map(jobData => (
+                      <EmployJobItem
+                      key={jobData.job_id}
+                      job_id={jobData.job_id}
+                      job_title={jobData.job_title}
+                      job_description={jobData.job_description}
+                      job_location={jobData.job_location}
+                      soft_skills_required={jobData.soft_skills_required}
+                      work_experience_required={jobData.work_experience_required}
+                      education_required={jobData.education_required}
+                      job_type={jobData.job_type}
+                      skills_required={jobData.skills_required}
+                      work_type={jobData.work_type}
+                      salary={jobData.salary}
+                      job_status={jobData.job_status}
+                      date_posted={jobData.date_posted}
+                      companyHR_id={jobData.companyHR_id}
+
                       title="Marketing Specialist"
                       info="Part-time . Uk"
                       application="20"
                       date="13 Aug, 2023"
                       status="pending"
                     />
+                    ))}
 
-                    <EmployJobItem
-                      title="Accounting Manager"
-                      info="Fulltime . USA"
-                      application="278"
-                      date="27 Sep, 2023"
-                      status="expired"
-                    />
-
-                    <EmployJobItem
-                      title="Developer for IT company"
-                      info="Fulltime . Germany"
-                      application="70"
-                      date="14 Feb, 2023"
-                      status="active"
-                    />
                   </tbody>
                 </table>
               </div>
@@ -114,7 +171,7 @@ const EmployJobArea = ({setIsOpenSidebar}:IProps) => {
                     </tr>
                   </thead>
                   <tbody className="border-0">
-                    <EmployJobItem
+                    {/* <EmployJobItem
                       title="Marketing Specialist"
                       info="Part-time . Uk"
                       application="20"
@@ -144,7 +201,7 @@ const EmployJobArea = ({setIsOpenSidebar}:IProps) => {
                       application="278"
                       date="27 Sep, 2023"
                       status="expired"
-                    />
+                    /> */}
                   </tbody>
                 </table>
               </div>
