@@ -112,8 +112,29 @@ async function getAllJobs(req, res) {
     }
 }
 
+async function getJobDetailsUsingId(req, res) {
+    try {
+        const { job_id } = req.params;
+        const job = await Jobs.findOne({
+            where: {
+                job_id
+            }
+        });
+        console.log("job from getJobDetailsUsingId: ", job);
+        return res.status(200).json({
+            success: true,
+            message: "Job fetched successfully",
+            data: { job },
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = { 
     submitJob,
     getJobsbyCompanyHR,
-    getAllJobs
+    getAllJobs,
+    getJobDetailsUsingId
 }
