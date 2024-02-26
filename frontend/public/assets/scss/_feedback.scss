@@ -1,0 +1,292 @@
+// FeedBack Section One
+.feedback-section-one .slick-arrow-one {
+    position: absolute;
+    right: 0;
+    top:70px;
+}
+.feedback-block-one {
+    background: #F9FFE1;
+    border: 2px solid #000;
+    border-radius: 30px;
+    padding: 40px 40px 45px;
+    @include transition(0.25s);
+    &:hover {
+        background: $color-two;
+    }
+    .logo {
+        height: 50px;
+        img {max-height: 100%;}
+    }
+    blockquote {
+        font-size: 36px;
+        line-height: 1.3888em;
+        color: #000;
+    }
+    .review {
+        border-top: 2px solid #000;
+    }
+    .review ul li a {
+        font-size: 15px;
+        color: #000;
+        margin-left: 5px;
+    }
+    &.color-two {
+        background: #755146;
+        border: none;
+        &:hover {
+            background: #249F47;
+        }
+        .review {
+            border-top: 1px solid #fff;
+            ul li a {
+                color: #fff;
+            }
+        }
+    }
+}
+// FeedBack Section Two
+.feedback-section-two:before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top:0;
+    bottom: 0;
+    width: 50%;
+    background: #F0F6F3;
+    z-index: -1;
+}
+.feedback-section-two .rating-title {
+    font-size: 42px;
+    color: $color-three;
+}
+.feedback-section-two .slider-wrapper {
+    width: calc(100% + 33vw);
+}
+.feedback-section-two .slick-dots {
+    margin: 70px 0 0 10px;
+}
+.feedback-section-two .shape_01 {
+    bottom: 0;
+    left: 15%;
+}
+.feedback-slider-two .item {
+    margin: 50px 25px;
+}
+.feedback-block-two {
+    box-shadow: 0px 20px 35px rgba(0, 16, 34, 0.03);
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 38px 45px 40px;
+    blockquote {
+        line-height: 2em;
+    }
+    .review {
+       font-size: 28px;
+       color: $color-three; 
+    }
+    .rating li a {
+        font-size: 13px;
+        color: #FFCC4A;
+        margin-right: 5px;
+    }
+    .block-footer {
+        border-top: 1px solid #000;
+
+        .author-img {
+            width: 50px;
+            height: 50px;
+        }
+        .name {
+            font-size: 18px;
+        }
+    }
+}
+// FeedBack Section Three
+.feedback-section-three #feedBack_carousel {
+    position: relative;
+    .carousel-inner p {
+        font-size: 36px;
+        line-height: 1.888em;
+        color: #000;
+        margin-bottom: 55px;
+    }
+    .name:before {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 2px;
+        background: #000;
+        left: -45px;
+        top:16px;
+    }
+    .carousel-indicators {
+        position: static;
+        width: 100%;
+        margin: 60px 0 0;
+        button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            opacity: 1;
+            margin: 0 10px;
+            @include transition(0.2s);
+            &.active {
+                border-color: #29503D;
+            }
+        }
+        
+    }
+    .carousel-btn {
+        top:65px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid rgba($color: #000000, $alpha: .15);
+        opacity: 1;
+        line-height: 48px;
+        text-align: center;
+        font-size: 20px;
+        color: #000;
+        @include transition(0.2s);
+        &:hover {
+            border-color: $color-three;
+            background: $color-three;
+            color: #fff;
+        }
+    }
+    
+}
+// FeedBack Section Four
+.feedback-section-four .bg-wrapper {
+    background: #1EA243;
+    padding: 125px 150px 165px 110px;
+    .icon {
+        width: 80px;
+        height: 80px;
+        background: rgba($color: #fff, $alpha: .16);
+    }
+    p {
+        font-size: 40px;
+        line-height: 1.7em;
+        color: #fff;
+        margin: 50px 0 95px;
+    }
+    .slider-arrows {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        li {
+            width: 60px;
+            height: 60px;
+            font-size: 22px;
+            text-align: center;
+            line-height: 60px;
+            color: #fff;
+            cursor: pointer;
+            @include transition(0.2s);
+            border-left: 1px solid rgba($color: #fff, $alpha: .14);
+            background: rgba($color: #fff, $alpha: .13);
+            &:hover {
+                background: #fff;
+                color: #000;
+            }
+        }
+    }
+}
+.feedback-section-four .slider-wrapper {
+    position: absolute;
+    width: 79vw;
+    right: -28vw;
+    bottom: 9%;
+
+    .slick-dots {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        bottom: -14%;
+        left: 20%;
+    }
+}
+// FeedBack Section Five
+.feedback-section-five {
+    z-index: 1;
+    background: url(../images/assets/img_39.jpg) no-repeat center;
+    background-size: cover;
+    &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top:0;
+        left: 0;
+        background: rgba($color: #000000, $alpha: .6);
+    }
+    .feedback-slider-one {
+        margin: 0 -35px;
+        .item {
+            margin: 0 35px;
+        }
+    }
+    .slider-arrows {
+        position: absolute;
+        right: 0;
+        top:85px;
+    }
+}
+.feedback-block-three {
+    padding: 45px 55px 40px;
+    background: #fff;
+    border-radius: 10px;
+    blockquote {
+        font-size: 24px;
+        line-height: 2em;
+    }
+    .review {
+       font-size: 28px;
+       color: $color-three; 
+    }
+    .rating li a {
+        font-size: 14px;
+        color: #FFCC4A;
+        margin-right:9px;
+    }
+    .author-img {
+        width: 60px;
+        height: 60px;
+    }
+    .name {
+        font-size: 20px;
+    }
+    .quote-icon {
+        position: absolute;
+        top:58px;
+        right: 55px;
+    }
+}
+.feedback-block-four {
+    padding: 25px 40px;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+    .rating li a {
+        font-size: 16px;
+        color: #FFCC4A;
+        margin-right: 8px;
+    }
+    .review-score {
+        color: rgba($color: #000000, $alpha: .4);
+        margin: 0 0 0 10px;
+    }
+    blockquote {
+        font-size: 17px;
+        line-height: 1.882em;
+        margin: 17px 0 25px;
+    }
+    .author-img {
+        width: 45px;
+        height: 45px;
+    }
+    .name {
+        font-size: 18px;
+    }
+}
