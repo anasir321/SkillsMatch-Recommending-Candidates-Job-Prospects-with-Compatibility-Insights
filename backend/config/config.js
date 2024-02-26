@@ -1,8 +1,8 @@
 module.exports = {
     development: {
       username: 'postgres',
-      password: 'arham123',
-      database: 'skillsmatch5',
+      password: 'insia2003',
+      database: 'skillsmatch',
       host: '127.0.0.1',
       dialect: 'postgres', // Specify your database dialect here
     },
