@@ -87,6 +87,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BLOB,
       allowNull: true,
     },
+    education_level: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    experience: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    work_preference: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     overview: {
       type: DataTypes.TEXT,
       allowNull: true,
