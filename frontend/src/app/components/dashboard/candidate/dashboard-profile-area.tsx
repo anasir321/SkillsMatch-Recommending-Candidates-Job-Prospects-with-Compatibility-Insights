@@ -269,16 +269,19 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
     updatedDetails[index][key] = value;
     setEducationDetails(updatedDetails);
   };
-  
+
+  const dob = userDetails.dateOfBirth ? userDetails.dateOfBirth.split('T')[0] : '';
+
   return (
     <div className="dashboard-body">
       <div className="position-relative">
         {/* Header */}
         <DashboardHeader setIsOpenSidebar={setIsOpenSidebar} />
 
-        <h2 className="main-title">Personal Information</h2>
+        {/* <h2 className="main-title">Personal Information</h2> */}
 
         <div className="bg-white card-box border-20">
+          <h4 className="dash-title-three">Personal Information</h4>
           {/* User Avatar and Photo Upload */}
           <div className="user-avatar-setting d-flex align-items-center mb-30">
             {profilePicture ? (
@@ -341,9 +344,9 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Date of Birth*</label>
             <input
-              type="text"
+              type="date"
               placeholder="DD/MM/YYYY"
-              value={userDetails.dateOfBirth}
+              value={dob}
               onChange={(e) =>
                 setUserDetails({ ...userDetails, dateOfBirth: e.target.value })
               }
