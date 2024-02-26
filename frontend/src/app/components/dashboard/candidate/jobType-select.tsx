@@ -40,7 +40,6 @@ const JobTypeSelect: React.FC<IProps> = ({ isEditing, selectedJobType, onChange 
     { value: "Part Time", label: "Part Time" },
     { value: "Contract", label: "Contract" },
     { value: "Internship", label: "Internship" },
-    { value: "Remote", label: "Remote" },
   ];
 
   const handleChange = (selectedOption: any) => {

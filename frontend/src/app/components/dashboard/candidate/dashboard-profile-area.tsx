@@ -5,6 +5,7 @@ import avatar from "@/assets/dashboard/images/avatar_02.jpg";
 import search from "@/assets/dashboard/images/icon/icon_16.svg";
 import DashboardHeader from "./dashboard-header";
 import JobTypeSelect from "./jobType-select";
+import WorkTypeSelect from "./workType-select";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { set } from "react-hook-form";
@@ -205,6 +206,10 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
     setUserDetails({ ...userDetails, preferredJobType: jobType });
   };
 
+  const handleWorkTypeChange = (workType: string) => {
+    setUserDetails({ ...userDetails, work_preference: workType });
+  }
+
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
@@ -269,6 +274,43 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
     updatedDetails[index][key] = value;
     setEducationDetails(updatedDetails);
   };
+
+  const handleResumeUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      try {
+        const token = localStorage.getItem('token');
+
+        // Create a FormData object to send the file
+        const formData = new FormData();
+        formData.append('resume', file);
+
+        console.log('Uploading resume:', file);
+
+        // Send the file to the upload endpoint
+        const uploadResponse = await axios.post(
+          'http://localhost:5000/api/auth/uploadResume',
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+
+        if (uploadResponse.status === 200) {
+          // Update the resume state with the new URL
+          setUserDetails({ ...userDetails, resume: uploadResponse.data.resume });
+        } else {
+          console.error('Failed to upload resume:', uploadResponse.data.message);
+        }
+      } catch (error) {
+        console.error('Error uploading resume:', error);
+      }
+    }
+  }
 
   const dob = userDetails.dateOfBirth ? userDetails.dateOfBirth.split('T')[0] : '';
 
@@ -418,9 +460,15 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
               onChange={handleJobTypeChange}
             />
           </div>
-        </div>
 
-        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Preferred Work Type</h4>
+          <div className="dash-input-wrapper mb-20">
+            <WorkTypeSelect
+                isEditing={isEditing}
+                selectedWorkType={userDetails.work_preference}
+                onChange={handleWorkTypeChange}
+              />
+          </div>
           <h4 className="dash-title-three">Preferred Job Title</h4>
           <div className="dash-input-wrapper mb-20">
             <input
@@ -433,10 +481,55 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
               readOnly={!isEditing}
             />
           </div>
+
         </div>
 
         <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Education</h4>
+          <h4 className="dash-title-three">Resume Attachment</h4>
+          <div className="dash-input-wrapper mb-20">
+            <label htmlFor="">CV Attachment*</label>
+              {userDetails.resume ? (
+                <a
+                  href={`http://localhost:5000${userDetails.resume}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View Resume
+                </a>
+                ) : (
+                  <p>No resume uploaded</p>
+                )
+              }
+          </div>
+
+          <div className="dash-btn-one d-inline-block position-relative me-3">
+            <i className="bi bi-plus"></i>
+            Upload CV
+            <input
+              type="file"
+              id="uploadCv"
+              name="uploadCv"
+              placeholder=""
+              onChange={handleResumeUpload}
+            />
+          </div>
+          <small>Upload file .pdf, .doc, .docx</small>
+        </div>
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Education Level</h4>
+          <div className="dash-input-wrapper mb-20">
+            <input
+              type="text"
+              placeholder="Most Recent Degree (e.g. Bachelors)"
+              value={userDetails.education_level}
+              onChange={(e) =>
+                setUserDetails({ ...userDetails, education_level: e.target.value })
+              }
+              readOnly={!isEditing}
+            />
+          </div>
+          <h4 className="dash-title-three">Education Details</h4>
           {educationDetails.map((education: EducationDetail, index: number) => (
             <div key={`education-${index}`} className="dash-input-wrapper mb-20">
               <input
