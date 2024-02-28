@@ -59,6 +59,9 @@ const LoginForm = () => {
         alert("Login successfully!");
         console.log(response.data);
         localStorage.setItem("token", token);
+        
+        localStorage.setItem("email", data.email); 
+        console.log("email is"+data.email+"emailed"+data["email"]+"local"+localStorage.getItem("email"));
         router.push("http://localhost:3000/dashboard/candidate-dashboard");
       } else {
         alert("Login failed!");

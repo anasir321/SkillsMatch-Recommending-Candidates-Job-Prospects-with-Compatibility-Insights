@@ -579,6 +579,22 @@ async function getAllCandidates(req, res) {
     res.status(500).json({ message: "Error! Unable to retrieve candidates" });
   }
 }
+async function getCandidateDetailsUsingEmail(req, res) {
+  try {
+      const {email} = req.params;
+      const company = await Candidate.findOne({ where: {email: email}});
+      if(!company){
+          return res.status(404).json({ message: "Candidate not found" });
+      }
+      res.status(200).json({
+          message: "Candidate details retrieved successfully",
+          data: { company },
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error! Unable to get Candidate details." });
+  }
+}
 
 module.exports = {
   signupCandidate,
@@ -596,4 +612,5 @@ module.exports = {
   getProfilePictureUsingId,
   getCandidateDetailsUsingId,
   getInstituteDetails,
+  getCandidateDetailsUsingEmail,
 };

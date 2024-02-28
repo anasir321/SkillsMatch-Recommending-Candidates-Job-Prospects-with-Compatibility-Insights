@@ -93,6 +93,7 @@ const nav_data: {
     link: "/dashboard/employ-dashboard/setting",
     title: "Account Settings",
   },
+ 
 ];
 // props type 
 type IProps = {

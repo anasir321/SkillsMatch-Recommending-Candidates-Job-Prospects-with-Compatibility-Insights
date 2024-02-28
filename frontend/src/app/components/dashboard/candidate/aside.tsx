@@ -82,7 +82,7 @@ const nav_data: {
     id: 6,
     icon: nav_6,
     icon_active: nav_6_active,
-    link: "/dashboard/candidate-dashboard/saved-job",
+    link: "/dashboard/candidate-dashboard/recommended",
     title: "Saved Job",
   },
   {
@@ -91,6 +91,20 @@ const nav_data: {
     icon_active: nav_7_active,
     link: "/dashboard/candidate-dashboard/setting",
     title: "Account Settings",
+  },
+  {
+    id: 9,
+    icon: nav_3,
+    icon_active: nav_3_active,
+    link: "/dashboard/candidate-dashboard/recommended_courses",
+    title: "Recommended Courses",
+  },
+  {
+    id: 5,
+    icon: nav_5,
+    icon_active: nav_5_active,
+    link: "/dashboard/candidate-dashboard/recommended_jobs",
+    title: "Recommended Jobs",
   },
 ];
 // props type 
