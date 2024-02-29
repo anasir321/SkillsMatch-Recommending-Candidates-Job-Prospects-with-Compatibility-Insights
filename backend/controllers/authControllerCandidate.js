@@ -62,7 +62,8 @@ async function signupCandidate(req, res) {
   }
 }
 
-async function loginCandidate(req, res) {
+async function 
+loginCandidate(req, res) {
   try {
     const { email, password } = req.body;
     const candidate = await Candidate.findOne({ where: { email } });

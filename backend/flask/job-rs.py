@@ -1,53 +1,75 @@
-from flask import Flask, jsonify
-from flask_cors import CORS  # Import CORS from flask_cors module
-
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.model_selection import train_test_split
-import tensorflow as tf
+from sklearn.metrics.pairwise import cosine_similarity
+from flask import Flask, jsonify
+from flask_cors import CORS
+from sqlalchemy import create_engine
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from tensorflow.keras.optimizers import Adam
-from sklearn.metrics.pairwise import cosine_similarity
-from tabulate import tabulate
-from tensorflow.keras.callbacks import EarlyStopping
-import psycopg2
 import sys
 
 # Set console encoding to UTF-8
 sys.stdout.reconfigure(encoding='utf-8')
-
 # Initialize Flask application
 app = Flask(__name__)
 CORS(app)  # Add this line to enable CORS for all routes
 
-# Establish connection to the database
-conn = psycopg2.connect(
-    dbname="skillsmatch",
-    user="postgres",
-    password="1234",
-    host="127.0.0.1",
-    port="5432"
-)
+# Function to connect to the database using SQLAlchemy
+def connect_to_database():
+    try:
+        engine = create_engine("postgresql://postgres:insia2003@127.0.0.1:5432/skillsmatch")
+        conn = engine.connect()
+        print("Connected to database successfully")
+        return conn
+    except Exception as e:
+        print("Unable to connect to the database:", e)
+        return None
 
 # Function to fetch candidates data from the database
-def fetch_candidates_data():
-    candidates_query = """SELECT * FROM public."Candidates";"""
-    candidates_data = pd.read_sql(candidates_query, conn)
-    return candidates_data
+def fetch_candidates_data(conn):
+    try:
+        candidates_query = """SELECT * FROM public."Candidates" ORDER BY candidate_id;"""
+        candidates_data = pd.read_sql(candidates_query, conn)
+        print("Fetched candidates data successfully")
+        return candidates_data
+    except Exception as e:
+        print("Error fetching candidates data:", e)
+        return None
 
 # Function to fetch jobs data from the database
-def fetch_jobs_data():
-    jobs_query = """SELECT j.*, c.company_name, c.company_email 
-                    FROM public."Jobs" j
-                    JOIN public."Companies" c ON j."companyHR_id" = c."companyHR_id";"""
-    jobs_data = pd.read_sql(jobs_query, conn)
-    return jobs_data
+def fetch_jobs_data(conn):
+    try:
+        jobs_query = """SELECT j.*, c.company_name, c.company_email 
+                        FROM public."Jobs" j
+                        JOIN public."Companies" c ON j."companyHR_id" = c."companyHR_id"
+                        ORDER BY job_id;"""
+        jobs_data = pd.read_sql(jobs_query, conn)
+        print("Fetched jobs data successfully")
+        return jobs_data
+    except Exception as e:
+        print("Error fetching jobs data:", e)
+        return None
+
+# Function to read data from database
+def read_data_from_database():
+    conn = connect_to_database()
+    if conn:
+        candidates_data = fetch_candidates_data(conn)
+        jobs_data = fetch_jobs_data(conn)
+        conn.close()  # Close the database connection
+        return candidates_data, jobs_data
+    else:
+        return None, None
 
 # Load datasets using database queries
-candidates_data = fetch_candidates_data()
-jobs_data = fetch_jobs_data()
+candidates_data, jobs_data = read_data_from_database()
+
+# Ensure data is loaded successfully
+if candidates_data is None or jobs_data is None:
+    print("Error loading data from the database. Exiting...")
+    exit()
 
 # Combine text data for CountVectorizer
 candidate_texts = candidates_data['skills'] + " " + candidates_data['preferredJobTitle'] + " " + candidates_data['location']+ " " + candidates_data['education_level']+ " " + candidates_data['experience'].astype(str)+ " " + candidates_data['preferredJobType']+ " " + candidates_data['work_preference']+ " " + candidates_data['softSkills']
@@ -82,18 +104,18 @@ model = Sequential([
 # Compile the model
 model.compile(optimizer=Adam(learning_rate=0.001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-# Define EarlyStopping callback
-early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
-
 # Train the model for candidate-job recommendation with EarlyStopping
-history = model.fit(x=candidate_vectors.toarray(), y=candidates_data.index, epochs=10, batch_size=128, callbacks=[early_stopping])
+history = model.fit(x=candidate_vectors.toarray(), y=candidates_data.index, epochs=10, batch_size=128)
 
 # Calculate cosine similarity between candidates and jobs
 cosine_sim_matrix = cosine_similarity(candidate_vectors, job_vectors)
 
 # Function to recommend jobs for a candidate using cosine similarity
 def recommend_jobs(candidate_id, top_n=7):
-    candidate_cosine_sim = cosine_sim_matrix[candidate_id]
+    candidate_index = candidate_id - 1  # Adjust index to match zero-based indexing
+    if candidate_index < 0 or candidate_index >= len(candidates_data):
+        return []
+    candidate_cosine_sim = cosine_sim_matrix[candidate_index]
     top_indices = np.argsort(candidate_cosine_sim)[-top_n:]
     return top_indices
 
@@ -104,29 +126,20 @@ def recommend_jobs_api(candidate_id):
     recommended_jobs = []
     for job_id in recommended_indices:
         job_info = jobs_data.iloc[job_id]
-        # Convert non-serializable elements to JSON serializable format
         recommended_job = {
-            'job_title': str(job_info['job_title']),  # Convert to string
-            'skills_required': str(job_info['skills_required']),  # Convert to string
-            'job_location': str(job_info['job_location']),  # Convert to string
-            'education_required': str(job_info['education_required']),  # Convert to string
-            'work_experience_required': int(job_info['work_experience_required']),  # Convert to int
-            'job_type': str(job_info['job_type']),  # Convert to string
-            'work_type': str(job_info['work_type']),  # Convert to string
-            'soft_skills_required': str(job_info['soft_skills_required']),  # Convert to string
-            'company_name': str(job_info['company_name']),  # Convert to string
-            'company_email': str(job_info['company_email'])  # Convert to string
+            'job_title': str(job_info['job_title']),
+            'skills_required': str(job_info['skills_required']),
+            'job_location': str(job_info['job_location']),
+            'education_required': str(job_info['education_required']),
+            'work_experience_required': int(job_info['work_experience_required']),
+            'job_type': str(job_info['job_type']),
+            'work_type': str(job_info['work_type']),
+            'soft_skills_required': str(job_info['soft_skills_required']),
+            'company_name': str(job_info['company_name']),
+            'company_email': str(job_info['company_email'])
         }
         recommended_jobs.append(recommended_job)
     response = jsonify({'recommended_jobs': recommended_jobs})
-    response.status_code = 200
-    return response
-
-# Function to get candidate information by ID via API
-@app.route('/candidate_info/<int:candidate_id>', methods=['GET'])
-def candidate_info_api(candidate_id):
-    candidate_info = candidates_data.iloc[candidate_id].to_dict()
-    response = jsonify({'candidate_info': candidate_info})
     response.status_code = 200
     return response
 
