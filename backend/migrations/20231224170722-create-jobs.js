@@ -18,6 +18,7 @@ module.exports = {
         references: {
           model: 'Company_HRs',
           key: 'companyHR_id',
+          
         },
       },
       job_description: {

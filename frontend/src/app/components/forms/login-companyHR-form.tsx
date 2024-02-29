@@ -7,6 +7,7 @@ import ErrorMsg from "../common/error-msg";
 import icon from "@/assets/images/icon/icon_60.svg";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import GlobClass from "./global.js";
 
 // form data type
 type IFormData = {

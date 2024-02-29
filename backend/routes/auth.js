@@ -16,6 +16,7 @@ const { signupCandidate,
         getCandidateDetailsUsingId,
         getInstituteDetails,
         getWorkExperienceDetails,
+        getCandidateDetailsUsingEmail,
         uploadResume,
         getResume
     } = require('../controllers/authControllerCandidate');
@@ -57,6 +58,7 @@ router.get('/getProfilePictureUsingId/:id', getProfilePictureUsingId);
 router.get('/getCandidateDetailsUsingId/:id', getCandidateDetailsUsingId);
 router.get('/getInstituteDetails', jwtMiddleware, getInstituteDetails);
 router.get('/getWorkExperienceDetails', jwtMiddleware, getWorkExperienceDetails);
+router.get('/getCandidateDetailsUsingEmail/:email',getCandidateDetailsUsingEmail);
 router.post('/uploadResume', jwtMiddleware, uploadResume);
 router.get('/getResume', jwtMiddleware, getResume);
 
