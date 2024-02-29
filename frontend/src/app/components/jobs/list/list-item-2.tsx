@@ -116,7 +116,7 @@ const ListItemTwo = ({ item }: { item: jobDetails }) => {
                 href={`/job-details-v1?job_id=${item.job_id}`}
                 className="title fw-500 tran3s"
               >
-                {item.job_title.slice(0, 22)} {item.job_title.length > 20 ? ".." : ""}
+                {item.job_title}
               </Link>
             </div>
           </div>

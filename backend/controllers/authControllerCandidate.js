@@ -21,6 +21,30 @@ const storage = multer.diskStorage({
   },
 });
 
+const storageResume = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/resumes");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+function checkFileTypeResume(file, cb) {
+  // Allowed ext
+  const filetypes = /pdf|doc|docx/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    cb("Error: Resumes Only!");
+  }
+}
+
 function checkFileType(file, cb) {
   // Allowed ext
   const filetypes = /jpeg|jpg|png|gif/;
@@ -43,6 +67,14 @@ const upload = multer({
     checkFileType(file, cb);
   },
 }).single("profilePicture");
+
+const uploadResumeFile = multer({
+  storage: storageResume,
+  limits: { fileSize: 1000000 },
+  fileFilter: function (req, file, cb) {
+    checkFileTypeResume(file, cb);
+  },
+}).single("resume");
 
 async function signupCandidate(req, res) {
   try {
@@ -335,7 +367,10 @@ async function updateCandidateDetails(req, res) {
       preferredJobType,
       preferredJobTitle,
       gender,
-      overview
+      overview,
+      work_preference,
+      experience,
+      education_level,
     } = req.body;
 
     const candidate = await Candidate.findOne({
@@ -363,6 +398,9 @@ async function updateCandidateDetails(req, res) {
     candidate.preferredJobTitle = preferredJobTitle;
     candidate.gender = gender;
     candidate.overview = overview;
+    candidate.work_preference = work_preference;
+    candidate.experience = experience;
+    candidate.education_level = education_level;
 
     // if (password) {
     //   const hashedPassword = await bcrypt.hashSync(password, 8);
@@ -516,6 +554,98 @@ const uploadProfilePicture = (req, res) => {
   });
 };
 
+async function uploadResume(req, res) {
+  uploadResumeFile(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ message: err });
+    } else {
+      if (req.file == undefined) {
+        return res.status(400).json({ message: "No file selected" });
+      } else {
+        try {
+          const { id } = req.user;
+          const candidate = await Candidate.findOne({
+            where: { candidate_id: id },
+          });
+
+          if (!candidate) {
+            return res.status(404).json({ message: "Candidate not found" });
+          }
+
+          candidate.resume = `/uploads/resumes/${req.file.filename}`;
+
+          console.log(candidate.resume);
+          console.log("INSIDE UPLOAD RESUME FUNCTION")
+
+          await Candidate.sequelize.transaction(async (t) => {
+            await candidate.save({ transaction: t });
+          });
+
+          return res.status(200).json({
+            message: "Resume uploaded successfully",
+            resume: candidate.resume,
+          });
+        } catch (error) {
+          console.error(error);
+          return res
+            .status(500)
+            .json({ message: "Error! Unable to upload resume." });
+        }
+      }
+    }
+  });
+}
+
+async function getResume(req, res) {
+  try {
+    const { id } = req.user;
+    const candidate = await Candidate.findOne({ where: { candidate_id: id } });
+
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+
+    if (!candidate.resume) {
+      return res.status(404).json({ message: "Resume not found" });
+    }
+
+    // Relative path from the static route or public directory
+    const relativePath = `${candidate.resume}`;
+
+    // Send the relative path directly as a response
+    res.status(200).json({ message: "Resume retrieved successfully", filePath: relativePath});
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Error! Unable to retrieve resume." });
+  }
+}
+
+async function getResumeUsingId(req, res) {
+  try {
+    const { id } = req.params;
+    const candidate = await Candidate.findOne({ where: { candidate_id: id } });
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+    if (!candidate.resume) {
+      return res.status(404).json({ message: "Resume not found" });
+    }
+    const relativePath = `${candidate.resume}`;
+    res.status(200).json({
+      message: "Resume retrieved successfully",
+      data: { filePath: relativePath },
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Error! Unable to retrieve resume" });
+  }
+
+}
+
 async function getProfilePicture(req, res) {
   try {
     const { id } = req.user;
@@ -614,4 +744,6 @@ module.exports = {
   getCandidateDetailsUsingId,
   getInstituteDetails,
   getCandidateDetailsUsingEmail,
+  uploadResume,
+  getResume,
 };

@@ -17,6 +17,8 @@ const { signupCandidate,
         getInstituteDetails,
         getWorkExperienceDetails,
         getCandidateDetailsUsingEmail,
+        uploadResume,
+        getResume
     } = require('../controllers/authControllerCandidate');
 
 const{  signupCompanyHR, 
@@ -57,6 +59,10 @@ router.get('/getCandidateDetailsUsingId/:id', getCandidateDetailsUsingId);
 router.get('/getInstituteDetails', jwtMiddleware, getInstituteDetails);
 router.get('/getWorkExperienceDetails', jwtMiddleware, getWorkExperienceDetails);
 router.get('/getCandidateDetailsUsingEmail/:email',getCandidateDetailsUsingEmail);
+router.post('/uploadResume', jwtMiddleware, uploadResume);
+router.get('/getResume', jwtMiddleware, getResume);
+
+
 // COMPANY HR LOGIN AND SIGNUP ROUTES
 router.post('/signupCompanyHR', signupCompanyHR);
 router.post('/loginCompanyHR', loginCompanyHR);
