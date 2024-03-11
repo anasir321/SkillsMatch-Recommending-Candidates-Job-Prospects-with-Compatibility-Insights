@@ -9,6 +9,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from tensorflow.keras.optimizers import Adam
 import sys
+from sqlalchemy import text
 
 # Set console encoding to UTF-8
 sys.stdout.reconfigure(encoding='utf-8')
@@ -20,7 +21,7 @@ CORS(app)  # Add this line to enable CORS for all routes
 # Function to connect to the database using SQLAlchemy
 def connect_to_database():
     try:
-        engine = create_engine("postgresql://postgres:insia2003@127.0.0.1:5432/skillsmatch")
+        engine = create_engine("postgresql://postgres:arham123@127.0.0.1:5432/skillsmatch")
         conn = engine.connect()
         print("Connected to database successfully")
         return conn
@@ -31,7 +32,7 @@ def connect_to_database():
 # Function to fetch candidates data from the database
 def fetch_candidates_data(conn):
     try:
-        candidates_query = """SELECT * FROM public."Candidates" ORDER BY candidate_id;"""
+        candidates_query = text("""SELECT * FROM public."Candidates" ORDER BY candidate_id;""")
         candidates_data = pd.read_sql(candidates_query, conn)
         print("Fetched candidates data successfully")
         return candidates_data
@@ -42,7 +43,7 @@ def fetch_candidates_data(conn):
 # Function to fetch jobs data from the database
 def fetch_jobs_data(conn):
     try:
-        job_query = """SELECT * FROM public."Jobs";"""
+        job_query = text("""SELECT * FROM public."Jobs";""")
         job_data = pd.read_sql(job_query, conn)
         print("Fetched jobs data successfully")
         return job_data
