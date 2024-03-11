@@ -504,7 +504,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
 
           <div className="dash-btn-one d-inline-block position-relative me-3">
             <i className="bi bi-plus"></i>
-            Upload CV
+            Upload Resume
             <input
               type="file"
               id="uploadCv"

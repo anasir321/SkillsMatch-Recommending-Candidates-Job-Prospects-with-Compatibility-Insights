@@ -46,16 +46,19 @@ const JobDetailsV1Area = ({job}:{job:IJobType}) => {
 	const [profilePicture, setProfilePicture] = useState<string>("");
 	const job_id = searchParams.get('job_id');
 	console.log("job_id: ", job_id);
+	var companyhrid = 0
 
 	useEffect(() => {
 
 		const fetchCompanyDetails = async () => {
 			try {
 			  if(jobData.companyHR_id){
-				const response = await axios.get(`http://localhost:5000/api/auth/getCompanyDetailsUsingId/${jobData.companyHR_id}`);
+				const response = await axios.get(`http://localhost:5000/api/auth/getCompanyDetailsUsingId/${companyhrid}`);
 				// console.log("fetchCompanyDetails :: response: ", response.data.data.company);
-				setCompanyDetails(response.data.data.company);
-				console.log("companyDetails: ", companyDetails)
+				if(response.status === 200){
+					setCompanyDetails(response.data.data.company);
+					console.log("companyDetails: ", companyDetails)
+				}
 			  }
 			} catch (error) {
 			  console.log("fetchCompanyDetails :: error: ", error);
@@ -64,17 +67,24 @@ const JobDetailsV1Area = ({job}:{job:IJobType}) => {
 
 		  const fetchProfilePicture = async () => {
 			try {
-			  const response = await axios.get(`http://localhost:5000/api/auth/getCompanyProfilePictureUsingId/${companyDetails.companyHR_id}`);
+			  const response = await axios.get(`http://localhost:5000/api/auth/getCompanyProfilePictureUsingId/${companyhrid}`);
 			  console.log("response: ", response.data.data.filePath);
-			  if(response.status === 200){
+		  
+			  // If picture is not found (404 status), exit the function
+			  if (response.status === 404) {
+				console.log("Picture not found in the database");
+				return;
+			  }
+		  
+			  if (response.status === 200) {
 				// construct full url based on relative path
-				const fullUrl = `http://localhost:5000/${response.data.data.filePath}`
-	  
+				const fullUrl = `http://localhost:5000/${response.data.data.filePath}`;
+				
 				// set profile picture
 				setProfilePicture(fullUrl);
 			  }
 			} catch (error) {
-			  console.log("fetchProfilePicture :: error fetching profile picture ", error)
+			  console.log("fetchProfilePicture :: error fetching profile picture ", error);
 			}
 		  }
 
@@ -91,15 +101,24 @@ const JobDetailsV1Area = ({job}:{job:IJobType}) => {
 				)
 				if(response.status === 200){
 					console.log("response.data.data.job: ", response.data.data.job);
+					companyhrid = response.data.data.job.companyHR_id;
+					console.log("companyhrid: ", companyhrid);
 					setJobData(response.data.data.job);
 				}
 			} catch (error) {
 				console.log("Error in getJobDetailsUsingId: ", error);
 			}
 		}
-		getJobDetailsUsingId();
-		fetchCompanyDetails();
-		fetchProfilePicture();
+
+		const fetchAllDetails = async () => {
+			await getJobDetailsUsingId();
+			await fetchCompanyDetails();
+			await fetchProfilePicture();
+		}
+		fetchAllDetails();
+		// getJobDetailsUsingId();
+		// fetchCompanyDetails();
+		// fetchProfilePicture();
 	}, [])
 
   return (
