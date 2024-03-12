@@ -120,10 +120,12 @@ loginCandidate(req, res) {
         email: candidate.email,
         firstname: candidate.firstname,
         lastname: candidate.lastname,
+        role: "candidate",
       },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
+
     console.log(token);
     res.status(200).json({
       message: "candidate logged in successfully",
@@ -131,6 +133,7 @@ loginCandidate(req, res) {
       id: candidate.candidate_id,
       firstname: candidate.firstname,
       lastname: candidate.lastname,
+      role: "candidate",
     });
   } catch (error) {
     console.log(error);

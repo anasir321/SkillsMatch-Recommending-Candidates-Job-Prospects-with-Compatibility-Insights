@@ -104,6 +104,16 @@ const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
 
   const [companyHRDetails, setCompanyHRDetails] = useState<any>({});
 
+  const logoutCompanyHR = () => {
+    const role = localStorage.getItem('roleHR');
+    console.log('Role:', role);
+    if (role === 'companyHR') {
+      localStorage.removeItem('tokenHR');
+      localStorage.removeItem('roleHR');
+      window.location.href = 'http://localhost:3000';
+    }
+  }
+
   useEffect(() => {
     const getCompanyHRDetails = async () => {
       try {
@@ -231,14 +241,14 @@ const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
           <p>Profile Complete</p>
         </div>
 
-        <a href="#" className="d-flex w-100 align-items-center logout-btn">
+        <a href="#" className="d-flex w-100 align-items-center logout-btn" onClick={logoutCompanyHR}>
           <Image src={logout} alt="icon" className="lazy-img" />
           <span>Logout</span>
         </a>
       </div>
     </aside>
     {/* LogoutModal star */}
-    <LogoutModal/>
+    {/* <LogoutModal/> */}
     {/* LogoutModal end */}
     </>
   );

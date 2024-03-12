@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const jwtMiddleware = (req, res, next) => {
+const jwtMiddlewareCandidate = (req, res, next) => {
     const token = req.header('Authorization');
 
     if (!token) {
@@ -15,11 +15,20 @@ const jwtMiddleware = (req, res, next) => {
     try {
         const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET);
         console.log("decoded: ",decoded);
-        req.user = {id: decoded.id};
-        next();
+
+        if(decoded.exp < Date.now().valueOf() / 1000){
+            return res.status(401).json({ message: 'Token has expired' });
+        }
+
+        if(decoded.role === 'candidate'){
+            req.user = {id: decoded.id, role: decoded.role};
+            next();
+        }else {
+            res.status(401).json({ message: 'User is not a candidate' });
+        }
     } catch (err) {
         res.status(401).json({ message: 'Token is not valid' });
     }
 };
 
-module.exports = jwtMiddleware;
+module.exports = jwtMiddlewareCandidate;

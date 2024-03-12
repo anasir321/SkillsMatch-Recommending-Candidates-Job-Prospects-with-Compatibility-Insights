@@ -124,6 +124,16 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
   // const [isSuccess, setIsSuccess] = useState<boolean>(false);
   // const [isShow, setIsShow] = useState<boolean>(false);
   // const [message, setMessage] = useState<string>("");
+
+  const logoutCandidate = () => {
+    const role = localStorage.getItem('roleC');
+    console.log('Role:', role);
+    if (role === 'candidate') {
+      localStorage.removeItem('tokenA');
+      localStorage.removeItem('roleC');
+      window.location.href = 'http://localhost:3000';
+    }
+  }
   
   useEffect(() => {
     const getUserDetails = async () => {
@@ -292,14 +302,14 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
           <p>Profile Complete</p>
         </div>
 
-        <a href="#" className="d-flex w-100 align-items-center logout-btn">
+        <a href="#" className="d-flex w-100 align-items-center logout-btn" onClick={logoutCandidate}>
           <Image src={logout} alt="icon" className="lazy-img" />
           <span>Logout</span>
         </a>
       </div>
     </aside>
     {/* LogoutModal star */}
-    <LogoutModal/>
+    {/* <LogoutModal/> */}
     {/* LogoutModal end */}
     </>
   );
