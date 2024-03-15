@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Institute extends Model {
+  class AppliedJobs extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,17 +11,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Institute.belongsTo(models.Candidate, {
+      AppliedJobs.belongsTo(models.Jobs, {
+        foreignKey: 'job_id',
+        onDelete: 'CASCADE',
+      });
+      AppliedJobs.belongsTo(models.Candidates, {
         foreignKey: 'candidate_id',
         onDelete: 'CASCADE',
       });
     }
   }
-  Institute.init({
-    institute_id: {
+  AppliedJobs.init({
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: true
+    },
+    job_id:{ 
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Jobs',
+        key: 'job_id'
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     },
     candidate_id: {
       type: DataTypes.INTEGER,
@@ -33,21 +47,18 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     },
-    institute_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false
     },
-    degree_program: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    duration: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     sequelize,
-    modelName: 'Institute',
+    modelName: 'AppliedJobs',
+    timestamps: true,
   });
-  return Institute;
+  return AppliedJobs;
 };
