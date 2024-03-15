@@ -4,14 +4,21 @@ import view from "@/assets/dashboard/images/icon/icon_18.svg";
 import share from "@/assets/dashboard/images/icon/icon_19.svg";
 import edit from "@/assets/dashboard/images/icon/icon_20.svg";
 import delete_icon from "@/assets/dashboard/images/icon/icon_21.svg";
+import Link from "next/link";
 
-const ActionDropdown = () => {
+interface ActionDropdownProps {
+  job_id: number;
+}
+
+const ActionDropdown = ({ job_id }) => {
   return (
     <ul className="dropdown-menu dropdown-menu-end">
       <li>
-        <a className="dropdown-item" href="#">
-          <Image src={view} alt="icon" className="lazy-img" /> View
-        </a>
+        <Link href={`/job-details-v1?job_id=${job_id}`}>
+          <div className="dropdown-item">
+            <Image src={view} alt="icon" className="lazy-img" /> View
+          </div>
+        </Link>
       </li>
       <li>
         <a className="dropdown-item" href="#">
