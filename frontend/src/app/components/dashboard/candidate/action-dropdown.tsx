@@ -1,17 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import view from "@/assets/dashboard/images/icon/icon_18.svg";
 import share from "@/assets/dashboard/images/icon/icon_19.svg";
 import edit from "@/assets/dashboard/images/icon/icon_20.svg";
 import delete_icon from "@/assets/dashboard/images/icon/icon_21.svg";
+import Link from "next/link";
+import axios from "axios";
 
-const ActionDropdown = () => {
+const ActionDropdown = ({ job_id }) => {
+
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [deleteError, setDeleteError] = useState(false);
+
+  // delete the job
+  const deleteJob = async () => {
+    try {
+
+      // console.log("delete job called:: job_id: ", job_id)
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(
+        `http://localhost:5000/api/auth/deleteJobUsingId/${job_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
+      );
+
+      if(response.status === 200){
+        setDeleteSuccess(true);
+      }
+    } catch (error) {
+      console.error(error);
+      setDeleteError(true);
+    }
+  }
+
   return (
     <ul className="dropdown-menu dropdown-menu-end">
       <li>
-        <a className="dropdown-item" href="#">
-          <Image src={view} alt="icon" className="lazy-img" /> View
-        </a>
+        <Link href={`/job-details-v1?job_id=${job_id}`}>
+          <div className="dropdown-item">
+            <Image src={view} alt="icon" className="lazy-img" /> View
+          </div>
+        </Link>
       </li>
       <li>
         <a className="dropdown-item" href="#">
@@ -19,12 +51,12 @@ const ActionDropdown = () => {
         </a>
       </li>
       <li>
-        <a className="dropdown-item" href="#">
+        <a className="dropdown-item" href={`/dashboard/employ-dashboard/edit-job?job_id=${job_id}`}>
           <Image src={edit} alt="icon" className="lazy-img" /> Edit
         </a>
       </li>
       <li>
-        <a className="dropdown-item" href="#">
+        <a className="dropdown-item" href="#" onClick={() => deleteJob()}>
           <Image src={delete_icon} alt="icon" className="lazy-img" /> Delete
         </a>
       </li>

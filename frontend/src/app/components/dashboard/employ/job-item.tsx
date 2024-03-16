@@ -66,7 +66,7 @@ const EmployJobItem = ({
             <span></span>
           </button>
           {/* action dropdown start */}
-          <ActionDropdown />
+          <ActionDropdown job_id={job_id}/>
           {/* action dropdown end */}
         </div>
       </td>
