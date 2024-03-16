@@ -37,7 +37,8 @@ const {
     submitJob,
     getJobsbyCompanyHR,
     getAllJobs,
-    getJobDetailsUsingId
+    getJobDetailsUsingId,
+    editJob
 } = require('../controllers/authControllerJobs')
 
 const jwtMiddlewareCandidate = require('../middleware/jwtMiddlewareCandidate');
@@ -83,5 +84,6 @@ router.put('/submitJob', jwtMiddlewareCompanyHR, submitJob);
 router.get('/getJobsbyCompanyHR', jwtMiddlewareCompanyHR, getJobsbyCompanyHR);
 router.get('/getAllJobs', jwtMiddlewareCompanyHR, getAllJobs);
 router.get('/getJobDetailsUsingId/:job_id', jwtMiddlewareCompanyHR, getJobDetailsUsingId);
+router.put('/editJob/:job_id', jwtMiddlewareCompanyHR, editJob);
 
 module.exports = router;

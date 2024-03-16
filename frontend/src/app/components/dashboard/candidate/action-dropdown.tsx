@@ -6,10 +6,6 @@ import edit from "@/assets/dashboard/images/icon/icon_20.svg";
 import delete_icon from "@/assets/dashboard/images/icon/icon_21.svg";
 import Link from "next/link";
 
-interface ActionDropdownProps {
-  job_id: number;
-}
-
 const ActionDropdown = ({ job_id }) => {
   return (
     <ul className="dropdown-menu dropdown-menu-end">
@@ -26,7 +22,7 @@ const ActionDropdown = ({ job_id }) => {
         </a>
       </li>
       <li>
-        <a className="dropdown-item" href="#">
+        <a className="dropdown-item" href={`/dashboard/employ-dashboard/edit-job?job_id=${job_id}`}>
           <Image src={edit} alt="icon" className="lazy-img" /> Edit
         </a>
       </li>

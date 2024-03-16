@@ -11,6 +11,7 @@ const fs = require("fs");
 
 dotenv.config();
 
+// submit job details (create a new job)
 async function submitJob(req, res) {
     try {
         const errors = validationResult(req);
@@ -74,7 +75,79 @@ async function submitJob(req, res) {
     }
 }
 
-// code of API to get jobs posted by porticular companyHR_id
+// edit job details (edit existing job details)
+async function editJob(req, res) {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                message: "Validation Failed",
+                errors: errors.array(),
+            });
+        }
+
+        const { job_id } = req.params;
+        const job = await Jobs.findOne({
+            where: {
+                job_id
+            }
+        });
+        
+        const { id } = req.user;
+        console.log("req.user from editJob: ", req.user);
+        const { 
+            job_title, 
+            job_description, 
+            job_location, 
+            soft_skills_required, 
+            work_experience_required, 
+            education_required,
+            job_type,
+            skills_required,
+            work_type,
+            salary,
+            job_status,
+            date_posted
+        } = req.body;
+        console.log("req.body from editJob: ", req.body);
+
+        // Check if a job exists for the current companyHR_id
+        // let job = await Jobs.findOne({ where: { companyHR_id: id } });
+        
+        if (job) {
+            // Update existing job details
+            job.job_title = job_title;
+            job.job_description = job_description;
+            job.job_location = job_location;
+            job.soft_skills_required = soft_skills_required;
+            job.work_experience_required = work_experience_required;
+            job.education_required = education_required;
+            job.job_type = job_type;
+            job.skills_required = skills_required;
+            job.work_type = work_type;
+            job.salary = salary;
+            job.job_status = job_status;
+            job.date_posted = date_posted;
+            
+            await job.save();
+
+            console.log("Updated job from editJob: ", job);
+
+            return res.status(200).json({
+                success: true,
+                message: "Job Updated Successfully",
+                data: { job },
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+
+// code of API to get jobs posted by particular companyHR_id
 async function getJobsbyCompanyHR(req, res) {
     try {
         const { id } = req.user;
@@ -136,5 +209,6 @@ module.exports = {
     submitJob,
     getJobsbyCompanyHR,
     getAllJobs,
-    getJobDetailsUsingId
+    getJobDetailsUsingId,
+    editJob
 }
