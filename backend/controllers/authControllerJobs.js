@@ -146,7 +146,6 @@ async function editJob(req, res) {
     }
 }
 
-
 // code of API to get jobs posted by particular companyHR_id
 async function getJobsbyCompanyHR(req, res) {
     try {
@@ -205,10 +204,42 @@ async function getJobDetailsUsingId(req, res) {
     }
 }
 
+async function deleteJobUsingId(req, res) {
+    try {
+        const { job_id } = req.params;
+
+        console.log("job_id from deleteJobUsingId: ", job_id);
+
+        const job = await Jobs.findOne({
+            where: {
+                job_id
+            }
+        });
+        
+        if (!job){
+            return res.status(404).json({message: "Job not found"})
+        }
+
+        if(job.companyHR_id !== req.user.id) {
+            return res.status(401).json({message: "You are not authorized to delete this job"})
+        }
+
+        await job.destroy();
+        return res.status(200).json({
+            success: true,
+            message: "Job deleted successfully",
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = { 
     submitJob,
     getJobsbyCompanyHR,
     getAllJobs,
     getJobDetailsUsingId,
-    editJob
+    editJob,
+    deleteJobUsingId
 }
