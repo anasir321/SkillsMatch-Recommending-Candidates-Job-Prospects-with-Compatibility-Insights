@@ -6,11 +6,9 @@ import edit from "@/assets/dashboard/images/icon/icon_20.svg";
 import delete_icon from "@/assets/dashboard/images/icon/icon_21.svg";
 import Link from "next/link";
 import axios from "axios";
+import { useEffect } from "react";
 
 const ActionDropdown = ({ job_id }) => {
-
-  const [deleteSuccess, setDeleteSuccess] = useState(false);
-  const [deleteError, setDeleteError] = useState(false);
 
   // delete the job
   const deleteJob = async () => {
@@ -26,13 +24,8 @@ const ActionDropdown = ({ job_id }) => {
           }
         }
       );
-
-      if(response.status === 200){
-        setDeleteSuccess(true);
-      }
     } catch (error) {
       console.error(error);
-      setDeleteError(true);
     }
   }
 
