@@ -11,18 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Interviews.belongsTo(models.Jobs, {
-        foreignKey: 'job_id',
-        onDelete: 'CASCADE',
-      });
-      Interviews.belongsTo(models.Candidates, {
-        foreignKey: 'candidate_id',
-        onDelete: 'CASCADE',
-      });
-      Interviews.belongsTo(models.Company_HRs, {
-        foreignKey: 'companyHR_id',
-        onDelete: 'CASCADE',
-      });
+      // Interviews.belongsTo(models.Job, {
+      //   foreignKey: 'job_id',
+      //   onDelete: 'CASCADE',
+      // });
+      // Interviews.belongsTo(models.Candidate, {
+      //   foreignKey: 'candidate_id',
+      //   onDelete: 'CASCADE',
+      // });
+      // Interviews.belongsTo(models.Company_HR, {
+      //   foreignKey: 'companyHR_id',
+      //   onDelete: 'CASCADE',
+      // });
     }
   }
   Interviews.init({

@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'candidate_id',
         onDelete: 'CASCADE',
       });
+      // Candidate.hasMany(models.AppliedJob, {
+      //   foreignKey: 'candidate_id',
+      //   onDelete: 'CASCADE',
+      // });
     }
   }
   Candidate.init({

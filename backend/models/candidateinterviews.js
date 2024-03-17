@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      CandidateInterviews.belongsTo(models.Candidates, {
-        foreignKey: 'candidate_id',
-        onDelete: 'CASCADE',
-      });
-      CandidateInterviews.belongsTo(models.Interviews, {
-        foreignKey: 'interview_id',
-        onDelete: 'CASCADE',
-      });
+      // CandidateInterviews.belongsTo(models.Candidate, {
+      //   foreignKey: 'candidate_id',
+      //   onDelete: 'CASCADE',
+      // });
+      // CandidateInterviews.belongsTo(models.Interview, {
+      //   foreignKey: 'interview_id',
+      //   onDelete: 'CASCADE',
+      // });
     }
   }
   CandidateInterviews.init({

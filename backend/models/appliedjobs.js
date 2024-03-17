@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      AppliedJobs.belongsTo(models.Jobs, {
-        foreignKey: 'job_id',
-        onDelete: 'CASCADE',
-      });
-      AppliedJobs.belongsTo(models.Candidates, {
-        foreignKey: 'candidate_id',
-        onDelete: 'CASCADE',
-      });
+      // AppliedJobs.belongsTo(models.Job, {
+      //   foreignKey: 'job_id',
+      //   onDelete: 'CASCADE',
+      // });
+      // AppliedJobs.belongsTo(models.Candidate, {
+      //   foreignKey: 'candidate_id',
+      //   onDelete: 'CASCADE',
+      // });
     }
   }
   AppliedJobs.init({
