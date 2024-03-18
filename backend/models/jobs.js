@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     job_description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     job_location: {
