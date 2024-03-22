@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 interface jobDetails {
   job_id: number;
@@ -142,6 +143,20 @@ useEffect(() => {
 		fetchCompanyDetails(jobData.companyHR_id);
 		fetchProfilePicture(jobData.companyHR_id);
 }, [jobData.companyHR_id])
+
+const handleApplyNowClick = (req, res) => {
+  const token = localStorage.getItem("token") as string;
+  const decodedToken = jwtDecode(token);
+  const userRole = decodedToken.role;
+  console.log("Apply Now clicked :: userRole: ", userRole);
+  if(userRole === "candidate"){
+    try{
+      
+    } catch (error) {
+      console.log("job-details :: Error in handleApplyNowClick: ", error);
+    }
+  }
+}
 
   return (
     <section className="job-details pt-100 lg-pt-80 pb-130 lg-pb-80">
@@ -336,7 +351,7 @@ useEffect(() => {
 									<a key={i} href="#">{t}</a>
 									))}
 								</div> */}
-                <a href="#" className="btn-one w-100 mt-25">
+                <a href="#" className="btn-one w-100 mt-25" onClick={handleApplyNowClick}>
                   Apply Now
                 </a>
               </div>
