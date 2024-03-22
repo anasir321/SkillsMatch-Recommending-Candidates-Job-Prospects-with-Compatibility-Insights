@@ -44,6 +44,7 @@ const {
 
 const jwtMiddlewareCandidate = require('../middleware/jwtMiddlewareCandidate');
 const jwtMiddlewareCompanyHR = require('../middleware/jwtMiddlewareCompanyHR');
+const jwtMiddlewareAllUsers = require('../middleware/jwtMiddlewareAllUsers');
 
 // CANDIDATE CRUD
 router.post('/signupCandidate', signupCandidate);
@@ -76,15 +77,18 @@ router.get('/companyDetails', jwtMiddlewareCompanyHR, getCompanyDetails);
 router.put('/saveCompanyDetails', jwtMiddlewareCompanyHR, saveCompanyDetails);
 router.post('/uploadCompanyProfilePicture', jwtMiddlewareCompanyHR, uploadCompanyProfilePicture);
 router.get('/getCompanyProfilePicture', jwtMiddlewareCompanyHR, getCompanyProfilePicture);
-router.get('/getAllCompanies', jwtMiddlewareCompanyHR, getAllCompanies);
+// router.get('/getAllCompanies', jwtMiddlewareCompanyHR, getAllCompanies);
+router.get('/getAllCompanies', jwtMiddlewareAllUsers, getAllCompanies);
 router.get('/getCompanyProfilePictureUsingId/:id', getCompanyProfilePictureUsingId);
 router.get('/getCompanyDetailsUsingId/:id', getCompanyDetailsUsingId);
+
 
 //JOBS
 router.put('/submitJob', jwtMiddlewareCompanyHR, submitJob);
 router.get('/getJobsbyCompanyHR', jwtMiddlewareCompanyHR, getJobsbyCompanyHR);
-router.get('/getAllJobs', jwtMiddlewareCompanyHR, getAllJobs);
-router.get('/getJobDetailsUsingId/:job_id', jwtMiddlewareCompanyHR, getJobDetailsUsingId);
+router.get('/getAllJobs', jwtMiddlewareAllUsers, getAllJobs);
+// router.get('/getJobDetailsUsingId/:job_id', jwtMiddlewareCompanyHR, getJobDetailsUsingId);
+router.get('/getJobDetailsUsingId/:job_id', jwtMiddlewareAllUsers, getJobDetailsUsingId);
 router.put('/editJob/:job_id', jwtMiddlewareCompanyHR, editJob);
 router.delete('/deleteJobUsingId/:job_id', jwtMiddlewareCompanyHR, deleteJobUsingId);
 
