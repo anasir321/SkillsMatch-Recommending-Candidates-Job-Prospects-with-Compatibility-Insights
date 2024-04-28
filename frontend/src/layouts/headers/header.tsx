@@ -1,5 +1,6 @@
 "use client"
 import React from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Menus from "./component/menus";
@@ -8,9 +9,59 @@ import CategoryDropdown from "./component/category-dropdown";
 import LoginModal from "@/app/components/common/popup/login-modal";
 import LoginModalCompanyHR from "@/app/components/common/popup/login-modal-companyHR";
 import useSticky from "@/hooks/use-sticky";
+import { jwtDecode } from "jwt-decode";
+
+// // Define an interface representing the structure of your JWT payload
+// interface JwtPayload {
+//   firstName: string;
+//   lastName: string;
+//   // Add more properties if needed
+// }
+
+// extract user details from jwt token
+const getUserDetails = (token: string) => {
+  try{
+    const decoded = jwtDecode(token);
+    return {
+      firstname: decoded.firstname,
+      lastname: decoded.lastname,
+    }
+
+  } catch(err){
+    console.error("Error decoding jwt token", err);
+    return null;
+  }
+}
+
 
 const Header = () => {
-  const {sticky} = useSticky()
+  const {sticky} = useSticky();
+  const [isLogged, setIsLoggedIn] = React.useState(false);
+  const [user, setUser] = React.useState<{ firstname: any; lastname: any; } | null>(null);
+
+  useEffect(() => {
+    // Check if JWT token exists in local storage or cookie
+    const token = localStorage.getItem("token"); // Adjust this based on where you store your token
+    console.log("token", token);
+
+    if (token) {
+      // Decode token to get user information
+      const userData = getUserDetails(token);
+      console.log("userData", userData);
+
+      if (userData) {
+        setIsLoggedIn(true);
+        setUser(userData);
+      } else {
+        setIsLoggedIn(false);
+        setUser(null);
+      }
+    } else {
+      setIsLoggedIn(false);
+      setUser(null);
+    }
+  }, []);
+
   return (
     <>
     <header className={`theme-main-menu menu-overlay menu-style-one sticky-menu ${sticky?'fixed':''}`}>
