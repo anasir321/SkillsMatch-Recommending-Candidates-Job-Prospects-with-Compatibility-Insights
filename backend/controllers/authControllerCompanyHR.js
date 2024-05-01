@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Company_HR, AppliedJobs } = require('../models');
+const { Company_HR, AppliedJobs, Candidate } = require('../models');
 const { Company } = require("../models");
 const dotenv = require('dotenv');
 const { validationResult } = require('express-validator');
@@ -381,27 +381,68 @@ async function getCandidateDetailsUsingEmail(req, res) {
 }
 
 // get applicants using JobId
+// async function getApplicantsUsingJobId(req, res) {
+//     try {
+//         const job_id = parseInt(req.params.job_id, 10);
+//         // const applicants = await AppliedJobs.findAll({ where: {job_id: job_id}});
+//         const applicants = await AppliedJobs.findAll({ where: {job_id: job_id}});
+
+//         console.log("getApplicantsUsingJobId :: job_id: ", job_id)
+//         console.log("getApplicantsUsingJobId :: applicants: ", applicants);
+
+//         if(!applicants){
+//             return res.status(404).json({ message: "No applicants found" });
+//         }
+//         res.status(200).json({
+//             message: "Applicants retrieved successfully",
+//             data: { applicants },
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: "Error! Unable to get applicants." });
+//     }
+// }
+
 async function getApplicantsUsingJobId(req, res) {
     try {
         const job_id = parseInt(req.params.job_id, 10);
-        // const applicants = await AppliedJobs.findAll({ where: {job_id: job_id}});
-        const applicants = await AppliedJobs.findAll({ where: {job_id: job_id}});
-
-        console.log("getApplicantsUsingJobId :: job_id: ", job_id)
+        
+        // Step 1: Retrieve applicant records with the specified job_id
+        const applicants = await AppliedJobs.findAll({ where: { job_id: job_id } });
+        
+        console.log("getApplicantsUsingJobId :: job_id: ", job_id);
         console.log("getApplicantsUsingJobId :: applicants: ", applicants);
-
-        if(!applicants){
+        
+        if (!applicants || applicants.length === 0) {
             return res.status(404).json({ message: "No applicants found" });
         }
+        
+        // Step 2: Extract the candidate_ids from the applicants
+        const candidate_id = applicants.map(applicant => applicant.candidate_id);
+
+        console.log("getApplicantsUsingJobId :: candidate_id: ", candidate_id);
+        
+        // Step 3: Retrieve candidates using the candidate_ids
+        const candidates = await Candidate.findAll({ where: { candidate_id: candidate_id } });
+
+        console.log("getApplicantsUsingJobId :: candidates: ", candidates);
+        
+        if (!candidates || candidates.length === 0) {
+            return res.status(404).json({ message: "No candidates found" });
+        }
+
+        // Step 4: Send the retrieved candidates in the response
         res.status(200).json({
-            message: "Applicants retrieved successfully",
-            data: { applicants },
+            message: "Candidates retrieved successfully",
+            data: { candidates },
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Error! Unable to get applicants." });
+        res.status(500).json({ message: "Error! Unable to get candidates." });
     }
 }
+
+
 
 module.exports = { 
     signupCompanyHR, 
