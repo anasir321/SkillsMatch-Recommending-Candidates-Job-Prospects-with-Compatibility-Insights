@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Company_HR } = require('../models');
+const { Company_HR, AppliedJobs } = require('../models');
 const { Company } = require("../models");
 const dotenv = require('dotenv');
 const { validationResult } = require('express-validator');
@@ -380,6 +380,29 @@ async function getCandidateDetailsUsingEmail(req, res) {
     }
 }
 
+// get applicants using JobId
+async function getApplicantsUsingJobId(req, res) {
+    try {
+        const job_id = parseInt(req.params.job_id, 10);
+        // const applicants = await AppliedJobs.findAll({ where: {job_id: job_id}});
+        const applicants = await AppliedJobs.findAll({ where: {job_id: job_id}});
+
+        console.log("getApplicantsUsingJobId :: job_id: ", job_id)
+        console.log("getApplicantsUsingJobId :: applicants: ", applicants);
+
+        if(!applicants){
+            return res.status(404).json({ message: "No applicants found" });
+        }
+        res.status(200).json({
+            message: "Applicants retrieved successfully",
+            data: { applicants },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error! Unable to get applicants." });
+    }
+}
+
 module.exports = { 
     signupCompanyHR, 
     loginCompanyHR, 
@@ -390,6 +413,7 @@ module.exports = {
     getCompanyProfilePicture,
     getAllCompanies,
     getCompanyProfilePictureUsingId,
-    getCompanyDetailsUsingId
+    getCompanyDetailsUsingId,
+    getApplicantsUsingJobId
 }
 

@@ -140,10 +140,10 @@ const ListItemTwo = ({ item }: { item: jobDetails }) => {
               <i className="bi bi-bookmark-dash"></i>
             </a> */}
             <Link
-              href={`/job-details-v1/${item.job_id}`}
+              href={`/job-details-v1?job_id=${item.job_id}`}
               className="apply-btn text-center tran3s"
             >
-              APPLY
+              VIEW
             </Link>
           </div>
         </div>

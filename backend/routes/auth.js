@@ -18,7 +18,8 @@ const { signupCandidate,
         getWorkExperienceDetails,
         getCandidateDetailsUsingEmail,
         uploadResume,
-        getResume
+        getResume,
+        applyJob
     } = require('../controllers/authControllerCandidate');
 
 const{  signupCompanyHR, 
@@ -30,7 +31,8 @@ const{  signupCompanyHR,
         getCompanyProfilePicture,
         getAllCompanies,
         getCompanyProfilePictureUsingId,
-        getCompanyDetailsUsingId
+        getCompanyDetailsUsingId,
+        getApplicantsUsingJobId
     } = require('../controllers/authControllerCompanyHR');
 
 const {
@@ -81,6 +83,7 @@ router.get('/getCompanyProfilePicture', jwtMiddlewareCompanyHR, getCompanyProfil
 router.get('/getAllCompanies', jwtMiddlewareAllUsers, getAllCompanies);
 router.get('/getCompanyProfilePictureUsingId/:id', getCompanyProfilePictureUsingId);
 router.get('/getCompanyDetailsUsingId/:id', getCompanyDetailsUsingId);
+router.get('/getApplicantsUsingJobId/:job_id', jwtMiddlewareCompanyHR, getApplicantsUsingJobId);
 
 
 //JOBS
@@ -91,5 +94,6 @@ router.get('/getAllJobs', jwtMiddlewareAllUsers, getAllJobs);
 router.get('/getJobDetailsUsingId/:job_id', jwtMiddlewareAllUsers, getJobDetailsUsingId);
 router.put('/editJob/:job_id', jwtMiddlewareCompanyHR, editJob);
 router.delete('/deleteJobUsingId/:job_id', jwtMiddlewareCompanyHR, deleteJobUsingId);
+router.post('/applyJob', jwtMiddlewareCandidate, applyJob);
 
 module.exports = router;

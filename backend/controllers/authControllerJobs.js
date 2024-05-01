@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Company_HR } = require('../models');
+
+const { Company_HR, AppliedJobs } = require('../models');
+
 const { Company } = require("../models");
 const { Jobs } = require("../models");
 const dotenv = require('dotenv');
