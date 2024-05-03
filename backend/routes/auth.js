@@ -19,7 +19,9 @@ const { signupCandidate,
         getCandidateDetailsUsingEmail,
         uploadResume,
         getResume,
-        applyJob
+        applyJob,
+        getAppliedJobs,
+        getJobDetailsUsingCandidateId
     } = require('../controllers/authControllerCandidate');
 
 const{  signupCompanyHR, 
@@ -69,6 +71,8 @@ router.get('/getWorkExperienceDetails', jwtMiddlewareCandidate, getWorkExperienc
 router.get('/getCandidateDetailsUsingEmail/:email',getCandidateDetailsUsingEmail);
 router.post('/uploadResume', jwtMiddlewareCandidate, uploadResume);
 router.get('/getResume', jwtMiddlewareCandidate, getResume);
+router.get('/getAppliedJobs', jwtMiddlewareCandidate, getAppliedJobs);
+router.get('/getJobDetailsUsingCandidateId/:candidate_id', jwtMiddlewareCandidate, getJobDetailsUsingCandidateId);
 
 
 // COMPANY HR LOGIN AND SIGNUP ROUTES

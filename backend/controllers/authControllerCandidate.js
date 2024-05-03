@@ -782,6 +782,73 @@ async function applyJob(req, res) {
   }
 }
 
+async function getAppliedJobs(req, res){
+  try{
+    const { id } = req.user;
+    const appliedJobs = await AppliedJobs.findAll({ where: { candidate_id: id } });
+    if (!appliedJobs){
+      return res.status(404).json({ 
+        success: false,
+        message: "Applied Jobs not found"
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Applied Jobs retrieved successfully",
+      data: { appliedJobs },
+    });
+  } catch(error){
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve applied jobs.",
+      error: error.message,
+    });
+  }
+}
+
+async function getJobDetailsUsingCandidateId(req, res){
+  try{
+    const candidate_id = req.params.candidate_id;
+
+    const appliedJobs = await AppliedJobs.findAll({ where: { candidate_id: candidate_id } });
+
+    if(!appliedJobs){
+      return res.status(404).json({
+        success: false,
+        message: "No jobs found against this candidate"
+      });
+    }
+
+    // get job_ids of all the jobs applied by the candidate
+    const job_ids = appliedJobs.map(job => job.job_id);
+
+    const jobs = await Jobs.findAll({ where: { job_id: job_ids } });
+
+    if(!jobs){
+      return res.status(404).json({
+        success: false,
+        message: "No job details found against this job_id"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Job details retrieved successfully",
+      data: { jobs },
+    });
+
+  } catch(error){
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve job details.",
+      error: error.message,
+    });
+  }
+
+}
+
 module.exports = {
   signupCandidate,
   loginCandidate,
@@ -801,5 +868,7 @@ module.exports = {
   getCandidateDetailsUsingEmail,
   uploadResume,
   getResume,
-  applyJob
+  applyJob,
+  getAppliedJobs,
+  getJobDetailsUsingCandidateId
 };

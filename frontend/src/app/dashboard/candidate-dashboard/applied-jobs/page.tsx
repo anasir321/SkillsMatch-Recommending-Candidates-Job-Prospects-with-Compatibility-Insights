@@ -4,7 +4,7 @@ import Wrapper from "@/layouts/wrapper";
 import CandidateAside from "@/app/components/dashboard/candidate/aside";
 import AppliedJobsArea from "@/app/components/dashboard/candidate/applied-jobs";
 
-const CandidateDashboardSavedJobPage = () => {
+const CandidateDashboardAppliedJobsPage = () => {
   const [isOpenSidebar,setIsOpenSidebar] = useState<boolean>(false);
   return (
     <Wrapper>
@@ -21,4 +21,4 @@ const CandidateDashboardSavedJobPage = () => {
   );
 };
 
-export default CandidateDashboardSavedJobPage;
+export default CandidateDashboardAppliedJobsPage;
