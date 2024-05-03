@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { Candidate, Institute, WorkExperience } = require("../models");
+const { Candidate, Institute, WorkExperience, Jobs, AppliedJobs } = require("../models");
 
 const dotenv = require("dotenv");
 
@@ -717,6 +717,7 @@ async function getAllCandidates(req, res) {
     res.status(500).json({ message: "Error! Unable to retrieve candidates" });
   }
 }
+
 async function getCandidateDetailsUsingEmail(req, res) {
   try {
       const {email} = req.params;
@@ -731,6 +732,53 @@ async function getCandidateDetailsUsingEmail(req, res) {
   } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Error! Unable to get Candidate details." });
+  }
+}
+
+// apply for a job
+async function applyJob(req, res) {
+  try {
+     // Extract job_id and candidate_id from request body
+     const { job_id, candidate_id } = req.body;
+
+     // Find the job and candidate in the database
+     const job = await Jobs.findByPk(job_id);
+     const candidate = await Candidate.findByPk(candidate_id);
+
+     // Check if job and candidate exist
+     if (!job) {
+         return res.status(404).json({ message: "Job not found" });
+     }
+     if (!candidate) {
+         return res.status(404).json({ message: "Candidate not found" });
+     }
+
+     // Check if the candidate has already applied for the job
+     const existingApplication = await AppliedJobs.findOne({
+         where: {
+             job_id,
+             candidate_id,
+         },
+     });
+
+     if (existingApplication) {
+         return res.status(201).json({ message: "Candidate has already applied for this job" });
+     }
+
+     // Create a new job application
+     const application = await AppliedJobs.create({
+         job_id,
+         candidate_id,
+     });
+
+     // Send a success response
+     res.status(200).json({
+      message: "Candidate successfully applied for the job",
+      data: { application },
+  });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error! Unable to retrieve candidates" });
   }
 }
 
@@ -753,4 +801,5 @@ module.exports = {
   getCandidateDetailsUsingEmail,
   uploadResume,
   getResume,
+  applyJob
 };

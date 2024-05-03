@@ -93,6 +93,13 @@ const nav_data: {
     link: "/dashboard/employ-dashboard/setting",
     title: "Account Settings",
   },
+  // {
+  //   id: 9,
+  //   icon: nav_3,
+  //   icon_active: nav_3_active,
+  //   link: "/dashboard/employ-dashboard/candidatesapplied",
+  //   title: "Candidates who applied",
+  // },
  
 ];
 // props type 
