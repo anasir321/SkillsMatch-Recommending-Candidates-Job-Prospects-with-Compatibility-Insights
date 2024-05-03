@@ -9,26 +9,51 @@ import axios from "axios";
 import { useEffect } from "react";
 import { Icons } from "react-toastify";
 
+import { useSearchParams } from "next/navigation";
+
+import { jwtDecode } from "jwt-decode";
+
 const ActionDropdownApplicant = ({ candidate_id }) => {
 
-  // delete the job
-//   const deleteJob = async () => {
-//     try {
+  const token = localStorage.getItem("token") as string;
+  const decodedToken = jwtDecode(token);
+  const company_hr_id = decodedToken.id;
 
-//       // console.log("delete job called:: job_id: ", job_id)
-//       const token = localStorage.getItem("token");
-//       const response = await axios.delete(
-//         `http://localhost:5000/api/auth/deleteJobUsingId/${job_id}`,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           }
-//         }
-//       );
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
+  // job id from params
+  const searchParams = useSearchParams();
+  const job_id = searchParams.get("job_id");
+  
+
+  console.log("action-dropdown-applicant.tsx :: candidate_id: ", candidate_id);
+  console.log("action-dropdown-applicant.tsx :: company_hr_id: ", company_hr_id);
+  console.log("action-dropdown-applicant.tsx :: job_id: ", job_id);
+
+  const saveCandidate = async () => {
+    try{
+      const data = {
+        company_hr_id,
+        candidate_id,
+        job_id,
+      };
+
+      const response = await axios.post(
+        `http://localhost:5000/api/auth/saveCandidate`,
+        data,
+        {
+          headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+
+      if(response.status === 201){
+        console.log("action-dropdown-applicant.tsx :: saveCandidate :: response.data: ", response.data);
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <ul className="dropdown-menu dropdown-menu-end">
@@ -39,11 +64,11 @@ const ActionDropdownApplicant = ({ candidate_id }) => {
           </div>
         </Link>
       </li>
-      {/* <li>
-        <a className="dropdown-item" href="#">
-          <Image src={share} alt="icon" className="lazy-img" /> Share
+      <li>
+        <a className="dropdown-item" href="#" onClick={() => saveCandidate()}>
+          <Image src={edit} alt="icon" className="lazy-img" /> Save Candidate
         </a>
-      </li> */}
+      </li>
       {/* <li>
         <a className="dropdown-item" href={`/dashboard/employ-dashboard/edit-job?job_id=${candidate_id}`}>
           <Image src={edit} alt="icon" className="lazy-img" /> Edit Job

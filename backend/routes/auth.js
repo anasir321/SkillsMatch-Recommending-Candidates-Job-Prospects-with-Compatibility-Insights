@@ -32,7 +32,9 @@ const{  signupCompanyHR,
         getAllCompanies,
         getCompanyProfilePictureUsingId,
         getCompanyDetailsUsingId,
-        getApplicantsUsingJobId
+        getApplicantsUsingJobId,
+        saveCandidate,
+        unsaveCandidate
     } = require('../controllers/authControllerCompanyHR');
 
 const {
@@ -84,6 +86,8 @@ router.get('/getAllCompanies', jwtMiddlewareAllUsers, getAllCompanies);
 router.get('/getCompanyProfilePictureUsingId/:id', getCompanyProfilePictureUsingId);
 router.get('/getCompanyDetailsUsingId/:id', getCompanyDetailsUsingId);
 router.get('/getApplicantsUsingJobId/:job_id', jwtMiddlewareCompanyHR, getApplicantsUsingJobId);
+router.post('/saveCandidate', jwtMiddlewareCompanyHR, saveCandidate);
+router.delete('/unsaveCandidate', jwtMiddlewareCompanyHR, unsaveCandidate);
 
 
 //JOBS

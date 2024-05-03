@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Company_HR, AppliedJobs, Candidate } = require('../models');
-const { Company } = require("../models");
+const { Company, SavedCandidates } = require("../models");
 const dotenv = require('dotenv');
 const { validationResult } = require('express-validator');
 const multer = require("multer");
@@ -442,6 +442,87 @@ async function getApplicantsUsingJobId(req, res) {
     }
 }
 
+// save Candidate
+async function saveCandidate(req, res) {
+    try {
+        const {company_hr_id, job_id, candidate_id} = req.body;
+
+        console.log("saveCandidate :: req.body: ", req.body);
+
+        if (!company_hr_id || !job_id || !candidate_id) {
+            return res.status(400).json({ message: "Please provide all the details" });
+        }
+
+        var companyHR_id = company_hr_id;
+
+        const existingRecord = await SavedCandidates.findOne({
+            where: {
+                companyHR_id,
+                candidate_id,
+                job_id,
+            },
+        });
+
+        if (existingRecord) {
+            return res.status(409).json({ error: 'Candidate is already saved for this job and companyHR_id' });
+        }
+
+         // Create a new record in the SavedCandidates table
+         const newSavedCandidate = await SavedCandidates.create({
+            companyHR_id,
+            candidate_id,
+            job_id,
+        });
+
+        return res.status(201).json(newSavedCandidate);
+    } catch (error) {
+         // Handle errors and send an error response
+         console.error('Error saving candidate data:', error);
+         return res.status(500).json({ error: 'An error occurred while saving the candidate data' });
+    }
+}
+
+// API function to unsave candidate data
+async function unsaveCandidate(req, res) {
+    try {
+        // Extract data from the request body
+        const { company_hr_id, job_id, candidate_id } = req.body;
+
+        console.log("unsaveCandidate :: req.body: ", req.body);
+
+        // Validate the data
+        if (!company_hr_id || !job_id || !candidate_id) {
+            return res.status(400).json({ message: "Please provide all the details" });
+        }
+
+        var companyHR_id = company_hr_id;
+
+        // Find the record to be deleted in the SavedCandidates table
+        const existingRecord = await SavedCandidates.findOne({
+            where: {
+                companyHR_id,
+                candidate_id,
+                job_id,
+            },
+        });
+
+        // If the record does not exist, return a 404 error
+        if (!existingRecord) {
+            return res.status(404).json({ error: 'Candidate not found for this job and companyHR_id' });
+        }
+
+        // Delete the record from the SavedCandidates table
+        await existingRecord.destroy();
+
+        // Send a success response after deletion
+        return res.status(200).json({ message: 'Candidate unsaved successfully' });
+    } catch (error) {
+        // Handle errors and send an error response
+        console.error('Error unsaving candidate data:', error);
+        return res.status(500).json({ error: 'An error occurred while unsaving the candidate data' });
+    }
+}
+
 
 
 module.exports = { 
@@ -455,6 +536,8 @@ module.exports = {
     getAllCompanies,
     getCompanyProfilePictureUsingId,
     getCompanyDetailsUsingId,
-    getApplicantsUsingJobId
+    getApplicantsUsingJobId,
+    saveCandidate,
+    unsaveCandidate
 }
 
