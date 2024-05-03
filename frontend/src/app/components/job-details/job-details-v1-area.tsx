@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 interface jobDetails {
   job_id: number;
@@ -24,6 +25,15 @@ interface jobDetails {
 }
 
 const JobDetailsV1Area = ({ job }: { job: IJobType }) => {
+
+  const token = localStorage.getItem("token") as string;
+  const decodedToken = jwtDecode(token);
+  const userrole = decodedToken.role;
+  console.log("job-details-v1-area :: userRole: ", userrole);
+  const [showNotification, setShowNotification] = useState(false);
+  const [showAppliedNotification, setShowAppliedNotification] = useState(false);
+
+
   const searchParams = useSearchParams();
   const [jobData, setJobData] = useState<jobDetails>({
     job_id: 0,
@@ -44,7 +54,7 @@ const JobDetailsV1Area = ({ job }: { job: IJobType }) => {
   const [companyDetails, setCompanyDetails] = useState<any>({});
   const [profilePicture, setProfilePicture] = useState<string>("");
   const job_id = searchParams.get("job_id");
-  console.log("job_id: ", job_id);
+  console.log("job-details-v1-area :: job_id: ", job_id);
 //   var companyhrid = 0;
 
   // get company details by companyHR_id
@@ -142,6 +152,59 @@ useEffect(() => {
 		fetchCompanyDetails(jobData.companyHR_id);
 		fetchProfilePicture(jobData.companyHR_id);
 }, [jobData.companyHR_id])
+
+const handleApplyNowClick = async () => {
+  const token = localStorage.getItem("token") as string;
+  const decodedToken = jwtDecode(token);
+  const userRole = decodedToken.role;
+  console.log("Apply Now clicked :: userRole: ", userRole);
+
+  if(userRole === "candidate"){
+    const data = {
+      job_id: job_id,
+      candidate_id: decodedToken.id
+    }
+
+    console.log("job-details-v1-area :: handleApplyNowClick :: data: ", data);
+
+    try{
+      const response = await axios.post(
+			`http://localhost:5000/api/auth/applyJob`,
+      data,
+			{
+			  headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			  },
+			});
+
+      // console.log("job-details-v1-area :: handleApplyNowClick :: response leone pessi: ", response);
+
+      // Check the response status to ensure successful application
+      if (response.status === 200) {
+        // console.log('Successfully applied for the job:', response);
+        // Show notification on successful application
+        // alert("You have successfully applied for this job!")
+        setShowNotification(true);
+        
+        // // Hide the notification after a few seconds
+        setTimeout(() => {
+            setShowNotification(false);
+        }, 10000); // Change the duration as desired (3000ms = 3 seconds)
+    } else if (response.status === 201){
+        // alert("You have already applied for this job!");
+        setShowAppliedNotification(true);
+        // // Hide the notification after a few seconds
+        setTimeout(() => {
+            setShowAppliedNotification(false);
+        }, 10000); // Change the duration as desired (3000ms = 3 seconds)
+    } else {
+        console.log('Error applying for the job:', response);
+      }
+    } catch (error) {
+      console.log("job-details :: Error in handleApplyNowClick: ", error);
+    }
+  }
+}
 
   return (
     <section className="job-details pt-100 lg-pt-80 pb-130 lg-pb-80">
@@ -336,9 +399,26 @@ useEffect(() => {
 									<a key={i} href="#">{t}</a>
 									))}
 								</div> */}
-                <a href="#" className="btn-one w-100 mt-25">
-                  Apply Now
-                </a>
+
+                {userrole === "candidate" && (
+                  <a href="#" className="btn-one w-100 mt-25" onClick={handleApplyNowClick}>
+                    Apply Now
+                  </a>
+                )}
+
+                 {/* Conditional rendering for notification */}
+                {showNotification && (
+                    <div className="fixed top-4 right-4 p-4 bg-green-500 text-dark rounded-md shadow-lg transition-opacity duration-300 ease-in-out">
+                        You have successfully applied for this job!
+                    </div>
+                )}
+
+                {showAppliedNotification && (
+                    <div className="fixed top-4 right-4 p-4 bg-green-500 text-dark rounded-md shadow-lg transition-opacity duration-300 ease-in-out">
+                        You have already applied for this job!
+                    </div>
+                )}
+                
               </div>
             </div>
           </div>

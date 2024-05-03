@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     job_description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     job_location: {
@@ -78,6 +78,11 @@ module.exports = (sequelize, DataTypes) => {
     date_posted: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    applicants: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
     },
   }, {
     sequelize,

@@ -18,7 +18,8 @@ const { signupCandidate,
         getWorkExperienceDetails,
         getCandidateDetailsUsingEmail,
         uploadResume,
-        getResume
+        getResume,
+        applyJob
     } = require('../controllers/authControllerCandidate');
 
 const{  signupCompanyHR, 
@@ -30,7 +31,10 @@ const{  signupCompanyHR,
         getCompanyProfilePicture,
         getAllCompanies,
         getCompanyProfilePictureUsingId,
-        getCompanyDetailsUsingId
+        getCompanyDetailsUsingId,
+        getApplicantsUsingJobId,
+        saveCandidate,
+        unsaveCandidate
     } = require('../controllers/authControllerCompanyHR');
 
 const {
@@ -44,6 +48,7 @@ const {
 
 const jwtMiddlewareCandidate = require('../middleware/jwtMiddlewareCandidate');
 const jwtMiddlewareCompanyHR = require('../middleware/jwtMiddlewareCompanyHR');
+const jwtMiddlewareAllUsers = require('../middleware/jwtMiddlewareAllUsers');
 
 // CANDIDATE CRUD
 router.post('/signupCandidate', signupCandidate);
@@ -76,16 +81,23 @@ router.get('/companyDetails', jwtMiddlewareCompanyHR, getCompanyDetails);
 router.put('/saveCompanyDetails', jwtMiddlewareCompanyHR, saveCompanyDetails);
 router.post('/uploadCompanyProfilePicture', jwtMiddlewareCompanyHR, uploadCompanyProfilePicture);
 router.get('/getCompanyProfilePicture', jwtMiddlewareCompanyHR, getCompanyProfilePicture);
-router.get('/getAllCompanies', jwtMiddlewareCompanyHR, getAllCompanies);
+// router.get('/getAllCompanies', jwtMiddlewareCompanyHR, getAllCompanies);
+router.get('/getAllCompanies', jwtMiddlewareAllUsers, getAllCompanies);
 router.get('/getCompanyProfilePictureUsingId/:id', getCompanyProfilePictureUsingId);
 router.get('/getCompanyDetailsUsingId/:id', getCompanyDetailsUsingId);
+router.get('/getApplicantsUsingJobId/:job_id', jwtMiddlewareCompanyHR, getApplicantsUsingJobId);
+router.post('/saveCandidate', jwtMiddlewareCompanyHR, saveCandidate);
+router.delete('/unsaveCandidate', jwtMiddlewareCompanyHR, unsaveCandidate);
+
 
 //JOBS
 router.put('/submitJob', jwtMiddlewareCompanyHR, submitJob);
 router.get('/getJobsbyCompanyHR', jwtMiddlewareCompanyHR, getJobsbyCompanyHR);
-router.get('/getAllJobs', jwtMiddlewareCompanyHR, getAllJobs);
-router.get('/getJobDetailsUsingId/:job_id', jwtMiddlewareCompanyHR, getJobDetailsUsingId);
+router.get('/getAllJobs', jwtMiddlewareAllUsers, getAllJobs);
+// router.get('/getJobDetailsUsingId/:job_id', jwtMiddlewareCompanyHR, getJobDetailsUsingId);
+router.get('/getJobDetailsUsingId/:job_id', jwtMiddlewareAllUsers, getJobDetailsUsingId);
 router.put('/editJob/:job_id', jwtMiddlewareCompanyHR, editJob);
 router.delete('/deleteJobUsingId/:job_id', jwtMiddlewareCompanyHR, deleteJobUsingId);
+router.post('/applyJob', jwtMiddlewareCandidate, applyJob);
 
 module.exports = router;

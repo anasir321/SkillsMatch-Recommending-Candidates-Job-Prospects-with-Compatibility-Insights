@@ -7,6 +7,7 @@ import delete_icon from "@/assets/dashboard/images/icon/icon_21.svg";
 import Link from "next/link";
 import axios from "axios";
 import { useEffect } from "react";
+import { Icons } from "react-toastify";
 
 const ActionDropdown = ({ job_id }) => {
 
@@ -34,23 +35,28 @@ const ActionDropdown = ({ job_id }) => {
       <li>
         <Link href={`/job-details-v1?job_id=${job_id}`}>
           <div className="dropdown-item">
-            <Image src={view} alt="icon" className="lazy-img" /> View
+            <Image src={view} alt="icon" className="lazy-img" /> View Job
           </div>
         </Link>
       </li>
-      <li>
+      {/* <li>
         <a className="dropdown-item" href="#">
           <Image src={share} alt="icon" className="lazy-img" /> Share
         </a>
-      </li>
+      </li> */}
       <li>
         <a className="dropdown-item" href={`/dashboard/employ-dashboard/edit-job?job_id=${job_id}`}>
-          <Image src={edit} alt="icon" className="lazy-img" /> Edit
+          <Image src={edit} alt="icon" className="lazy-img" /> Edit Job
         </a>
       </li>
       <li>
         <a className="dropdown-item" href="#" onClick={() => deleteJob()}>
-          <Image src={delete_icon} alt="icon" className="lazy-img" /> Delete
+          <Image src={delete_icon} alt="icon" className="lazy-img" /> Delete Job
+        </a>
+      </li>
+      <li>
+        <a className="dropdown-item" href={`/dashboard/employ-dashboard/candidatesapplied?job_id=${job_id}`}>
+          <Image src={view} alt="icon" className="lazy-img" /> View Applicants
         </a>
       </li>
     </ul>
