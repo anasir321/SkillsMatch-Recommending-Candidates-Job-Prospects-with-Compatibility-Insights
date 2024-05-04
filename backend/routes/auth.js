@@ -34,7 +34,11 @@ const{  signupCompanyHR,
         getCompanyDetailsUsingId,
         getApplicantsUsingJobId,
         saveCandidate,
-        unsaveCandidate
+        unsaveCandidate,
+        isCandidateSaved,
+        countApplicantsUsingJobId,
+        getSavedCandidatesUsingcompanyhrId,
+        unsaveCandidateWithoutJobId
     } = require('../controllers/authControllerCompanyHR');
 
 const {
@@ -87,8 +91,11 @@ router.get('/getCompanyProfilePictureUsingId/:id', getCompanyProfilePictureUsing
 router.get('/getCompanyDetailsUsingId/:id', getCompanyDetailsUsingId);
 router.get('/getApplicantsUsingJobId/:job_id', jwtMiddlewareCompanyHR, getApplicantsUsingJobId);
 router.post('/saveCandidate', jwtMiddlewareCompanyHR, saveCandidate);
-router.delete('/unsaveCandidate', jwtMiddlewareCompanyHR, unsaveCandidate);
-
+router.post('/unsaveCandidate', jwtMiddlewareCompanyHR, unsaveCandidate);
+router.post('/isCandidateSaved', jwtMiddlewareCompanyHR, isCandidateSaved);
+router.get('/countApplicantsUsingJobId/:id', jwtMiddlewareCompanyHR, countApplicantsUsingJobId);
+router.get('/getSavedCandidatesUsingcompanyhrId/:id', jwtMiddlewareCompanyHR, getSavedCandidatesUsingcompanyhrId);
+router.post('/unsaveCandidateWithoutJobId', jwtMiddlewareCompanyHR, unsaveCandidateWithoutJobId);
 
 //JOBS
 router.put('/submitJob', jwtMiddlewareCompanyHR, submitJob);

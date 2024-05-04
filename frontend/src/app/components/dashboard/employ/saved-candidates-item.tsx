@@ -3,6 +3,7 @@ import ActionDropdown from "../candidate/action-dropdown";
 import ActionDropdownApplicant from "./action-dropdown-applicant";
 import { ICandidate } from "@/data/candidate-data";
 import Image from "next/image";
+import SavedCandidateItemActionDropDown from "./saved-candidates-item-action-dropdown";
 
 interface candidateDetails {
     candidate_id: number;
@@ -27,7 +28,7 @@ interface candidateDetails {
     overview: Text;
   }
 
-const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
+const SavedCandidateItem = ({ item }: { item: candidateDetails }) => {
 
   const skillsArray = item.skills ? item.skills.split(",") : [];
 
@@ -150,7 +151,7 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
                   >
                     <span></span>
                   </button>
-                  <ActionDropdownApplicant candidate_id={item.candidate_id}/>
+                  <SavedCandidateItemActionDropDown candidate_id={item.candidate_id}/>
                 </div>
               </div>
             </div>
@@ -161,4 +162,4 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
   );
 };
 
-export default CandidateSingleApplicant;
+export default SavedCandidateItem;

@@ -1,5 +1,6 @@
 import React from "react";
 import ActionDropdown from "../candidate/action-dropdown";
+import axios from "axios";
 
 const EmployJobItem = ({
   job_id,
@@ -44,6 +45,33 @@ const EmployJobItem = ({
   application: string;
   date: string;
 }) => {
+
+  const [applicantCount, setApplicantCount] = React.useState(0);
+
+   // Function to fetch the number of applicants for the given job_id
+   const fetchApplicantCount = async () => {
+    try {
+        // Call the countApplicants API
+        const response = await axios.post('http://localhost:5000/api/auth/countApplicants', {
+            job_id: job_id,
+        });
+
+        // Update the applicantCount state with the response data
+        if (response.status === 200) {
+            setApplicantCount(response.data.count);
+        }
+    } catch (error) {
+        console.error("Error fetching applicant count:", error);
+    }
+  };
+
+  // Use useEffect to fetch the applicant count when the component mounts
+  React.useEffect(() => {
+    fetchApplicantCount();
+  }, [job_id]);
+
+
+
   return (
     <tr className={status}>
       <td>
@@ -51,9 +79,10 @@ const EmployJobItem = ({
         <div className="info1">{job_type}, {job_location}</div>
       </td>
       <td>{date_posted}</td>
-      <td>{application} Applications</td>
+      <td>{applicantCount} Applications</td>
       <td>
-        <div className="job-status text-capitalize">{job_status}</div>
+        {work_type}
+        {/* <div className="job-status text-capitalize">{work_type}</div> */}
       </td>
       <td>
         <div className="action-dots float-end">
