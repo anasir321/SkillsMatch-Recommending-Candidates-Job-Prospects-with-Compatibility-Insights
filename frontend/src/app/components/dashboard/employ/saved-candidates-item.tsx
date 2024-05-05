@@ -44,25 +44,78 @@ const SavedCandidateItem = ({ item }: { item: candidateDetails }) => {
 
   // State variable to hold the URL for the profile picture
   const [profilePicURL, setProfilePicURL] = React.useState("");
+  
+useEffect(() => {
 
-  // Convert the profile picture Blob to a URL when the component mounts
-  // or when the item.profilePicture changes
-  useEffect(() => {
-    // Check if profilePicture exists and is a valid Blob
-    if (item.profilePicture) {
-      try {
-        const objectURL = URL.createObjectURL(item.profilePicture);
-        console.log("candidate-single-applicant :: objectURL: ", objectURL)
-        setProfilePicURL(objectURL);
-        // Clean up the URL object when the component unmounts or the prop changes
-        return () => {
-          URL.revokeObjectURL(objectURL);
-        };
-      } catch (error) {
-        console.error("Failed to create object URL from Blob:", error);
-      }
-    }
-  }, [item.profilePicture]);
+  // if(item.profilePicture){
+  //   console.log("candidate-single-applicant :: item.profilePicture: ", item.profilePicture);
+  //   const relativePath = `${item.profilePicture}`;
+  //   console.log("candidate-single-applicant :: relativePath: ", relativePath);
+  //   const fullUrl = `http://localhost:5000${relativePath}`;
+  //   console.log("candidate-single-applicant :: fullUrl: ", fullUrl);
+  //   setProfilePicURL(fullUrl);
+  // }
+
+  // if (item.profilePicture){
+  //   console.log("candidate-single-applicant :: item.profilePicture: ", item.profilePicture)
+  //   const objecturl = URL.createObjectURL(item.profilePicture);
+  //   console.log("candidate-single-applicant :: objecturl: ", objecturl)
+  // }
+
+//   if (item.profilePicture instanceof Blob) {
+//     const objectURL = URL.createObjectURL(item.profilePicture);
+//     console.log("candidate-single-applicant :: objectURL: ", objectURL);
+//     // setProfilePicURL(objectURL);
+// } else {
+//     console.log("Type of item.profilePicture: ", typeof item.profilePicture);
+//     console.error("item.profilePicture is not a Blob");
+// }
+
+// if (item.profilePicture instanceof Buffer) {
+//   const blob = new Blob([item.profilePicture], { type: 'image/jpeg' }); // Use the appropriate MIME type
+//   const objectURL = URL.createObjectURL(blob);
+//   setProfilePicURL(objectURL);
+// } else {
+//   console.error("item.profilePicture is not a Blob or Buffer");
+//   console.log("Type of item.profilePicture: ", typeof item.profilePicture);
+//   console.log("Contents of item.profilePicture: ", item.profilePicture);
+
+//   setProfilePicURL("/uploads/profile-pictures/default-profile.jpg"); // Fallback image
+// }
+
+}, [profilePicURL])
+
+// useEffect(() => {
+//   if (item.profilePicture) {
+//       const { type, data } = item.profilePicture;
+
+//       // Check if the data is of type 'Buffer'
+//       if (type === 'Buffer' && Array.isArray(data)) {
+//           // Convert Buffer data array to Uint8Array
+//           const uint8Array = new Uint8Array(data);
+
+//           // Determine the appropriate MIME type (e.g., 'image/jpeg' or 'image/png')
+//           const mimeType = 'image/jpeg'; // Adjust as needed based on your data source
+
+//           // Create a Blob from Uint8Array with the appropriate MIME type
+//           const blob = new Blob([uint8Array], { type: mimeType });
+
+//           // Create an object URL from the Blob
+//           try {
+//               const objectURL = URL.createObjectURL(blob);
+//               console.log("candidate-single-applicant :: objectURL: ", objectURL);
+//               setProfilePicURL("http://localhost:5000/uploads/company-logo/1707920390592.jpeg");
+//           } catch (error) {
+//               console.error("Failed to create object URL from Blob:", error);
+//               setProfilePicURL("/backend/uploads/company-logo/1707920390592.jpeg");
+//           }
+//       } else {
+//           console.error("item.profilePicture is not a Buffer");
+//           setProfilePicURL("/backend/uploads/company-logo/1707920390592.jpeg");
+//       }
+//   }
+// }, [item.profilePicture]);
+
 
   return (
     <div className="candidate-profile-card list-layout border-0 mb-25">
@@ -79,7 +132,7 @@ const SavedCandidateItem = ({ item }: { item: candidateDetails }) => {
             />
           </a> */}
 
-          <a href="#" className="rounded-circle">
+          {/* <a href="#" className="rounded-circle">
             <Image
               // Use the profilePicURL as the source if available; otherwise, use a default image
               src={profilePicURL || "/uploads/profile-pictures/1707126742998.jpg"}
@@ -88,7 +141,17 @@ const SavedCandidateItem = ({ item }: { item: candidateDetails }) => {
               width={100}
               height={100}
             />
-          </a>
+          </a> */}
+
+          <a href="#" className="rounded-circle">
+                        <Image
+                            src={profilePicURL}
+                            alt="Profile picture"
+                            className="lazy-img rounded-circle"
+                            width={100}
+                            height={100}
+                        />
+                    </a>
 
           
         </div>

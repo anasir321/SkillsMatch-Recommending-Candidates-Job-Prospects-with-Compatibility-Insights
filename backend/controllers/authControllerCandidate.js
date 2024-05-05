@@ -667,7 +667,7 @@ async function getProfilePicture(req, res) {
     }
 
     // Relative path from the static route or public directory
-    const relativePath = `${candidate.profilePicture}`;
+    // const relativePath = `${candidate.profilePicture}`;
 
     // Send the relative path directly as a response
     res.status(200).json({ filePath: relativePath });
