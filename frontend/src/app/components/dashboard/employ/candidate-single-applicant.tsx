@@ -3,6 +3,8 @@ import ActionDropdown from "../candidate/action-dropdown";
 import ActionDropdownApplicant from "./action-dropdown-applicant";
 import { ICandidate } from "@/data/candidate-data";
 import Image from "next/image";
+import axios from "axios";
+import avatar from "@/assets/dashboard/images/avatar_04.jpg";
 
 interface candidateDetails {
     candidate_id: number;
@@ -43,30 +45,48 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
 
   // State variable to hold the URL for the profile picture
   const [profilePicURL, setProfilePicURL] = React.useState("");
+  const [profilePicture, setProfilePicture] = React.useState("");
 
-  // Convert the profile picture Blob to a URL when the component mounts
-  // or when the item.profilePicture changes
   useEffect(() => {
-    // Check if profilePicture exists and is a valid Blob
-    if (item.profilePicture) {
+    const fetchCandidateProfilePicture = async () => {
       try {
-        const objectURL = URL.createObjectURL(item.profilePicture);
-        console.log("candidate-single-applicant :: objectURL: ", objectURL)
-        setProfilePicURL(objectURL);
-        // Clean up the URL object when the component unmounts or the prop changes
-        return () => {
-          URL.revokeObjectURL(objectURL);
-        };
+        const token = localStorage.getItem('token');
+        const data = {
+          candidate_id: item.candidate_id
+        }
+        const response = await axios.post(
+          'http://localhost:5000/api/auth/getCandidateProfilePicture',
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log('Profile Picture Path:', response.data.filePath);
+
+        if (response.status === 200) {
+          // Construct the full URL based on the relative path
+          const fullUrl = `http://localhost:5000${response.data.filePath}`;
+
+          console.log('saved-candidate-item :: Full URL:', fullUrl);
+
+          // Update the profile picture state with the full URL
+          setProfilePicture(fullUrl);
+        }
       } catch (error) {
-        console.error("Failed to create object URL from Blob:", error);
+        console.error('Error fetching profile picture:', error);
       }
-    }
-  }, [item.profilePicture]);
+    };
+
+    fetchCandidateProfilePicture();
+  }, []);
 
   return (
     <div className="candidate-profile-card list-layout border-0 mb-25">
       <div className="d-flex">
-        <div className="cadidate-avatar online position-relative d-block me-auto ms-auto">
+        <div className="cadidate-avatar position-relative d-block me-auto ms-auto">
           {/* <a href="#" className="rounded-circle">
             <Image
               src={item.profilePicture || "/uploads/profile-pictures/1707126742998.jpg"}
@@ -79,7 +99,7 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
           </a> */}
 
           <a href="#" className="rounded-circle">
-            <Image
+            {/* <Image
               // Use the profilePicURL as the source if available; otherwise, use a default image
               src={profilePicURL || "/uploads/profile-pictures/1707126742998.jpg"}
               alt="Profile picture"
@@ -87,6 +107,27 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
               width={100}
               height={100}
             />
+          </a> */}
+
+<div className="user-avatar-setting d-flex align-items-center mb-30">
+          {profilePicture ? (
+              <img
+                src={profilePicture}
+                alt="profile-picture"
+                className="lazy-img user-img"
+                width={100} // Set the desired width
+                height={100} // Set the desired height
+              />
+            ) : (
+              <Image
+                src={avatar}
+                alt="avatar"
+                className="lazy-img user-img"
+                width={100} // Set the desired width
+                height={100} // Set the desired height
+              />
+            )}
+            </div>
           </a>
 
           

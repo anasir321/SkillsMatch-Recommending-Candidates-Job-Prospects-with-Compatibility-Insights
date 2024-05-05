@@ -4,6 +4,8 @@ import ActionDropdownApplicant from "./action-dropdown-applicant";
 import { ICandidate } from "@/data/candidate-data";
 import Image from "next/image";
 import SavedCandidateItemActionDropDown from "./saved-candidates-item-action-dropdown";
+import axios from "axios";
+import avatar from "@/assets/dashboard/images/avatar_02.jpg";
 
 interface candidateDetails {
     candidate_id: number;
@@ -44,83 +46,48 @@ const SavedCandidateItem = ({ item }: { item: candidateDetails }) => {
 
   // State variable to hold the URL for the profile picture
   const [profilePicURL, setProfilePicURL] = React.useState("");
+  const [profilePicture, setProfilePicture] = React.useState("");
+
+  useEffect(() => {
+    const fetchCandidateProfilePicture = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const data = {
+          candidate_id: item.candidate_id
+        }
+        const response = await axios.post(
+          'http://localhost:5000/api/auth/getCandidateProfilePicture',
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log('Profile Picture Path:', response.data.filePath);
+
+        if (response.status === 200) {
+          // Construct the full URL based on the relative path
+          const fullUrl = `http://localhost:5000${response.data.filePath}`;
+
+          console.log('saved-candidate-item :: Full URL:', fullUrl);
+
+          // Update the profile picture state with the full URL
+          setProfilePicture(fullUrl);
+        }
+      } catch (error) {
+        console.error('Error fetching profile picture:', error);
+      }
+    };
+
+    fetchCandidateProfilePicture();
+  }, []);
   
-useEffect(() => {
-
-  // if(item.profilePicture){
-  //   console.log("candidate-single-applicant :: item.profilePicture: ", item.profilePicture);
-  //   const relativePath = `${item.profilePicture}`;
-  //   console.log("candidate-single-applicant :: relativePath: ", relativePath);
-  //   const fullUrl = `http://localhost:5000${relativePath}`;
-  //   console.log("candidate-single-applicant :: fullUrl: ", fullUrl);
-  //   setProfilePicURL(fullUrl);
-  // }
-
-  // if (item.profilePicture){
-  //   console.log("candidate-single-applicant :: item.profilePicture: ", item.profilePicture)
-  //   const objecturl = URL.createObjectURL(item.profilePicture);
-  //   console.log("candidate-single-applicant :: objecturl: ", objecturl)
-  // }
-
-//   if (item.profilePicture instanceof Blob) {
-//     const objectURL = URL.createObjectURL(item.profilePicture);
-//     console.log("candidate-single-applicant :: objectURL: ", objectURL);
-//     // setProfilePicURL(objectURL);
-// } else {
-//     console.log("Type of item.profilePicture: ", typeof item.profilePicture);
-//     console.error("item.profilePicture is not a Blob");
-// }
-
-// if (item.profilePicture instanceof Buffer) {
-//   const blob = new Blob([item.profilePicture], { type: 'image/jpeg' }); // Use the appropriate MIME type
-//   const objectURL = URL.createObjectURL(blob);
-//   setProfilePicURL(objectURL);
-// } else {
-//   console.error("item.profilePicture is not a Blob or Buffer");
-//   console.log("Type of item.profilePicture: ", typeof item.profilePicture);
-//   console.log("Contents of item.profilePicture: ", item.profilePicture);
-
-//   setProfilePicURL("/uploads/profile-pictures/default-profile.jpg"); // Fallback image
-// }
-
-}, [profilePicURL])
-
-// useEffect(() => {
-//   if (item.profilePicture) {
-//       const { type, data } = item.profilePicture;
-
-//       // Check if the data is of type 'Buffer'
-//       if (type === 'Buffer' && Array.isArray(data)) {
-//           // Convert Buffer data array to Uint8Array
-//           const uint8Array = new Uint8Array(data);
-
-//           // Determine the appropriate MIME type (e.g., 'image/jpeg' or 'image/png')
-//           const mimeType = 'image/jpeg'; // Adjust as needed based on your data source
-
-//           // Create a Blob from Uint8Array with the appropriate MIME type
-//           const blob = new Blob([uint8Array], { type: mimeType });
-
-//           // Create an object URL from the Blob
-//           try {
-//               const objectURL = URL.createObjectURL(blob);
-//               console.log("candidate-single-applicant :: objectURL: ", objectURL);
-//               setProfilePicURL("http://localhost:5000/uploads/company-logo/1707920390592.jpeg");
-//           } catch (error) {
-//               console.error("Failed to create object URL from Blob:", error);
-//               setProfilePicURL("/backend/uploads/company-logo/1707920390592.jpeg");
-//           }
-//       } else {
-//           console.error("item.profilePicture is not a Buffer");
-//           setProfilePicURL("/backend/uploads/company-logo/1707920390592.jpeg");
-//       }
-//   }
-// }, [item.profilePicture]);
-
-
   return (
     <div className="candidate-profile-card list-layout border-0 mb-25">
       <div className="d-flex">
-        <div className="cadidate-avatar online position-relative d-block me-auto ms-auto">
+        <div className="cadidate-avatar position-relative d-block me-auto ms-auto">
           {/* <a href="#" className="rounded-circle">
             <Image
               src={item.profilePicture || "/uploads/profile-pictures/1707126742998.jpg"}
@@ -143,15 +110,37 @@ useEffect(() => {
             />
           </a> */}
 
-          <a href="#" className="rounded-circle">
-                        <Image
-                            src={profilePicURL}
-                            alt="Profile picture"
-                            className="lazy-img rounded-circle"
-                            width={100}
-                            height={100}
-                        />
-                    </a>
+          {/* <a href="#" className="rounded-circle">
+            <Image
+                src={profilePicture}
+                alt="Profile picture"
+                className="lazy-img rounded-circle"
+                width={100}
+                height={100}
+            />
+          </a> */}
+
+          <a href="" className="rounded-circle">
+          <div className="user-avatar-setting d-flex align-items-center mb-30">
+          {profilePicture ? (
+              <img
+                src={profilePicture}
+                alt="profile-picture"
+                className="lazy-img user-img"
+                width={100} // Set the desired width
+                height={100} // Set the desired height
+              />
+            ) : (
+              <Image
+                src={avatar}
+                alt="avatar"
+                className="lazy-img user-img"
+                width={100} // Set the desired width
+                height={100} // Set the desired height
+              />
+            )}
+            </div>
+          </a>
 
           
         </div>

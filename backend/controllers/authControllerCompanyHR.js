@@ -674,6 +674,36 @@ async function unsaveCandidateWithoutJobId(req, res) {
     }
 }
 
+async function getCandidateProfilePicture(req, res) {
+    try {
+      // Extract candidate_id from req.body
+      const { candidate_id } = req.body;
+  
+      // Find the candidate using the provided candidate_id
+      const candidate = await Candidate.findOne({ where: { candidate_id: candidate_id } });
+  
+      if (!candidate) {
+        return res.status(404).json({ message: "Candidate not found" });
+      }
+  
+      if (!candidate.profilePicture) {
+        return res.status(404).json({ message: "Profile picture not found" });
+      }
+  
+      // Relative path from the static route or public directory
+      const relativePath = `${candidate.profilePicture}`;
+  
+      // Send the relative path directly as a response
+      res.status(200).json({ filePath: relativePath });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .json({ message: "Error! Unable to retrieve profile picture." });
+    }
+  }
+  
+
 module.exports = { 
     signupCompanyHR, 
     loginCompanyHR, 
@@ -692,5 +722,6 @@ module.exports = {
     countApplicantsUsingJobId,
     getSavedCandidatesUsingcompanyhrId,
     unsaveCandidateWithoutJobId,
+    getCandidateProfilePicture
 }
 
