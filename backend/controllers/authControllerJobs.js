@@ -310,10 +310,16 @@ async function getJobsByCompanyHRId(req, res) {
 const { google } = require("googleapis");
 // const fs = require("fs");
 
+// Get paths from environment variables
+// const GOOGLE_CLIENT_SECRET_PATH = process.env.GOOGLE_CLIENT_SECRET_PATH;
+// const TOKEN_PATH = process.env.TOKEN_PATH;
+
 // Load credentials from JSON file
 const credentials = JSON.parse(
   fs.readFileSync("/home/faris/SkillsMatch-Recommending-Candidates-Job-Prospects-with-Compatibility-Insights/backend/client_secret_924825865240-3qavb2lveu8mmj156l2f4aphucqhurh2.apps.googleusercontent.com.json")
 );
+// Read credentials from the JSON file
+// const credentials = JSON.parse(fs.readFileSync(GOOGLE_CLIENT_SECRET_PATH));
 
 // Set up OAuth2 client
 const { client_secret, client_id, redirect_uris } = credentials.installed;
@@ -325,6 +331,7 @@ const oAuth2Client = new google.auth.OAuth2(
 
 // Set token if you already have one, otherwise generate a new one
 const token = fs.readFileSync("/home/faris/SkillsMatch-Recommending-Candidates-Job-Prospects-with-Compatibility-Insights/backend/token.json");
+// const token = fs.readFileSync(TOKEN_PATH);
 oAuth2Client.setCredentials(JSON.parse(token));
 
 // Create Gmail API instance
