@@ -10,6 +10,8 @@ import LoginModal from "@/app/components/common/popup/login-modal";
 import LoginModalCompanyHR from "@/app/components/common/popup/login-modal-companyHR";
 import useSticky from "@/hooks/use-sticky";
 import { jwtDecode } from "jwt-decode";
+import MenusCandidate from "./component/menuscandidate";
+import { set } from "react-hook-form";
 
 // // Define an interface representing the structure of your JWT payload
 // interface JwtPayload {
@@ -25,6 +27,7 @@ const getUserDetails = (token: string) => {
     return {
       firstname: decoded.firstname,
       lastname: decoded.lastname,
+      role: decoded.role
     }
 
   } catch(err){
@@ -39,10 +42,17 @@ const Header = () => {
   const [isLogged, setIsLoggedIn] = React.useState(false);
   const [user, setUser] = React.useState<{ firstname: any; lastname: any; } | null>(null);
 
+  const [userRole, setUserRole] = React.useState("companyHR");
+
   useEffect(() => {
     // Check if JWT token exists in local storage or cookie
     const token = localStorage.getItem("token"); // Adjust this based on where you store your token
     console.log("token", token);
+
+    const userDetails = getUserDetails(token);
+    setUserRole(userDetails?.role);
+    console.log("header.tsx :: userDetails", userDetails);
+
 
     if (token) {
       // Decode token to get user information
@@ -144,7 +154,9 @@ const Header = () => {
                     {/* CategoryDropdown end */}
                   </li>
                   {/* menus start */}
-                  <Menus />
+                  {userRole === "candidate" ? <MenusCandidate /> : <Menus />}
+                  {/* <Menus /> */}
+                  {/* <MenusCandidate /> */}
                   {/* menus end */}
                   <li className="d-md-none">
                     <Link href='/register' className="job-post-btn tran3s">

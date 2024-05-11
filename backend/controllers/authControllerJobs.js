@@ -237,11 +237,219 @@ async function deleteJobUsingId(req, res) {
     }
 }
 
+async function countJobsUsingCompanyHRId(req, res) {
+    try {
+        // Extract the companyHR_id from the request parameters
+        const companyHR_id = parseInt(req.params.id, 10);
+
+        if (!companyHR_id) {
+            return res.status(400).json({ message: "companyHR_id is required" });
+        }
+
+        // Count the number of jobs in the Jobs model with the given companyHR_id
+        const jobCount = await Jobs.count({
+            where: {
+                companyHR_id: companyHR_id, // Count records where companyHR_id matches
+            }
+        });
+
+        // Respond with the count of jobs
+        res.status(200).json({ jobCount });
+    } catch (error) {
+        // Handle errors (e.g., database errors)
+        console.error(error);
+        res.status(500).json({ message: "An error occurred while counting jobs" });
+    }
+}
+
+async function getJobsByCompanyHRId(req, res) {
+    try {
+        // Extract companyHR_id from the request body
+        // const { companyHR_id } = req.body;
+        const companyHR_id = parseInt(req.params.id, 10);
+
+        // Validate that companyHR_id is provided
+        if (!companyHR_id) {
+            return res.status(400).json({ message: "companyHR_id is required" });
+        }
+
+        // Retrieve all jobs from the Jobs model with the given companyHR_id
+        const jobs = await Jobs.findAll({
+            where: {
+                companyHR_id: companyHR_id, // Match companyHR_id
+            },
+            attributes: [
+                'job_id',
+                'job_title',
+                'job_description',
+                'job_location',
+                'soft_skills_required',
+                'work_experience_required',
+                'education_required',
+                'job_type',
+                'skills_required',
+                'work_type',
+                'salary',
+                'job_status',
+                'date_posted',
+            ], // Specify the attributes you want to return
+        });
+
+        // Respond with the list of jobs
+        res.status(200).json({ jobs });
+    } catch (error) {
+        // Handle errors (e.g., database errors)
+        console.error(error);
+        res.status(500).json({ message: "An error occurred while retrieving jobs" });
+    }
+}
+
+
+// -----------------------------------------------------------------------
+// Import required modules
+const { google } = require("googleapis");
+// const fs = require("fs");
+
+// Load credentials from JSON file
+const credentials = JSON.parse(
+  fs.readFileSync("/home/faris/SkillsMatch-Recommending-Candidates-Job-Prospects-with-Compatibility-Insights/backend/client_secret_924825865240-3qavb2lveu8mmj156l2f4aphucqhurh2.apps.googleusercontent.com.json")
+);
+
+// Set up OAuth2 client
+const { client_secret, client_id, redirect_uris } = credentials.installed;
+const oAuth2Client = new google.auth.OAuth2(
+  client_id,
+  client_secret,
+  redirect_uris[0]
+);
+
+// Set token if you already have one, otherwise generate a new one
+const token = fs.readFileSync("/home/faris/SkillsMatch-Recommending-Candidates-Job-Prospects-with-Compatibility-Insights/backend/token.json");
+oAuth2Client.setCredentials(JSON.parse(token));
+
+// Create Gmail API instance
+const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
+
+// Function to decode email body
+function decodeBody(body) {
+  const buff = Buffer.from(body, "base64");
+  return buff.toString("utf-8");
+}
+
+// // Define the async function to get jobs by career officers
+// async function getJobsByCareerOfficers(req, res) {
+//   try {
+//     // Retrieve emails
+//     const response = await gmail.users.messages.list({
+//       userId: "skillsmatch20@gmail.com",
+//     });
+
+//     const messages = response.data.messages;
+
+//     // Array to store email data
+//     const emails = [];
+
+//     // If there are messages, process them
+//     if (messages) {
+//       for (const message of messages) {
+//         const messageData = await gmail.users.messages.get({
+//           userId: "skillsmatch20@gmail.com",
+//           id: message.id,
+//         });
+
+//         const headers = messageData.data.payload.headers;
+//         const subject = headers.find((header) => header.name === "Subject").value;
+
+//         // Find the part containing the body text
+//         const bodyPart = messageData.data.payload.parts.find(
+//           (part) => part.mimeType === "text/plain"
+//         );
+
+//         // Extract and decode the body content
+//         const body = bodyPart.body.data;
+//         const decodedBody = decodeBody(body);
+
+//         // Push email data to the array
+//         emails.push({ subject, body: decodedBody });
+//       }
+
+//       // Send the response with the email data
+//       res.json(emails);
+//     } else {
+//       // Send an empty array if there are no messages
+//       res.json([]);
+//     }
+//   } catch (error) {
+//     // Handle errors
+//     console.error("Error fetching emails:", error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
+
+// Define the async function to get jobs by career officers
+async function getJobsByCareerOfficers(req, res) {
+    try {
+      // Retrieve emails with a specific label
+      const response = await gmail.users.messages.list({
+        userId: "skillsmatch20@gmail.com",
+        // labelId: "job", // Replace "YOUR_LABEL
+        // labelIds: ["job"], // Replace "YOUR_LABEL_ID_HERE" with the ID of the label you want to filter by
+      });
+  
+      const messages = response.data.messages;
+    //   console.log("messages from getJobsByCareerOfficers: ", messages)
+  
+      // Array to store email data
+      const emails = [];
+  
+      // If there are messages, process them
+      if (messages) {
+        for (const message of messages) {
+          const messageData = await gmail.users.messages.get({
+            userId: "skillsmatch20@gmail.com",
+            id: message.id,
+          });
+  
+          const headers = messageData.data.payload.headers;
+          const subject = headers.find((header) => header.name === "Subject").value;
+  
+          // Find the part containing the body text
+          const bodyPart = messageData.data.payload.parts.find(
+            (part) => part.mimeType === "text/plain"
+          );
+  
+          // Extract and decode the body content
+          const body = bodyPart.body.data;
+          const decodedBody = decodeBody(body);
+  
+          // Push email data to the array
+          emails.push({ subject, body: decodedBody });
+        }
+
+        // console.log("emails from getJobsByCareerOfficers: ", emails)
+  
+        // Send the response with the email data
+        res.status(200).json(emails);
+      } else {
+        // Send an empty array if there are no messages
+        res.json([]);
+      }
+    } catch (error) {
+      // Handle errors
+      console.error("Error fetching emails:", error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+  
+
 module.exports = { 
     submitJob,
     getJobsbyCompanyHR,
     getAllJobs,
     getJobDetailsUsingId,
     editJob,
-    deleteJobUsingId
+    deleteJobUsingId,
+    countJobsUsingCompanyHRId,
+    getJobsByCompanyHRId,
+    getJobsByCareerOfficers
 }

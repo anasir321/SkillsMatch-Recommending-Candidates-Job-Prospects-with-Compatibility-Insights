@@ -208,10 +208,10 @@ const CompanyDetailsArea = () => {
                     <span>Phone:</span>
                     <div><a href="#">{companyDetails?.company_phone}</a></div>
                   </li>
-                  <li className="col-12">
+                  {/* <li className="col-12">
                     <span>Category: </span>
                     <div>Technology, Product,  Agency</div>
-                  </li>
+                  </li> */}
                   <li className="col-12">
                     <span>Social: </span>
                     <div>
@@ -262,7 +262,7 @@ const CompanyDetailsArea = () => {
       </div>
     </section>
       {/* video modal start */}
-      <VideoPopup isVideoOpen={isVideoOpen} setIsVideoOpen={setIsVideoOpen} videoId={'-6ZbrfSRWKc'} />
+      {/* <VideoPopup isVideoOpen={isVideoOpen} setIsVideoOpen={setIsVideoOpen} videoId={'-6ZbrfSRWKc'} /> */}
       {/* video modal end */}
     </>
   );
