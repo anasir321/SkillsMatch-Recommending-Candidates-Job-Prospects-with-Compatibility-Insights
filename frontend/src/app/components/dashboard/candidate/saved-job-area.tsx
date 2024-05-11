@@ -1,78 +1,114 @@
-import React from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import DashboardHeader from "./dashboard-header";
 import ShortSelect from "../../common/short-select";
-import job_data from "@/data/job-data";
-import ActionDropdown from "./action-dropdown";
+import ActionDropdown from "./savedJob-dropdown";
+import axios from "axios";
 
-// props type 
 type IProps = {
-  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
-}
+  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const SavedJobArea = ({setIsOpenSidebar}:IProps) => {
-  const job_items = job_data.slice(0, 4);
+const SavedJobArea = ({ setIsOpenSidebar }: IProps) => {
+  const [savedJobs, setSavedJobs] = useState([]);
+  const [jobDetails, setJobDetails] = useState([]);
+
+  useEffect(() => {
+    const fetchSavedJobs = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `http://localhost:5000/api/auth/getAllSavedJobs`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setSavedJobs(response.data.data.savedJobs);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchSavedJobs();
+  }, []);
+
+  useEffect(() => {
+    const fetchJobDetails = async () => {
+      const promises = savedJobs.map(async (savedJob) => {
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.get(
+            `http://localhost:5000/api/auth/getJobDetailsUsingSavedJobs/${savedJob.job_id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          return response.data.data.jobs[0];
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      });
+      const jobDetailsData = await Promise.all(promises);
+      setJobDetails(jobDetailsData.filter(Boolean)); // Filter out null values
+    };
+
+    if (savedJobs.length > 0) {
+      fetchJobDetails();
+    }
+  }, [savedJobs]);
+
+  const handleUnsaveJob = (jobId) => {
+    // Filter out the deleted job from savedJobs
+    const updatedSavedJobs = savedJobs.filter((job) => job.job_id !== jobId);
+    setSavedJobs(updatedSavedJobs);
+  
+    // Filter out the corresponding job detail from jobDetails
+    const updatedJobDetails = jobDetails.filter((jobDetail) => jobDetail.job_id !== jobId);
+    setJobDetails(updatedJobDetails);
+  };
+  
+
   return (
     <div className="dashboard-body">
       <div className="position-relative">
-        {/* header start */}
         <DashboardHeader setIsOpenSidebar={setIsOpenSidebar} />
-        {/* header end */}
-
         <div className="d-flex align-items-center justify-content-between mb-40 lg-mb-30">
-          <h2 className="main-title m0">Saved Job</h2>
+          <h2 className="main-title m0">Saved Jobs</h2>
           <div className="short-filter d-flex align-items-center">
             <div className="text-dark fw-500 me-2">Short by:</div>
             <ShortSelect />
           </div>
         </div>
-
         <div className="wrapper">
-          {job_items.map((j) => (
+          {jobDetails.map((jobDetail, index) => (
             <div
-              key={j.id}
+              key={index}
               className="job-list-one style-two position-relative mb-20"
             >
               <div className="row justify-content-between align-items-center">
                 <div className="col-xxl-3 col-lg-4">
                   <div className="job-title d-flex align-items-center">
-                    <a href="#" className="logo">
-                      <Image
-                        src={j.logo}
-                        alt="img"
-                        className="lazy-img m-auto"
-                      />
-                    </a>
                     <a href="#" className="title fw-500 tran3s">
-                      {j.title}
+                      {jobDetail?.job_title}
                     </a>
                   </div>
                 </div>
                 <div className="col-lg-3 col-md-4 col-sm-6 ms-auto">
-                  <Link href={`/job-details-v1/${j.id}`}
-                    className={`job-duration fw-500 ${
-                      j.duration === "Part time" ? "part-time" : ""
-                    }`}
+                  <Link
+                    href={`/job-details-v1/${jobDetail?.job_id}`}
+                    className={`job-duration fw-500`}
                   >
-                    {j.duration}
+                    {jobDetail?.job_type}
                   </Link>
-                  <div className="job-salary">
-                    <span className="fw-500 text-dark">${j.salary}</span> /{" "}
-                    {j.salary_duration} . {j.experience}
-                  </div>
                 </div>
                 <div className="col-xxl-2 col-lg-3 col-md-4 col-sm-6 ms-auto xs-mt-10">
                   <div className="job-location">
-                    <a href="#">{j.location}</a>
-                  </div>
-                  <div className="job-category">
-                    {j.category.map((c, i) => (
-                      <a key={i} href="#">
-                        {c}
-                        {i < j.category.length - 1 && ", "}
-                      </a>
-                    ))}
+                    <a href="#">{jobDetail?.job_location}</a>
                   </div>
                 </div>
                 <div className="col-lg-2 col-md-4">
@@ -85,39 +121,15 @@ const SavedJobArea = ({setIsOpenSidebar}:IProps) => {
                     >
                       <span></span>
                     </button>
-                    {/* action dropdown start */}
-                    <ActionDropdown/>
-                    {/* action dropdown end */}
+                    <ActionDropdown
+                      job_id={jobDetail?.job_id}
+                      onUnsaveJob={handleUnsaveJob}
+                    />
                   </div>
                 </div>
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="dash-pagination d-flex justify-content-end mt-30">
-          <ul className="style-none d-flex align-items-center">
-            <li>
-              <a href="#" className="active">
-                1
-              </a>
-            </li>
-            <li>
-              <a href="#">2</a>
-            </li>
-            <li>
-              <a href="#">3</a>
-            </li>
-            <li>..</li>
-            <li>
-              <a href="#">7</a>
-            </li>
-            <li>
-              <a href="#">
-                <i className="bi bi-chevron-right"></i>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
