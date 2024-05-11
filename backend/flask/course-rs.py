@@ -21,7 +21,7 @@ CORS(app)  # Add this line to enable CORS for all routes
 # Function to connect to the database using SQLAlchemy
 def connect_to_database():
     try:
-        engine = create_engine("postgresql://postgres:arham123@127.0.0.1:5432/skillsmatch")
+        engine = create_engine("postgresql://faris:12345@127.0.0.1:5432/skillsmatch")
         conn = engine.connect()
         print("Connected to database successfully")
         return conn
@@ -138,4 +138,4 @@ def recommend_course_api(candidate_id):
     return response
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=2002, host='0.0.0.0')

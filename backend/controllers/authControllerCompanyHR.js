@@ -523,7 +523,186 @@ async function unsaveCandidate(req, res) {
     }
 }
 
+async function isCandidateSaved(req, res) {
+    try {
+        // Extract data from the request query or parameters
+        const { company_hr_id, job_id, candidate_id } = req.body; // You may also use req.params
 
+        console.log("isCandidateSaved :: req.body: ", req.body);
+
+        // Validate the input data
+        if (!company_hr_id || !job_id || !candidate_id) {
+            return res.status(400).json({ error: "Please provide all the required parameters: company_hr_id, job_id, and candidate_id." });
+        }
+
+        console.log("isCandidateSaved :: company_hr_id: ", company_hr_id);
+        console.log("isCandidateSaved :: job_id: ", job_id);
+        console.log("isCandidateSaved :: candidate_id: ", candidate_id);
+
+        // Convert company_hr_id and job_id to integers, if necessary
+        const companyHR_id = company_hr_id;
+        // const jobId = parseInt(job_id);
+
+        // Query the SavedCandidates table to find a matching record
+        const existingRecord = await SavedCandidates.findOne({
+            where: {
+                companyHR_id,
+                job_id,
+                candidate_id,
+            },
+        });
+
+        // Check if the record exists
+        if (existingRecord) {
+            // Return true if the candidate is saved against the given job_id and companyHR_id
+            return res.status(200).json({ isSaved: true });
+        } else {
+            // Return false if the candidate is not saved against the given job_id and companyHR_id
+            return res.status(200).json({ isSaved: false });
+        }
+    } catch (error) {
+        // Handle errors and send an error response
+        console.error('Error checking if candidate is saved:', error);
+        return res.status(500).json({ error: 'An error occurred while checking if the candidate is saved.' });
+    }
+}
+
+// Define the countApplicants API function
+async function countApplicantsUsingJobId(req, res) {
+    try {
+        // Extract the job_id from the request body
+        const job_id = parseInt(req.params.id, 10);
+
+        if (!job_id) {
+            return res.status(400).json({ message: "job_id is required" });
+        }
+
+        // Count the number of applicants in the AppliedJobs model with the given job_id
+        const count = await AppliedJobs.count({
+            where: {
+                job_id: job_id, // Count records where job_id matches
+            }
+        });
+
+        // Respond with the count of applicants
+        res.status(200).json({ count });
+    } catch (error) {
+        // Handle errors (e.g., database errors)
+        console.error(error);
+        res.status(500).json({ message: "An error occurred while counting applicants" });
+    }
+}
+
+async function getSavedCandidatesUsingcompanyhrId(req, res) {
+    try {
+        // Extract the company_hr_id from the request parameters
+        const company_hr_id = parseInt(req.params.id, 10);
+
+        // Step 1: Retrieve saved candidate records with the specified company_hr_id
+        const savedCandidates = await SavedCandidates.findAll({
+            where: {
+                companyHR_id: company_hr_id,
+            },
+        });
+
+        // Check if any saved candidates were found
+        if (!savedCandidates || savedCandidates.length === 0) {
+            return res.status(404).json({ message: "No saved candidates found" });
+        }
+
+        // Step 2: Extract the candidate_ids from the saved candidates
+        const candidate_ids = savedCandidates.map((savedCandidate) => savedCandidate.candidate_id);
+
+        // Step 3: Retrieve candidates using the extracted candidate_ids
+        const candidates = await Candidate.findAll({
+            where: {
+                candidate_id: candidate_ids,
+            },
+        });
+
+        // Check if any candidates were found
+        if (!candidates || candidates.length === 0) {
+            return res.status(404).json({ message: "No candidates found" });
+        }
+
+        // Step 4: Send the retrieved candidates in the response
+        res.status(200).json({
+            message: "Saved candidates retrieved successfully",
+            data: { candidates },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error! Unable to retrieve saved candidates." });
+    }
+}
+
+// API function to unsave candidate data based on company_hr_id and candidate_id
+async function unsaveCandidateWithoutJobId(req, res) {
+    try {
+        // Extract data from the request body
+        const { company_hr_id, candidate_id } = req.body;
+
+        console.log("unsaveCandidate :: req.body: ", req.body);
+
+        // Validate the data
+        if (!company_hr_id || !candidate_id) {
+            return res.status(400).json({ message: "Please provide all the details (company_hr_id and candidate_id)" });
+        }
+
+        // Find the record to be deleted in the SavedCandidates table based on company_hr_id and candidate_id
+        const existingRecord = await SavedCandidates.findOne({
+            where: {
+                companyHR_id: company_hr_id,
+                candidate_id,
+            },
+        });
+
+        // If the record does not exist, return a 404 error
+        if (!existingRecord) {
+            return res.status(404).json({ error: 'Candidate not found for this company_hr_id and candidate_id' });
+        }
+
+        // Delete the record from the SavedCandidates table
+        await existingRecord.destroy();
+
+        // Send a success response after deletion
+        return res.status(200).json({ message: 'Candidate unsaved successfully' });
+    } catch (error) {
+        // Handle errors and send an error response
+        console.error('Error unsaving candidate data:', error);
+        return res.status(500).json({ error: 'An error occurred while unsaving the candidate data' });
+    }
+}
+
+async function getCandidateProfilePicture(req, res) {
+    try {
+      // Extract candidate_id from req.body
+      const { candidate_id } = req.body;
+  
+      // Find the candidate using the provided candidate_id
+      const candidate = await Candidate.findOne({ where: { candidate_id: candidate_id } });
+  
+      if (!candidate) {
+        return res.status(404).json({ message: "Candidate not found" });
+      }
+  
+      if (!candidate.profilePicture) {
+        return res.status(404).json({ message: "Profile picture not found" });
+      }
+  
+      // Relative path from the static route or public directory
+      const relativePath = `${candidate.profilePicture}`;
+  
+      // Send the relative path directly as a response
+      res.status(200).json({ filePath: relativePath });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .json({ message: "Error! Unable to retrieve profile picture." });
+    }
+  }
+  
 
 module.exports = { 
     signupCompanyHR, 
@@ -538,6 +717,11 @@ module.exports = {
     getCompanyDetailsUsingId,
     getApplicantsUsingJobId,
     saveCandidate,
-    unsaveCandidate
+    unsaveCandidate,
+    isCandidateSaved,
+    countApplicantsUsingJobId,
+    getSavedCandidatesUsingcompanyhrId,
+    unsaveCandidateWithoutJobId,
+    getCandidateProfilePicture
 }
 

@@ -95,7 +95,7 @@ const JobDetailsV1Area = ({ job }: { job: IJobType }) => {
 		  },
 		}
 	  );
-	  // console.log("response: ", response.data.data.filePath);
+	  console.log("response: ", response.data.data.filePath);
 
 	  // If picture is not found (404 status), exit the function
 	  if (response.status === 404) {

@@ -104,12 +104,12 @@
 import { IMenuData } from "@/types/menu-data-type";
 // import { jwtDecode } from "jwt-decode";
 
-  // const token = localStorage.getItem("token") as string;
-  // const decodedToken = jwtDecode(token);
-  // const userrole = decodedToken.role;
-  // console.log("menu-data: ", userrole);
-
-  const menu_data:IMenuData[] = [
+//   const token = localStorage.getItem("token") as string;
+//   const decodedToken = jwtDecode(token);
+//   const userrole = decodedToken.role;
+//   console.log("menu-data: ", userrole);
+  
+  const menu_data_candidate:IMenuData[] = [
   {
     id:1,
     link:'/',
@@ -130,7 +130,7 @@ import { IMenuData } from "@/types/menu-data-type";
     title:'Job',
     sub_menus:[
       {link:'/job-list-v1',title:'View Jobs'},
-      // {link:'/mailserver', title: 'View Jobs by Career Officers'}
+      {link:'/mailserver', title: 'View Jobs by Career Officers'}
       // {link:'/job-list-v2',title:'Job List style -2'},
       // {link:'/job-list-v3',title:'Job List style -3'},
       // {link:'/job-grid-v1',title:'Job Grid style -1'},
@@ -208,4 +208,4 @@ import { IMenuData } from "@/types/menu-data-type";
   }
 ]
 
-export default menu_data;
+export default menu_data_candidate;

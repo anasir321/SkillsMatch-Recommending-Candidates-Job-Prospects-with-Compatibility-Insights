@@ -3,8 +3,9 @@ import ActionDropdown from "../candidate/action-dropdown";
 import ActionDropdownApplicant from "./action-dropdown-applicant";
 import { ICandidate } from "@/data/candidate-data";
 import Image from "next/image";
+import SavedCandidateItemActionDropDown from "./saved-candidates-item-action-dropdown";
 import axios from "axios";
-import avatar from "@/assets/dashboard/images/avatar_04.jpg";
+import avatar from "@/assets/dashboard/images/avatar_02.jpg";
 
 interface candidateDetails {
     candidate_id: number;
@@ -29,7 +30,7 @@ interface candidateDetails {
     overview: Text;
   }
 
-const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
+const SavedCandidateItem = ({ item }: { item: candidateDetails }) => {
 
   const skillsArray = item.skills ? item.skills.split(",") : [];
 
@@ -82,7 +83,7 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
 
     fetchCandidateProfilePicture();
   }, []);
-
+  
   return (
     <div className="candidate-profile-card list-layout border-0 mb-25">
       <div className="d-flex">
@@ -98,8 +99,8 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
             />
           </a> */}
 
-          <a href="#" className="rounded-circle">
-            {/* <Image
+          {/* <a href="#" className="rounded-circle">
+            <Image
               // Use the profilePicURL as the source if available; otherwise, use a default image
               src={profilePicURL || "/uploads/profile-pictures/1707126742998.jpg"}
               alt="Profile picture"
@@ -109,7 +110,18 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
             />
           </a> */}
 
-<div className="user-avatar-setting d-flex align-items-center mb-30">
+          {/* <a href="#" className="rounded-circle">
+            <Image
+                src={profilePicture}
+                alt="Profile picture"
+                className="lazy-img rounded-circle"
+                width={100}
+                height={100}
+            />
+          </a> */}
+
+          <a href="" className="rounded-circle">
+          <div className="user-avatar-setting d-flex align-items-center mb-30">
           {profilePicture ? (
               <img
                 src={profilePicture}
@@ -191,7 +203,7 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
                   >
                     <span></span>
                   </button>
-                  <ActionDropdownApplicant candidate_id={item.candidate_id}/>
+                  <SavedCandidateItemActionDropDown candidate_id={item.candidate_id}/>
                 </div>
               </div>
             </div>
@@ -202,4 +214,4 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
   );
 };
 
-export default CandidateSingleApplicant;
+export default SavedCandidateItem;

@@ -94,7 +94,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
           }
         );
 
-        // console.log('Profile Picture Path:', response.data.filePath);
+        console.log('Profile Picture Path:', response.data.filePath);
 
         if (response.status === 200) {
           // Construct the full URL based on the relative path
