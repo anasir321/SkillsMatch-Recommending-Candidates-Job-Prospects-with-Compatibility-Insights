@@ -51,6 +51,13 @@ const nav_data: {
     title: "My Profile",
   },
   {
+    id: 12,
+    icon: nav_3,
+    icon_active: nav_3_active,
+    link: "/dashboard/candidate-dashboard/applied-jobs",
+    title: "Applied Jobs",
+  },
+  {
     id: 3,
     icon: nav_3,
     icon_active: nav_3_active,
@@ -82,7 +89,7 @@ const nav_data: {
     id: 6,
     icon: nav_6,
     icon_active: nav_6_active,
-    link: "/dashboard/candidate-dashboard/recommended",
+    link: "/dashboard/candidate-dashboard/saved-job",
     title: "Saved Job",
   },
   {

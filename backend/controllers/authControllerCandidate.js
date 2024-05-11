@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { Candidate, Institute, WorkExperience, Jobs, AppliedJobs } = require("../models");
+const { Candidate, Institute, WorkExperience, Jobs, AppliedJobs, SavedJobs, Company_HR } = require("../models");
 
 const dotenv = require("dotenv");
 
@@ -9,6 +9,7 @@ const { validationResult } = require("express-validator");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { get } = require("http");
 
 dotenv.config();
 
@@ -669,6 +670,8 @@ async function getProfilePicture(req, res) {
     // Relative path from the static route or public directory
     // const relativePath = `${candidate.profilePicture}`;
 
+    console.log("Relative path: ", relativePath);
+
     // Send the relative path directly as a response
     res.status(200).json({ filePath: relativePath });
   } catch (error) {
@@ -782,6 +785,205 @@ async function applyJob(req, res) {
   }
 }
 
+async function getAppliedJobs(req, res){
+  try{
+    const { id } = req.user;
+    const appliedJobs = await AppliedJobs.findAll({ where: { candidate_id: id } });
+    if (!appliedJobs){
+      return res.status(404).json({ 
+        success: false,
+        message: "Applied Jobs not found"
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Applied Jobs retrieved successfully",
+      data: { appliedJobs },
+    });
+  } catch(error){
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve applied jobs.",
+      error: error.message,
+    });
+  }
+}
+
+async function getJobDetailsUsingCandidateId(req, res){
+  try{
+    const candidate_id = req.params.candidate_id;
+
+    const appliedJobs = await AppliedJobs.findAll({ where: { candidate_id: candidate_id } });
+
+    if(!appliedJobs){
+      return res.status(404).json({
+        success: false,
+        message: "No jobs found against this candidate"
+      });
+    }
+
+    // get job_ids of all the jobs applied by the candidate
+    const job_ids = appliedJobs.map(job => job.job_id);
+
+    const jobs = await Jobs.findAll({ where: { job_id: job_ids } });
+
+    if(!jobs){
+      return res.status(404).json({
+        success: false,
+        message: "No job details found against this job_id"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Job details retrieved successfully",
+      data: { jobs },
+    });
+
+  } catch(error){
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve job details.",
+      error: error.message,
+    });
+  }
+
+}
+
+async function saveJob(req,res){
+  try{
+    const { job_id, candidate_id, companyHR_id, } = req.body;
+
+    const job = await Jobs.findAll({ where: { job_id } });
+
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    const savedJob = await SavedJobs.create({
+      job_id,
+      candidate_id,
+      companyHR_id,
+    });
+    res.status(200).json({
+      message: "Job saved successfully",
+      data: { savedJob },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error! Unable to save job" });
+  }
+
+}
+
+async function unsaveJob(req,res){
+  try{
+    const { job_id } = req.body;
+
+    const savedJob = await SavedJobs.findAll({ where: { job_id } });
+
+    if (!savedJob) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    await SavedJobs.destroy({ where: { job_id } });
+
+    res.status(200).json({
+      message: "Job unsaved successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error! Unable to unsave job" });
+  }
+}
+
+async function isJobSaved(req,res){
+  try{
+    const { job_id } = req.body;
+
+    const savedJob = await SavedJobs.findOne({ where: { job_id } });
+
+    if (!savedJob) {
+      return res.status(200).json({ isJobSaved: false });
+    }else {
+      return res.status(200).json({ isJobSaved: true });
+    }
+
+  } catch(error){
+    console.error(error);
+    res.status(500).json({ message: "Error! Unable to check if job is saved" });
+  }
+}
+
+async function getAllSavedJobs(req, res){
+  try{
+    const { id } = req.user;
+    const savedJobs = await SavedJobs.findAll({ where: { candidate_id: id } });
+    if (!savedJobs){
+      return res.status(404).json({ 
+        success: false,
+        message: "Saved Jobs not found"
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Saved Jobs retrieved successfully",
+      data: { savedJobs },
+    });
+  } catch(error){
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve saved jobs.",
+      error: error.message,
+    });
+  }
+}
+
+async function getJobDetailsUsingSavedJobs(req, res){
+  try{
+    const job_id = req.params.job_id;
+
+    const savedJobs = await SavedJobs.findAll({ where: { job_id: job_id } });
+
+    if(!savedJobs){
+      return res.status(404).json({
+        success: false,
+        message: "No jobs found against this job_id"
+      });
+    }
+
+    // get job_ids of all the jobs applied by the candidate
+    const job_ids = savedJobs.map(job => job.job_id);
+
+    const jobs = await Jobs.findAll({ where: { job_id: job_ids } });
+
+    if(!jobs){
+      return res.status(404).json({
+        success: false,
+        message: "No job details found against this job_id"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Job details retrieved successfully",
+      data: { jobs },
+    });
+
+  } catch(error){
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve job details.",
+      error: error.message,
+    });
+  }
+
+}
+
 module.exports = {
   signupCandidate,
   loginCandidate,
@@ -801,5 +1003,12 @@ module.exports = {
   getCandidateDetailsUsingEmail,
   uploadResume,
   getResume,
-  applyJob
+  applyJob,
+  getAppliedJobs,
+  getJobDetailsUsingCandidateId,
+  saveJob,
+  unsaveJob,
+  isJobSaved,
+  getAllSavedJobs,
+  getJobDetailsUsingSavedJobs,
 };
