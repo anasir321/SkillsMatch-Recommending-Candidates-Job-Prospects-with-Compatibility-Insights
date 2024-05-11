@@ -68,13 +68,13 @@ const AppliedJobsArea = ({setIsOpenSidebar}:IProps) => {
                 <div className="row justify-content-between align-items-center">
                   <div className="col-xxl-3 col-lg-4">
                     <div className="job-title d-flex align-items-center">
-                      <a href="#" className="logo">
+                      {/* <a href="#" className="logo">
                         <Image
                           src={j.logo}
                           alt="img"
                           className="lazy-img m-auto"
                         />
-                      </a>
+                      </a> */}
                       <a href="#" className="title fw-500 tran3s">
                         {j.job_title}
                       </a>
@@ -83,28 +83,44 @@ const AppliedJobsArea = ({setIsOpenSidebar}:IProps) => {
                   <div className="col-lg-3 col-md-4 col-sm-6 ms-auto">
                     <Link href={`/job-details-v1/${j.id}`}
                       className={`job-duration fw-500 ${
-                        j.duration === "Part time" ? "part-time" : ""
+                        j.job_type === "Part time" ? "part-time" : ""
                       }`}
                     >
-                      {j.duration}
+                      {j.job_type}
                     </Link>
-                    <div className="job-salary">
+                    {/* <div className="job-salary">
                       <span className="fw-500 text-dark">${j.salary}</span> /{" "}
                       {j.salary_duration} . {j.experience}
+                    </div> */}
+                    <div className="education-level">
+                      <i className="fas fa-user-tie me-2">Education Required:</i>
+                      {j.education_required}
                     </div>
                   </div>
                   <div className="col-lg-3 col-md-4 col-sm-6 ms-auto">
                     <div className="job-location">
                       <i className="fas fa-map-marker-alt me-2"></i>
-                      {j.location}
+                      {j.job_location}
                     </div>
                     <div className="job-type">
                       <i className="fas fa-user-tie me-2"></i>
                       {j.job_type}
                     </div>
                   </div>
-                  <div className="col-lg-2 col-md-4 col-sm-6 ms-auto">
-                    <ActionDropdown />
+                  <div className="col-lg-2 col-md-4">
+                    <div className="action-dots float-end">
+                      <button
+                        className="action-btn dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <span></span>
+                      </button>
+                      {/* action dropdown start */}
+                      <ActionDropdown job_id={j.job_id} companyHR_id={j.companyHR_id}/>
+                      {/* action dropdown end */}
+                    </div>
                   </div>
                 </div>
               </div>
