@@ -4,7 +4,7 @@ import Link from "next/link";
 import DashboardHeader from "./dashboard-header";
 import ShortSelect from "../../common/short-select";
 // import job_data from "@/data/job-data";
-import ActionDropdown from "./action-dropdown";
+import ActionDropdown from "./action-dropdownCandidate";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 

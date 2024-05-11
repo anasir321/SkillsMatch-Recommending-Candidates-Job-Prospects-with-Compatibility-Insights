@@ -74,7 +74,11 @@ const Header = () => {
 
   return (
     <>
-    <header className={`theme-main-menu menu-overlay menu-style-one sticky-menu ${sticky?'fixed':''}`}>
+    <header
+      className={`theme-main-menu menu-overlay menu-style-one sticky-menu ${
+        sticky ? "fixed" : ""
+      }`}
+    >
       <div className="inner-content position-relative">
         <div className="top-header">
           <div className="d-flex align-items-center">
@@ -84,9 +88,25 @@ const Header = () => {
               </Link>
             </div>
             <div className="right-widget ms-auto order-lg-3">
-              <ul className="d-flex align-items-center style-none">
-                <li className="d-none d-md-block">
-                  <Link href="/register" className="job-post-btn tran3s">
+              {isLogged ? (
+                <div>
+                  <p className="text-white">
+                    <span style={{ fontWeight: "bold" }}>
+                    Welcome, {user?.firstname}
+                    </span>{" "}
+                    <span style={{ fontWeight: "bold" }}>{user?.lastname}</span>
+                  </p>
+                  <button className="btn btn-danger" onClick={() => {
+                    localStorage.removeItem("token");
+                    window.location.reload();
+                  }}>
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <ul className="d-flex align-items-center style-none">
+                  <li className="d-none d-md-block">
+                    <Link href="/register" className="job-post-btn tran3s">
                     Register
                   </Link>
                 </li>
@@ -116,6 +136,7 @@ const Header = () => {
                   </Link>
                 </li>
               </ul>
+            )}
             </div>
             <nav className="navbar navbar-expand-lg p0 ms-lg-5 ms-3 order-lg-2">
               <button
