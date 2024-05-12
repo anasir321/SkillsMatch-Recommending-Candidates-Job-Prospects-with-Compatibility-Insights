@@ -41,7 +41,7 @@ const JobDetailsV1Page = () => {
         {/* job portal intro end */}
 
         {/* footer start */}
-        {/* <FooterOne /> */}
+        <FooterOne />
         {/* footer end */}
       </div>
     </Wrapper>

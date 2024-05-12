@@ -42,7 +42,7 @@ const CompanyV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
       <div className="container">
         <div className="row">
           <div className="col-xl-3 col-lg-4">
-            <button
+            {/* <button
               type="button"
               className="filter-btn w-100 pt-2 pb-2 h-auto fw-500 tran3s d-lg-none mb-40"
               data-bs-toggle="offcanvas"
@@ -50,7 +50,7 @@ const CompanyV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
             >
               <i className="bi bi-funnel"></i>
               Filter
-            </button>
+            </button> */}
             <div
               className="filter-area-tab offcanvas offcanvas-start"
               id="filteroffcanvas"
@@ -61,16 +61,16 @@ const CompanyV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
               ></button>
-              <div className="main-title fw-500 text-dark">Filter By</div>
+              {/* <div className="main-title fw-500 text-dark">Filter By</div> */}
               {/* CompanyV1Filter */}
-              <CompanyV1Filter />
+              {/* <CompanyV1Filter /> */}
               {/* CompanyV1Filter */}
             </div>
           </div>
 
           <div className="col-xl-9 col-lg-8">
             <div className="ms-xxl-5 ms-xl-3">
-              <div className="upper-filter d-flex justify-content-between align-items-center mb-20">
+              {/* <div className="upper-filter d-flex justify-content-between align-items-center mb-20">
                 <div className="total-job-found">
                   All <span className="text-dark fw-500">320</span> company
                   found
@@ -95,7 +95,7 @@ const CompanyV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
                     <i className="bi bi-grid"></i>
                   </button>
                 </div>
-              </div>
+              </div> */}
 
               <div
                 className={`accordion-box grid-style ${jobType === "grid" ? "show" : ""}`}
@@ -127,13 +127,13 @@ const CompanyV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
                 ))} */}
               </div>
 
-              <div className="pt-50 lg-pt-20 d-sm-flex align-items-center justify-content-between">
+              {/* <div className="pt-50 lg-pt-20 d-sm-flex align-items-center justify-content-between">
                 <p className="m0 order-sm-last text-center text-sm-start xs-pb-20">
                   Showing <span className="text-dark fw-500">1 to 20</span> of{" "}
                   <span className="text-dark fw-500">350</span>
                 </p>
                 <CompanyPagination/>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

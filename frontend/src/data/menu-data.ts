@@ -115,7 +115,7 @@ import { IMenuData } from "@/types/menu-data-type";
     link:'/',
     title:'Home',
     sub_menus:[
-      {link:'/',title:'Home 1'},
+      {link:'/',title:'Home'},
       // {link:'/home-2',title:'Home 2'},
       // {link:'/home-3',title:'Home 3'},
       // {link:'/home-4',title:'Home 4'},
@@ -150,7 +150,7 @@ import { IMenuData } from "@/types/menu-data-type";
         id:1,
         title:'Candidates',
         sub_menus:[
-          {title:'Candidates V-1',link:'/candidates-v1'},
+          {title:'View Candidates',link:'/candidates-v1'},
           // {title:'Candidates V-2',link:'/candidates-v2'},
           // {title:'Candidates V-3',link:'/candidates-v3'},
           // {title:'Candidates V-4',link:'/candidates-v4'},
@@ -162,7 +162,7 @@ import { IMenuData } from "@/types/menu-data-type";
         id:2,
         title:'Company',
         sub_menus:[
-          {title:'Company V-1',link:'/company-v1'},
+          {title:'View Companies',link:'/company-v1'},
           // {title:'Company V-2',link:'/company-v2'},
           // {title:'Company V-3',link:'/company-v3'},
           // {title:'Company V-4',link:'/company-v4'},
@@ -202,7 +202,7 @@ import { IMenuData } from "@/types/menu-data-type";
     link:'/dashboard/employer-dashboard',
     title:'Dashboard',
     sub_menus:[
-      {link:'/dashboard/candidate-dashboard',title:'Candidate Dashboard'},
+      // {link:'/dashboard/candidate-dashboard',title:'Candidate Dashboard'},
       {link:'/dashboard/employ-dashboard',title:'Employer Dashboard'},
     ]
   }

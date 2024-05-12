@@ -24,7 +24,7 @@ export default function Home() {
       {/* hero banner end */}
 
       {/* category section start */}
-      <CategorySection/>
+      {/* <CategorySection/> */}
       {/* category section end */}
 
       {/* feature one start */}
@@ -36,7 +36,7 @@ export default function Home() {
       {/* how works end */}
 
       {/* expert one section start */}
-      <ExpertsOne/>
+      {/* <ExpertsOne/> */}
       {/* expert one section end */}
 
       {/* feedback one start */}
@@ -52,15 +52,15 @@ export default function Home() {
       {/* blog section one end */}
 
       {/* fancy banner start */}
-      <FancyBanner/>
+      {/* <FancyBanner/> */}
       {/* fancy banner end */}
 
       {/* job portal intro start */}
-      <JobPortalIntro/>
+      {/* <JobPortalIntro/> */}
       {/* job portal intro end */}
 
       {/* footer start */}
-      {/* <FooterOne/> */}
+      <FooterOne/>
       {/* footer end */}
     </Wrapper>
   );

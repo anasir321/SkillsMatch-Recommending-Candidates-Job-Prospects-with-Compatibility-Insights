@@ -36,13 +36,13 @@ const nav_data: {
   link: string;
   title: string;
 }[] = [
-  {
-    id: 1,
-    icon: nav_1,
-    icon_active: nav_1_active,
-    link: "/dashboard/candidate-dashboard",
-    title: "Dashboard",
-  },
+  // {
+  //   id: 1,
+  //   icon: nav_1,
+  //   icon_active: nav_1_active,
+  //   link: "/dashboard/candidate-dashboard",
+  //   title: "Dashboard",
+  // },
   {
     id: 2,
     icon: nav_2,
@@ -227,7 +227,7 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
           <div className="user-name-data">
             {userDetails.firstname && userDetails.lastname ? (
               <button
-                className="user-name dropdown-toggle"
+                className="user-name"
                 type="button"
                 id="profile-dropdown"
                 data-bs-toggle="dropdown"
@@ -240,7 +240,7 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
             ): (
               <p>Loading</p>
             )}
-            <ul className="dropdown-menu" aria-labelledby="profile-dropdown">
+            {/* <ul className="dropdown-menu" aria-labelledby="profile-dropdown">
               <li>
                 <Link
                   className="dropdown-item d-flex align-items-center"
@@ -265,7 +265,7 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
                   <span className="ms-2 ps-1">Notification</span>
                 </a>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
         <nav className="dasboard-main-nav">

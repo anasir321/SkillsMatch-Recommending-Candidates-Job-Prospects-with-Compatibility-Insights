@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import man_1 from "@/assets/images/assets/img_02.jpg";
-import girl from "@/assets/images/assets/img_03.jpg";
-import man_2 from "@/assets/images/assets/img_04.jpg";
-import screen_1 from "@/assets/images/assets/screen_01.png";
-import screen_2 from "@/assets/images/assets/screen_02.png";
-import screen_3 from "@/assets/images/assets/screen_03.png";
-import shape from "@/assets/images/shape/shape_06.svg";
+import man_1 from "@/assets/new_images/markus-winkler-7iSEHWsxPLw-unsplash (1).jpg";
+// import girl from "@/assets/new_images/nik-3xNn1zGvBwY-unsplash (1).jpg";
+import man_2 from "@/assets/new_images/jj-ying-8bghKxNU1j0-unsplash (1).jpg";
+import screen_1 from "@/assets/new_images/gustavo-zambelli-MIC75hn_CMI-unsplash (1).jpg";
+import screen_2 from "@/assets/new_images/nagara-oyodo-kE0o9syjDZQ-unsplash (1).jpg";
+import screen_3 from "@/assets/new_images/jj-ying-8bghKxNU1j0-unsplash (1).jpg";
+import shape from "@/assets/new_images/nagara-oyodo-kE0o9syjDZQ-unsplash (1).jpg";
 
 // FeatureImgData
 export function FeatureImgData() {
@@ -19,13 +19,13 @@ export function FeatureImgData() {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-4 col-5">
+        {/* <div className="col-md-4 col-5">
           <Image
             src={girl}
             alt="girl img"
             className="lazy-img img02 mt-35"
           />
-        </div>
+        </div> */}
         <div className="col-md-6 col-7">
           <Image
             src={man_2}
@@ -44,16 +44,16 @@ export function FeatureImgData() {
         alt="screen_2-img"
         className="lazy-img shapes screen02 wow fadeInUp"
       />
-      <Image
+      {/* <Image
         src={screen_3}
         alt="screen_3-img"
         className="lazy-img shapes screen03 wow fadeInUp"
-      />
-      <Image
+      /> */}
+      {/* <Image
         src={shape}
         alt="shape"
         className="lazy-img shapes shape_01"
-      />
+      /> */}
     </div>
   )
 }
