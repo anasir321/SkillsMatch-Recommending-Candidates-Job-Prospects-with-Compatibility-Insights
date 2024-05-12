@@ -981,8 +981,60 @@ async function getJobDetailsUsingSavedJobs(req, res){
       error: error.message,
     });
   }
-
 }
+
+// async function recommendCandidateUsingJobId(req, res) {
+//   try {
+//       const job_id = req.params.job_id;
+//       // Step 1: Fetch candidates from API
+//       const response = await axios.get(`http://localhost:2004/recommend_candidates/${job_id}`);
+//       const recommendedCandidates = response.data.recommended_candidates;
+      
+//       // Step 2: Extract candidate IDs
+//       const candidateIds = recommendedCandidates.map(candidate => candidate.candidate_id);
+
+//       // Step 3: Fetch candidates from the database using Sequelize
+//       const candidatesFromDB = await Candidate.findAll({
+//           where: {
+//               candidate_id: candidateIds // Assuming your Candidate model has candidate_id as the primary key
+//           }
+//       });
+
+//       return { recommendedCandidates, candidatesFromDB };
+//   } catch (error) {
+//       console.error('Error:', error);
+//       throw new Error('Failed to recommend candidates');
+//   }
+// }
+
+async function getCandidateDetailsUsingCandidateIdsArray(req, res) {
+  try {
+    const { candidateIds } = req.body;
+
+    const candidateDetails = await Candidate.findAll({ where: { candidate_id: candidateIds } });
+
+    if (!candidateDetails) {
+      return res.status(404).json({
+        success: false,
+        message: "No candidate details found for the provided candidate IDs",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Candidate details retrieved successfully",
+      data: { candidateDetails },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error! Unable to retrieve candidate details.",
+      error: error.message,
+    });
+  }
+}
+
 
 module.exports = {
   signupCandidate,
@@ -1011,4 +1063,5 @@ module.exports = {
   isJobSaved,
   getAllSavedJobs,
   getJobDetailsUsingSavedJobs,
+  getCandidateDetailsUsingCandidateIdsArray
 };

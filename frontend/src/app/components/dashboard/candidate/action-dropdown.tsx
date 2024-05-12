@@ -59,6 +59,11 @@ const ActionDropdown = ({ job_id }) => {
           <Image src={view} alt="icon" className="lazy-img" /> View Applicants
         </a>
       </li>
+      <li>
+        <a className="dropdown-item" href={`/dashboard/employ-dashboard/recommendedcandidates?job_id=${job_id}`}>
+          <Image src={view} alt="icon" className="lazy-img" /> View Recommendeded Candidates
+        </a>
+      </li>
     </ul>
   );
 };

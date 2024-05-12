@@ -138,15 +138,15 @@ const CandidateSingleApplicant = ({ item }: { item: candidateDetails }) => {
               <div className="position-relative">
                 <h4 className="candidate-name mb-0">
                   <a href="#" className="tran3s">
-                    {item.firstname}
+                    {item.firstname} {item.lastname}
                   </a>
                 </h4>
                 <div className="candidate-post">{item.preferredJobTitle}</div>
                 <ul className="cadidate-skills style-none d-flex align-items-center">
                   {/* Display each skill in a <li> tag */}
-                  {skillsToDisplay.map((skill, index) => (
+                  {/* {skillsToDisplay.map((skill, index) => (
                     <li key={index}>{skill.trim()}</li>
-                  ))}
+                  ))} */}
                 </ul>
                 {/* <ul className="cadidate-skills style-none d-flex align-items-center">
                   <li>{item.skills[0]}</li>
