@@ -42,6 +42,7 @@ const SavedCandidateItemActionDropDown = ({ candidate_id }) => {
   
         if(response.status === 200){
           console.log("action-dropdown-applicant.tsx :: unsaveCandidate :: response.data: ", response.data);
+          window.location.reload();
         }
   
       } catch (error) {

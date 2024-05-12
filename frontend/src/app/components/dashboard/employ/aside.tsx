@@ -37,26 +37,26 @@ const nav_data: {
   link: string;
   title: string;
 }[] = [
-  {
-    id: 1,
-    icon: nav_1,
-    icon_active: nav_1_active,
-    link: "/dashboard/employ-dashboard",
-    title: "Dashboard",
-  },
+  // {
+  //   id: 1,
+  //   icon: nav_1,
+  //   icon_active: nav_1_active,
+  //   link: "/dashboard/employ-dashboard",
+  //   title: "Dashboard",
+  // },
   {
     id: 2,
     icon: nav_2,
     icon_active: nav_2_active,
     link: "/dashboard/employ-dashboard/profile",
-    title: "My Profile",
+    title: "Company Profile",
   },
   {
     id: 3,
     icon: nav_3,
     icon_active: nav_3_active,
     link: "/dashboard/employ-dashboard/jobs",
-    title: "My Jobs",
+    title: "Jobs Posted",
   },
   // {
   //   id: 4,
@@ -70,14 +70,14 @@ const nav_data: {
     icon: nav_5,
     icon_active: nav_5_active,
     link: "/dashboard/employ-dashboard/submit-job",
-    title: "Submit Job",
+    title: "Post Job",
   },
   {
     id: 6,
     icon: nav_6,
     icon_active: nav_6_active,
     link: "/dashboard/employ-dashboard/saved-candidate",
-    title: "Saved Candidate",
+    title: "Saved Candidates",
   },
   // {
   //   id: 7,
@@ -86,13 +86,13 @@ const nav_data: {
   //   link: "/dashboard/employ-dashboard/membership",
   //   title: "Membership",
   // },
-  {
-    id: 8,
-    icon: nav_7,
-    icon_active: nav_7_active,
-    link: "/dashboard/employ-dashboard/setting",
-    title: "Account Settings",
-  },
+  // {
+  //   id: 8,
+  //   icon: nav_7,
+  //   icon_active: nav_7_active,
+  //   link: "/dashboard/employ-dashboard/setting",
+  //   title: "Account Settings",
+  // },
   // {
   //   id: 9,
   //   icon: nav_3,
@@ -166,7 +166,7 @@ const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
           <div className="user-name-data">
           {companyHRDetails.firstname && companyHRDetails.lastname ? (
               <button
-                className="user-name dropdown-toggle"
+                className="user-name"
                 type="button"
                 id="profile-dropdown"
                 data-bs-toggle="dropdown"
@@ -179,7 +179,7 @@ const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
             ): (
               <p>Loading</p>
             )}
-            <ul className="dropdown-menu" aria-labelledby="profile-dropdown">
+            {/* <ul className="dropdown-menu" aria-labelledby="profile-dropdown">
               <li>
                 <Link
                   className="dropdown-item d-flex align-items-center"
@@ -204,7 +204,7 @@ const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
                   <span className="ms-2 ps-1">Notification</span>
                 </a>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
         <nav className="dasboard-main-nav">
@@ -227,7 +227,7 @@ const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
                 </li>
               );
             })}
-            <li>
+            {/* <li>
               <a
                 href="#"
                 className="d-flex w-100 align-items-center"
@@ -237,21 +237,21 @@ const EmployAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
                 <Image src={nav_8} alt="icon" className="lazy-img" />
                 <span>Delete Account</span>
               </a>
-            </li>
+            </li> */}
           </ul>
         </nav>
-        <div className="profile-complete-status">
+        {/* <div className="profile-complete-status">
           <div className="progress-value fw-500">87%</div>
           <div className="progress-line position-relative">
             <div className="inner-line" style={{ width: "80%" }}></div>
           </div>
           <p>Profile Complete</p>
-        </div>
+        </div> */}
 
-        <a href="#" className="d-flex w-100 align-items-center logout-btn" onClick={logoutCompanyHR}>
+        {/* <a href="#" className="d-flex w-100 align-items-center logout-btn" onClick={logoutCompanyHR}>
           <Image src={logout} alt="icon" className="lazy-img" />
           <span>Logout</span>
-        </a>
+        </a> */}
       </div>
     </aside>
     {/* LogoutModal star */}

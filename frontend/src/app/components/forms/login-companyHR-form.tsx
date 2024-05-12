@@ -60,7 +60,8 @@ const LoginFormCompanyHR = () => {
         alert("Login successfully!");
         console.log(response.data);
         localStorage.setItem("token", token);
-        router.push("http://localhost:3000/dashboard/employ-dashboard");
+        // router.push("http://localhost:3000/dashboard/employ-dashboard");
+        window.location.reload();
       } else {
         alert("Login failed!");
       }
@@ -110,11 +111,11 @@ const LoginFormCompanyHR = () => {
         </div>
         <div className="col-12">
           <div className="agreement-checkbox d-flex justify-content-between align-items-center">
-            <div>
+            {/* <div>
               <input type="checkbox" id="remember" />
               <label htmlFor="remember">Keep me logged in</label>
-            </div>
-            <a href="#">Forget Password?</a>
+            </div> */}
+            {/* <a href="#">Forget Password?</a> */}
           </div>
         </div>
         <div className="col-12">

@@ -203,7 +203,7 @@ import { IMenuData } from "@/types/menu-data-type";
     title:'Dashboard',
     sub_menus:[
       // {link:'/dashboard/candidate-dashboard',title:'Candidate Dashboard'},
-      {link:'/dashboard/employ-dashboard',title:'Employer Dashboard'},
+      {link:'/dashboard/employ-dashboard/profile',title:'Employer Dashboard'},
     ]
   }
 ]
