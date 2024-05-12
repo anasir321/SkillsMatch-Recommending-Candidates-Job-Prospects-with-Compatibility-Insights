@@ -110,7 +110,7 @@ const Header = () => {
                     Register
                   </Link>
                 </li>
-                <li>
+                <li margin-bottom='10px'>
                   <a
                     href="#"
                     className="login-btn-one"
@@ -119,6 +119,9 @@ const Header = () => {
                   >
                     Candidate Login
                   </a>
+                </li>
+                <li>
+                  <span style={{ marginRight: '10px' }}></span>
                 </li>
                 <li>
                   <a
@@ -130,11 +133,11 @@ const Header = () => {
                     Company HR Login
                   </a>
                 </li>
-                <li className="d-none d-md-block ms-4">
+                {/* <li className="d-none d-md-block ms-4">
                   <Link href="/candidates-v1" className="btn-one">
                     Hire Top Talents
                   </Link>
-                </li>
+                </li> */}
               </ul>
             )}
             </div>
@@ -184,11 +187,11 @@ const Header = () => {
                       Post Job
                     </Link>
                   </li>
-                  <li className="d-md-none">
+                  {/* <li className="d-md-none">
                     <Link href="/candidates-v1" className="btn-one w-100">
                       Hire Top Talents
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </nav>
