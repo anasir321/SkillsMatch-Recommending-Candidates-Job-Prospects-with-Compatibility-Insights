@@ -57,34 +57,34 @@ const nav_data: {
     link: "/dashboard/candidate-dashboard/applied-jobs",
     title: "Applied Jobs",
   },
-  {
-    id: 3,
-    icon: nav_3,
-    icon_active: nav_3_active,
-    link: "/dashboard/candidate-dashboard/resume",
-    title: "Resume",
-  },
-  {
-    id: 8,
-    icon: nav_3,
-    icon_active: nav_3_active,
-    link: "/dashboard/candidate-dashboard/resume-generator",
-    title: "Resume Generator",
-  },
-  {
-    id: 4,
-    icon: nav_4,
-    icon_active: nav_4_active,
-    link: "/dashboard/candidate-dashboard/messages",
-    title: "Messages",
-  },
-  {
-    id: 5,
-    icon: nav_5,
-    icon_active: nav_5_active,
-    link: "/dashboard/candidate-dashboard/job-alert",
-    title: "Job Alert",
-  },
+  // {
+  //   id: 3,
+  //   icon: nav_3,
+  //   icon_active: nav_3_active,
+  //   link: "/dashboard/candidate-dashboard/resume",
+  //   title: "Resume",
+  // },
+  // {
+  //   id: 8,
+  //   icon: nav_3,
+  //   icon_active: nav_3_active,
+  //   link: "/dashboard/candidate-dashboard/resume-generator",
+  //   title: "Resume Generator",
+  // },
+  // {
+  //   id: 4,
+  //   icon: nav_4,
+  //   icon_active: nav_4_active,
+  //   link: "/dashboard/candidate-dashboard/messages",
+  //   title: "Messages",
+  // },
+  // {
+  //   id: 5,
+  //   icon: nav_5,
+  //   icon_active: nav_5_active,
+  //   link: "/dashboard/candidate-dashboard/job-alert",
+  //   title: "Job Alert",
+  // },
   {
     id: 6,
     icon: nav_6,
@@ -92,13 +92,13 @@ const nav_data: {
     link: "/dashboard/candidate-dashboard/saved-job",
     title: "Saved Job",
   },
-  {
-    id: 7,
-    icon: nav_7,
-    icon_active: nav_7_active,
-    link: "/dashboard/candidate-dashboard/setting",
-    title: "Account Settings",
-  },
+  // {
+  //   id: 7,
+  //   icon: nav_7,
+  //   icon_active: nav_7_active,
+  //   link: "/dashboard/candidate-dashboard/setting",
+  //   title: "Account Settings",
+  // },
   {
     id: 9,
     icon: nav_3,
@@ -288,7 +288,7 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
                 </li>
               );
             })}
-            <li>
+            {/* <li>
               <a
                 href="#"
                 className="d-flex w-100 align-items-center"
@@ -298,21 +298,21 @@ const CandidateAside = ({isOpenSidebar,setIsOpenSidebar}:IProps) => {
                 <Image src={nav_8} alt="icon" className="lazy-img" />
                 <span>Delete Account</span>
               </a>
-            </li>
+            </li> */}
           </ul>
         </nav>
-        <div className="profile-complete-status">
+        {/* <div className="profile-complete-status">
           <div className="progress-value fw-500">87%</div>
           <div className="progress-line position-relative">
             <div className="inner-line" style={{ width: "80%" }}></div>
           </div>
           <p>Profile Complete</p>
-        </div>
+        </div> */}
 
-        <a href="#" className="d-flex w-100 align-items-center logout-btn" onClick={logoutCandidate}>
+        {/* <a href="#" className="d-flex w-100 align-items-center logout-btn" onClick={logoutCandidate}>
           <Image src={logout} alt="icon" className="lazy-img" />
           <span>Logout</span>
-        </a>
+        </a> */}
       </div>
     </aside>
     {/* LogoutModal star */}
