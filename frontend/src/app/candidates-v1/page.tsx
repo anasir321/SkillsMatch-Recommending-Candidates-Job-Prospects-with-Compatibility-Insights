@@ -8,7 +8,7 @@ import CandidateV1Area from '../components/candidate/candidate-v1-area';
 import FooterOne from '@/layouts/footers/footer-one';
 
 export const metadata: Metadata = {
-  title: "Candidate v1",
+  title: "Candidates",
 };
 
 
@@ -21,7 +21,7 @@ const CandidatePage = () => {
         {/* header end */}
 
         {/* search breadcrumb start */}
-        <JobBreadcrumb title='Candidates' subtitle='Subtitle' />
+        <JobBreadcrumb title='Registered Candidates' subtitle='Subtitle' />
         {/* search breadcrumb end */}
 
         {/* candidate area start */}
@@ -29,11 +29,11 @@ const CandidatePage = () => {
         {/* candidate area end */}
 
         {/* job portal intro start */}
-        <JobPortalIntro top_border={true} />
+        {/* <JobPortalIntro top_border={true} /> */}
         {/* job portal intro end */}
 
         {/* footer start */}
-        {/* <FooterOne /> */}
+        <FooterOne />
         {/* footer end */}
       </div>
     </Wrapper>

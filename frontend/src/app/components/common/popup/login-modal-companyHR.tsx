@@ -24,9 +24,9 @@ const LoginModalCompanyHR = () => {
             ></button>
             <div className="text-center">
               <h2>Hi, Welcome Back!</h2>
-              <p>
+              {/* <p>
                 Still do not have an account? <Link href="/register">Sign up</Link>
-              </p>
+              </p> */}
             </div>
             <div className="form-wrapper m-auto">
               <LoginFormCompanyHR />
@@ -35,7 +35,7 @@ const LoginModalCompanyHR = () => {
                 <span className="pe-3 ps-3">OR</span>
                 <div className="line"></div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-md-6">
                   <a
                     href="#"
@@ -54,7 +54,7 @@ const LoginModalCompanyHR = () => {
                     <span className="ps-2">Login with Facebook</span>
                   </a>
                 </div>
-              </div>
+              </div> */}
               <p className="text-center mt-10">
                 Do not have an account?{" "}
                 <Link href="/register" className="fw-500">

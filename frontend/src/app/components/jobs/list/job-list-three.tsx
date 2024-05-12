@@ -284,7 +284,7 @@ const JobListThree = ({ itemsPerPage,grid_style=false }: { itemsPerPage: number;
               Filter
             </button>
             {/* filter area start */}
-            <FilterArea priceValue={priceValue} setPriceValue={setPriceValue} maxPrice={maxPrice} />
+            {/* <FilterArea priceValue={priceValue} setPriceValue={setPriceValue} maxPrice={maxPrice} /> */}
             {/* filter area end */}
           </div>
 
@@ -297,7 +297,7 @@ const JobListThree = ({ itemsPerPage,grid_style=false }: { itemsPerPage: number;
                 </div>
                 <div className="d-flex align-items-center">
                   <div className="short-filter d-flex align-items-center">
-                    <div className="text-dark fw-500 me-2">Short:</div>
+                    {/* <div className="text-dark fw-500 me-2">Short:</div> */}
                     {/* <NiceSelect
                       options={[
                         {value:'',label:'Price Short'},
@@ -309,7 +309,7 @@ const JobListThree = ({ itemsPerPage,grid_style=false }: { itemsPerPage: number;
                       name="Price Short"
                     /> */}
                   </div>
-                  <button
+                  {/* <button
                     onClick={() => setJobType("list")}
                     className={`style-changer-btn text-center rounded-circle tran3s ms-2 list-btn 
                     ${jobType === "grid" ? "active" : ""}`}
@@ -324,7 +324,7 @@ const JobListThree = ({ itemsPerPage,grid_style=false }: { itemsPerPage: number;
                     title="Active Grid"
                   >
                     <i className="bi bi-grid"></i>
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <div

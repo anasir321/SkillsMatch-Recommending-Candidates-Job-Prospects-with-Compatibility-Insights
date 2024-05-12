@@ -32,7 +32,7 @@ const JobDetailsV1Page = () => {
         {/* job details area end */}
 
         {/* related job start */}
-        <RelatedJobs category={job.category}/>
+        {/* <RelatedJobs category={job.category}/> */}
         {/* related job end */}
 
         {/* job portal intro start */}
@@ -40,7 +40,7 @@ const JobDetailsV1Page = () => {
         {/* job portal intro end */}
 
         {/* footer start */}
-        {/* <FooterOne /> */}
+        <FooterOne />
         {/* footer end */}
       </div>
     </Wrapper>

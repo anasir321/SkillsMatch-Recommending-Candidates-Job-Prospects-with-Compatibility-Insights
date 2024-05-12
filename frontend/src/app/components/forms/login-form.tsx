@@ -6,7 +6,7 @@ import { Resolver, useForm } from "react-hook-form";
 import ErrorMsg from "../common/error-msg";
 import icon from "@/assets/images/icon/icon_60.svg";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 // form data type
 type IFormData = {
@@ -54,15 +54,15 @@ const LoginForm = () => {
   const onSubmit = async (data: IFormData) => {
     try {
       const response = await axios.post("http://localhost:5000/api/auth/loginCandidate", data);
-      const { token } = response.data;
+      const { token } = await response.data;
       if (response) {
-        alert("Login successfully!");
+        alert("Logged in successfully!");
         console.log(response.data);
         localStorage.setItem("token", token);
         
         localStorage.setItem("email", data.email); 
         console.log("email is"+data.email+"emailed"+data["email"]+"local"+localStorage.getItem("email"));
-        router.push("http://localhost:3000/dashboard/candidate-dashboard");
+        window.location.reload(); // Refresh the page instantly
       } else {
         alert("Login failed!");
       }
@@ -111,13 +111,13 @@ const LoginForm = () => {
           </div>
         </div>
         <div className="col-12">
-          <div className="agreement-checkbox d-flex justify-content-between align-items-center">
+          {/* <div className="agreement-checkbox d-flex justify-content-between align-items-center">
             <div>
               <input type="checkbox" id="remember" />
               <label htmlFor="remember">Keep me logged in</label>
             </div>
             <a href="#">Forget Password?</a>
-          </div>
+          </div> */}
         </div>
         <div className="col-12">
           <button
