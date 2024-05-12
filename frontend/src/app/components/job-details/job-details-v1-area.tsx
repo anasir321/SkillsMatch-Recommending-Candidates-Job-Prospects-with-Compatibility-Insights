@@ -56,6 +56,7 @@ const JobDetailsV1Area = ({ job }: { job: IJobType }) => {
   const job_id = searchParams.get("job_id");
   console.log("job-details-v1-area :: job_id: ", job_id);
 //   var companyhrid = 0;
+  const [recommendedCandidates, setRecommendedCandidates] = useState<any[]>([]);
 
   // get company details by companyHR_id
   const fetchCompanyDetails = async (companyhrid: number) => {
@@ -205,6 +206,23 @@ const handleApplyNowClick = async () => {
     }
   }
 }
+
+// useEffect(() => {
+//   const getRecommendedCandidates = async () => {
+//     try {
+//       const response = await axios.get(`http://localhost:2004/recommend_candidates/${job_id}`);
+//       if(response){
+//         console.log("Recommended candidates: ", response.data);
+//         setRecommendedCandidates(response.data);
+//       }
+//     } catch (error) {
+//       console.log("Error in getRecommendedCandidates: ", error);
+//     }
+//   };
+//   getRecommendedCandidates();
+// }, [])
+
+
 
   return (
     <section className="job-details pt-100 lg-pt-80 pb-130 lg-pb-80">
@@ -425,6 +443,8 @@ const handleApplyNowClick = async () => {
         </div>
       </div>
     </section>
+
+    
   );
 };
 
