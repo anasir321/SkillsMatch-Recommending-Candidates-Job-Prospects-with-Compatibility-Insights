@@ -51,10 +51,15 @@ const EmployJobItem = ({
    // Function to fetch the number of applicants for the given job_id
    const fetchApplicantCount = async () => {
     try {
+        const token = localStorage.getItem("token");
         // Call the countApplicants API
-        const response = await axios.post('http://localhost:5000/api/auth/countApplicants', {
-            job_id: job_id,
-        });
+        const response = await axios.get(`http://localhost:5000/api/auth/countApplicantsUsingJobId/${job_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }
+        );
 
         // Update the applicantCount state with the response data
         if (response.status === 200) {

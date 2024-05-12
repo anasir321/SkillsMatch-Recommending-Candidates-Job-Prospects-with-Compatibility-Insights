@@ -111,7 +111,7 @@ history = model.fit(x=candidate_vectors.toarray(), y=candidates_data.index, epoc
 cosine_sim_matrix = cosine_similarity(candidate_vectors, job_vectors)
 
 # Function to recommend candidates for a job using cosine similarity
-def recommend_candidates(job_id, top_n=5):
+def recommend_candidates(job_id, top_n=10):
     job_index = job_id - 1  # Adjust index to match zero-based indexing
     if job_index < 0 or job_index >= len(jobs_data):
         return []
