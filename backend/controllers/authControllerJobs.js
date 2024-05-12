@@ -316,7 +316,7 @@ const { google } = require("googleapis");
 
 // Load credentials from JSON file
 const credentials = JSON.parse(
-  fs.readFileSync("D:/SkillsMatch - FYP/SkillsMatch/backend/client_secret_924825865240-3qavb2lveu8mmj156l2f4aphucqhurh2.apps.googleusercontent.com.json")
+  fs.readFileSync("/home/faris/SkillsMatch-Recommending-Candidates-Job-Prospects-with-Compatibility-Insights/backend/client_secret_924825865240-3qavb2lveu8mmj156l2f4aphucqhurh2.apps.googleusercontent.com.json")
 );
 // Read credentials from the JSON file
 // const credentials = JSON.parse(fs.readFileSync(GOOGLE_CLIENT_SECRET_PATH));
@@ -330,7 +330,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 
 // Set token if you already have one, otherwise generate a new one
-const token = fs.readFileSync("D:/SkillsMatch - FYP/SkillsMatch/backend/token.json");
+const token = fs.readFileSync("/home/faris/SkillsMatch-Recommending-Candidates-Job-Prospects-with-Compatibility-Insights/backend/token.json");
 // const token = fs.readFileSync(TOKEN_PATH);
 oAuth2Client.setCredentials(JSON.parse(token));
 
