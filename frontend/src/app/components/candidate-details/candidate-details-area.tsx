@@ -19,10 +19,42 @@ const CandidateDetailsArea = () => {
   const [institute, setInstitute] = useState<any>([]);
   const [workExperience, setWorkExperience] = useState<any>([]);
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const [skills, setSkills] = useState<any>([]);
+  const [resumePath, setResumePath] = useState<string | null>(null);
+
   const searchParams = useSearchParams();
 
   const id = searchParams.get('id');
+  
+  const handleDownloadCV = async () => {
+    try {
+      // Get the id from search params
+      const token = localStorage.getItem('token');
 
+      if (!id) {
+        console.error("Candidate id not found in search params");
+        return;
+      }
+
+      // Make a GET request to the /getResume API endpoint
+      const response = await axios.get(`http://localhost:5000/api/auth/getResume?id=${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const newPath = "http://localhost:5000" + response.data.filePath;
+
+      if (response.status === 200) {
+        // Update the state with the resume path received from the API
+        setResumePath(newPath);
+      } else {
+        console.error("Error retrieving resume:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error retrieving resume:", error);
+    }
+  };
   useEffect(() => {
     const getCandidateDetailsUsingId = async () => {
       try {
@@ -32,7 +64,9 @@ const CandidateDetailsArea = () => {
           setUserDetails(response.data.data.candidate);
           setInstitute(response.data.data.institute);
           setWorkExperience(response.data.data.workExperience);
+          setSkills(response.data.data.candidate.skills);
         }
+        // console.log("Skills: ", skills);
 
       } catch (error){
         console.error("Error fetching candidate details: ", error);
@@ -55,6 +89,8 @@ const CandidateDetailsArea = () => {
         console.error("Error fetching profile picture:", error);
       }
     };
+
+
     getCandidateDetailsUsingId(), fetchProfilePicture();
   }, [])
   return (
@@ -90,7 +126,7 @@ const CandidateDetailsArea = () => {
                 <div className="inner-card border-style mb-75 lg-mb-50">
                   <h3 className="title">Skills</h3>
                   {/* skill area */}
-                  <Skills />
+                  <Skills skills={skills} />
                   {/* skill area */}
                 </div>
                 <div className="inner-card border-style mb-60 lg-mb-50">
@@ -99,9 +135,9 @@ const CandidateDetailsArea = () => {
                   <WorkExperience workExperienceProp={workExperience} />
                   {/* WorkExperience */}
                 </div>
-                <h3 className="title">Portfolio</h3>
+                {/* <h3 className="title">Portfolio</h3> */}
                 {/* Candidate Profile Slider */}
-                <CandidateProfileSlider />
+                {/* <CandidateProfileSlider /> */}
                 {/* Candidate Profile Slider */}
               </div>
             </div>
@@ -117,23 +153,25 @@ const CandidateDetailsArea = () => {
                     </div>
                   </div>
                   <h3 className="cadidate-name text-center">{userDetails.firstname} {userDetails.lastname}</h3>
-                  <div className="text-center pb-25"><a href="#" className="invite-btn fw-500">Invite</a></div>
+                  {/* <div className="text-center pb-25"><a href="#" className="invite-btn fw-500">Invite</a></div> */}
                   {/* CandidateBio */}
                   <CandidateBio userDetails={userDetails} workExperience={workExperience} institute={institute} />
                   {/* CandidateBio */}
-                  <a href="#" className="btn-ten fw-500 text-white w-100 text-center tran3s mt-15">Download CV</a>
+                  {/* <a href="#" className="btn-ten fw-500 text-white w-100 text-center tran3s mt-15">Download CV</a> */}
+                  <a href={resumePath} className="btn-ten fw-500 text-white w-100 text-center tran3s mt-15" onClick={handleDownloadCV} target="_blank">View Resume</a>
+
                 </div>
-                <h4 className="sidebar-title">Location</h4>
+                {/* <h4 className="sidebar-title">Location</h4>
                 <div className="map-area mb-60 md-mb-40">
                   <div className="gmap_canvas h-100 w-100">
                     <iframe className="gmap_iframe h-100 w-100" src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=bass hill plaza medical centre&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
                   </div>
-                </div>
-                <h4 className="sidebar-title">Email James Brower.</h4>
+                </div> */}
+                {/* <h4 className="sidebar-title">Email James Brower.</h4>
                 <div className="email-form bg-wrapper bg-color">
                   <p>Your email address & profile will be shown to the recipient.</p>
                   <EmailSendForm/>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

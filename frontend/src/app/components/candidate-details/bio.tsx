@@ -51,16 +51,16 @@ const CandidateBio = ({ userDetails, workExperience, institute }: { userDetails:
         <span>Gender: </span>
         <div>{userDetails.gender}</div>
       </li>
-      <li>
+      {/* <li>
         <span>Expected Salary: </span>
         <div>{userDetails.expectedSalary}</div>
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         <span>Social:</span>
         <div>
-          {/* Render social links */}
+          Render social links
         </div>
-      </li>
+      </li> */}
     </ul>
   );
 };
