@@ -20,7 +20,7 @@ const CompanyV1Page = () => {
         {/* header end */}
 
         {/*breadcrumb start */}
-        <CompanyBreadcrumb title="Company" subtitle="Find your desire company and get your dream job" />
+        <CompanyBreadcrumb title="Registered Companies" subtitle="Find your desired Company" />
         {/*breadcrumb end */}
 
         {/* company v1 area start */}
@@ -28,11 +28,11 @@ const CompanyV1Page = () => {
         {/* company v1 area end */}
 
         {/* job portal intro start */}
-        <JobPortalIntro top_border={true} />
+        {/* <JobPortalIntro top_border={true} /> */}
         {/* job portal intro end */}
 
         {/* footer start */}
-        {/* <FooterOne /> */}
+        <FooterOne />
         {/* footer end */}
       </div>
     </Wrapper>

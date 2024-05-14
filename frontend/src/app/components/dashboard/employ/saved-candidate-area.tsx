@@ -172,7 +172,7 @@ const SavedCandidateArea = ({setIsOpenSidebar}:IProps) => {
           ))}
         </div>
 
-        <div className="dash-pagination d-flex justify-content-end mt-30">
+        {/* <div className="dash-pagination d-flex justify-content-end mt-30">
           <ul className="style-none d-flex align-items-center">
             <li>
               <a href="#" className="active">
@@ -195,7 +195,7 @@ const SavedCandidateArea = ({setIsOpenSidebar}:IProps) => {
               </a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );

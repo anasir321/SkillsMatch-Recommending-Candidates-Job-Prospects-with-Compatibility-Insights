@@ -9,6 +9,8 @@ import WorkTypeSelect from "./workType-select";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { set } from "react-hook-form";
+import {jwtDecode} from "jwt-decode";
+import { decode } from "punycode";
 
 // props type
 type IProps = {
@@ -33,6 +35,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
   const [educationDetails, setEducationDetails] = useState<EducationDetail[]>([]);
   const [workExperience, setWorkExperience] = useState<workExperience[]>([]);
+  const [resumePath, setResumePath] = useState<string | null>(null);
 
 
   useEffect(() => {
@@ -312,6 +315,37 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
     }
   }
 
+  const handleDownloadCV = async () => {
+    try {
+      const token = localStorage.getItem("token") as string;
+      const decoded = jwtDecode(token);
+      const id = decoded.id;
+
+      if (!id) {
+        console.error("Candidate id not found in search params");
+        return;
+      }
+
+      // Make a GET request to the /getResume API endpoint
+      const response = await axios.get(`http://localhost:5000/api/auth/getResume?id=${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const newPath = "http://localhost:5000" + response.data.filePath;
+
+      if (response.status === 200) {
+        // Update the state with the resume path received from the API
+        setResumePath(newPath);
+      } else {
+        console.error("Error retrieving resume:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error retrieving resume:", error);
+    }
+  };
+
   const dob = userDetails.dateOfBirth ? userDetails.dateOfBirth.split('T')[0] : '';
 
   return (
@@ -490,9 +524,11 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
             <label htmlFor="">CV Attachment*</label>
               {userDetails.resume ? (
                 <a
-                  href={`http://localhost:5000${userDetails.resume}`}
+                  href={resumePath}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={handleDownloadCV}
+                  target="_blank"
                 >
                   View Resume
                 </a>

@@ -62,14 +62,14 @@ const EmployJobArea = ({setIsOpenSidebar}:IProps) => {
         {/* header end */}
 
         <div className="d-sm-flex align-items-center justify-content-between mb-40 lg-mb-30">
-          <h2 className="main-title m0">My Jobs</h2>
+          <h2 className="main-title m0">Jobs Posted</h2>
           <div className="d-flex ms-auto xs-mt-30">
             <div
               className="nav nav-tabs tab-filter-btn me-4"
               id="nav-tab"
               role="tablist"
             >
-              <button
+              {/* <button
                 className="nav-link active"
                 data-bs-toggle="tab"
                 data-bs-target="#a1"
@@ -78,8 +78,8 @@ const EmployJobArea = ({setIsOpenSidebar}:IProps) => {
                 aria-selected="true"
               >
                 All
-              </button>
-              <button
+              </button> */}
+              {/* <button
                 className="nav-link"
                 data-bs-toggle="tab"
                 data-bs-target="#a2"
@@ -88,11 +88,11 @@ const EmployJobArea = ({setIsOpenSidebar}:IProps) => {
                 aria-selected="false"
               >
                 New
-              </button>
+              </button> */}
             </div>
             <div className="short-filter d-flex align-items-center ms-auto">
-              <div className="text-dark fw-500 me-2">Short by:</div>
-              <EmployShortSelect />
+              {/* <div className="text-dark fw-500 me-2">Short by:</div> */}
+              {/* <EmployShortSelect /> */}
             </div>
           </div>
         </div>
@@ -209,7 +209,7 @@ const EmployJobArea = ({setIsOpenSidebar}:IProps) => {
           </div>
         </div>
 
-        <div className="dash-pagination d-flex justify-content-end mt-30">
+        {/* <div className="dash-pagination d-flex justify-content-end mt-30">
           <ul className="style-none d-flex align-items-center">
             <li>
               <a href="#" className="active">
@@ -232,7 +232,7 @@ const EmployJobArea = ({setIsOpenSidebar}:IProps) => {
               </a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );

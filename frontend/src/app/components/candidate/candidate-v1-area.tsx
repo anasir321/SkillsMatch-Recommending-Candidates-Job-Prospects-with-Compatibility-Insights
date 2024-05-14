@@ -40,7 +40,7 @@ const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
         <div className="container">
           <div className="row">
             <div className="col-xl-3 col-lg-4">
-              <button
+              {/* <button
                 type="button"
                 className="filter-btn w-100 pt-2 pb-2 h-auto fw-500 tran3s d-lg-none mb-40"
                 data-bs-toggle="offcanvas"
@@ -48,25 +48,25 @@ const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
               >
                 <i className="bi bi-funnel"></i>
                 Filter
-              </button>
+              </button> */}
               {/* filter area start */}
-              <CandidateV1FilterArea />
+              {/* <CandidateV1FilterArea /> */}
               {/* filter area end */}
             </div>
 
             <div className="col-xl-9 col-lg-8">
               <div className="ms-xxl-5 ms-xl-3">
                 <div className="upper-filter d-flex justify-content-between align-items-center mb-20">
-                  <div className="total-job-found">
+                  {/* <div className="total-job-found">
                     All <span className="text-dark fw-500">1,270</span>{" "}
                     candidates found
-                  </div>
+                  </div> */}
                   <div className="d-flex align-items-center">
-                    <div className="short-filter d-flex align-items-center">
+                    {/* <div className="short-filter d-flex align-items-center">
                       <div className="text-dark fw-500 me-2">Short:</div>
                       <ShortSelect />
-                    </div>
-                    <button
+                    </div> */}
+                    {/* <button
                       onClick={() => setJobType("list")}
                       className={`style-changer-btn text-center rounded-circle tran3s ms-2 list-btn ${jobType === "grid" ? "active" : ""}`}
                       title="Active List"
@@ -79,7 +79,7 @@ const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
                       title="Active Grid"
                     >
                       <i className="bi bi-grid"></i>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
 
@@ -111,7 +111,7 @@ const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
                 </div>
 
                 <div className="pt-20 d-sm-flex align-items-center justify-content-between">
-                  <p className="m0 order-sm-last text-center text-sm-start xs-pb-20">
+                  {/* <p className="m0 order-sm-last text-center text-sm-start xs-pb-20">
                     Showing <span className="text-dark fw-500">1 to 20</span> of{" "}
                     <span className="text-dark fw-500">1,270</span>
                   </p>
@@ -132,7 +132,7 @@ const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
                         </a>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

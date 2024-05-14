@@ -5,7 +5,8 @@ import Image from 'next/image';
 import shape_1 from '@/assets/images/shape/shape_01.svg';
 import shape_2 from '@/assets/images/shape/shape_02.svg';
 import shape_3 from '@/assets/images/shape/shape_03.svg';
-import main_img from '@/assets/images/assets/img_01.jpg';
+// import main_img from '@/assets/images/assets/img_01.jpg';
+import main_img from '@/assets/new_images/javier-allegue-barros-0nOP5iHVaZ8-unsplash (1).jpg';
 import SearchForm from '../forms/search-form';
 
 const HeroBanner = () => {

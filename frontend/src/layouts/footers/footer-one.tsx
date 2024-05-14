@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 // internal
 import logo from "@/assets/images/logo/logo_03.png";
-import logo_2 from "@/assets/images/logo/logo_04.png";
+import logo_2 from "@/assets/new_images/Screenshot_2024-05-12_135442.svg-removebg-preview.png";
 import logo_w from "@/assets/images/logo/logo_06.png";
 import shape from "@/assets/images/shape/shape_28.svg";
 import { WidgetOne, WidgetThree, WidgetTwo } from "./component/footer-widgets";
@@ -24,25 +24,25 @@ const FooterOne = ({
 				<div className="inner-wrapper">
 					<div className="row">
 						<div className="col-lg-2 col-md-3 footer-intro mb-15">
-							<div className="logo mb-15">
+							<div className="logo mb-15" style={{ maxWidth: '557px' }}>
 								<Link href="/" className="d-flex align-items-center">
-									<Image src={style_2 ? logo_w : style_3 ? logo_2 : logo} alt="logo" priority />
+									<Image src={logo_2} alt="logo" priority />
 								</Link>
 							</div>
-							<Image
+							{/* <Image
 								src={shape}
 								alt="shape"
 								className="lazy-img mt-80 sm-mt-30 sm-mb-20"
-							/>
+							/> */}
 						</div>
 						{/* widget one */}
-						<WidgetOne style_2={style_2} cls="col-lg-2 col-md-3 col-sm-4" />
+						{/* <WidgetOne style_2={style_2} cls="col-lg-2 col-md-3 col-sm-4" /> */}
 						{/* widget two */}
-						<WidgetTwo style_2={style_2} cls="col-lg-2 col-md-3 col-sm-4" />
+						{/* <WidgetTwo style_2={style_2} cls="col-lg-2 col-md-3 col-sm-4" /> */}
 						{/* widget three */}
-						<WidgetThree style_2={style_2} cls="col-lg-2 col-md-3 col-sm-4" />
+						{/* <WidgetThree style_2={style_2} cls="col-lg-2 col-md-3 col-sm-4" /> */}
 						{/* widget end */}
-						<div className="col-lg-4 mb-20 footer-newsletter">
+						{/* <div className="col-lg-4 mb-20 footer-newsletter">
 							<h5 className={`footer-title ${style_2 ? "text-white" : ""}`}>
 								Newsletter
 							</h5>
@@ -56,7 +56,7 @@ const FooterOne = ({
 							<p className="note">
 								We only send interesting and relevant emails.
 							</p>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</div>
@@ -65,12 +65,12 @@ const FooterOne = ({
 			>
 				<div className="container">
 					<div className="row align-items-center">
-						<div className="col-lg-4 order-lg-3 mb-15">
+						{/* <div className="col-lg-4 order-lg-3 mb-15">
 							<ul className="style-none d-flex order-lg-last justify-content-center justify-content-lg-end social-icon">
 								<SocialLinks />
 							</ul>
-						</div>
-						<div className="col-lg-4 order-lg-1 mb-15">
+						</div> */}
+						{/* <div className="col-lg-4 order-lg-1 mb-15">
 							<ul className="d-flex style-none bottom-nav justify-content-center justify-content-lg-start">
 								<li>
 									<Link href='/contact'>Privacy & Terms.</Link>
@@ -79,10 +79,20 @@ const FooterOne = ({
 									<Link href='/contact'> Contact Us</Link>
 								</li>
 							</ul>
+						</div> */}
+						<div className="col-lg-4 order-lg-2">
+							<p className={`text-center mb-15 ${style_2 ? "text-white" : ""}`}>
+								Copyright @{new Date().getFullYear()} SkillsMatch - Final Year Project
+							</p>
 						</div>
 						<div className="col-lg-4 order-lg-2">
 							<p className={`text-center mb-15 ${style_2 ? "text-white" : ""}`}>
-								Copyright @{new Date().getFullYear()} jobi inc.
+								Contributed By: 20K-0270 20K-0265 20K-0195
+							</p>
+						</div>
+						<div className="col-lg-4 order-lg-2">
+							<p className={`text-center mb-15 ${style_2 ? "text-white" : ""}`}>
+								Supervised By: Dr. Zulfiqar Ali Memon
 							</p>
 						</div>
 					</div>
