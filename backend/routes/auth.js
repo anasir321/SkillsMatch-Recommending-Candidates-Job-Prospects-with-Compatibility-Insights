@@ -27,7 +27,8 @@ const { signupCandidate,
         isJobSaved,
         getAllSavedJobs,
         getJobDetailsUsingSavedJobs,
-        getCandidateDetailsUsingCandidateIdsArray
+        getCandidateDetailsUsingCandidateIdsArray,
+        getCandidateInterviews
     } = require('../controllers/authControllerCandidate');
 
 const{  signupCompanyHR, 
@@ -94,6 +95,7 @@ router.delete('/unsaveJob', jwtMiddlewareCandidate, unsaveJob);
 router.get('/isJobSaved', jwtMiddlewareCandidate, isJobSaved);
 router.get('/getAllSavedJobs', jwtMiddlewareCandidate, getAllSavedJobs);
 router.get('/getJobDetailsUsingSavedJobs/:job_id',jwtMiddlewareCandidate, getJobDetailsUsingSavedJobs);
+router.get('/getCandidateInterviews', jwtMiddlewareCandidate, getCandidateInterviews);
 
 // COMPANY HR LOGIN AND SIGNUP ROUTES
 router.post('/signupCompanyHR', signupCompanyHR);

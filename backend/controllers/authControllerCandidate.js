@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { Candidate, Institute, WorkExperience, Jobs, AppliedJobs, SavedJobs, Company_HR } = require("../models");
+const { Candidate, Institute, WorkExperience, Jobs, AppliedJobs, SavedJobs, Company_HR, Interviews } = require("../models");
 
 const dotenv = require("dotenv");
 
@@ -1035,6 +1035,29 @@ async function getCandidateDetailsUsingCandidateIdsArray(req, res) {
   }
 }
 
+async function getCandidateInterviews(req, res) {
+  try {
+    // Extract company HR ID from the decoded JWT token
+    const { id } = req.user;
+
+    // Fetch all interviews scheduled by the company HR using the companyHR_id
+    const interviews = await Interviews.findAll({ where: { candidate_id: id } });
+
+    res.status(200).json({
+      success: true,
+      message: "Candidate interviews fetched successfully",
+      data: interviews
+    });
+  } catch (error) {
+    console.error("Error fetching candidate interviews:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch candidate interviews",
+      error: error.message
+    });
+  }
+}
+
 
 module.exports = {
   signupCandidate,
@@ -1063,5 +1086,6 @@ module.exports = {
   isJobSaved,
   getAllSavedJobs,
   getJobDetailsUsingSavedJobs,
-  getCandidateDetailsUsingCandidateIdsArray
+  getCandidateDetailsUsingCandidateIdsArray,
+  getCandidateInterviews,
 };
