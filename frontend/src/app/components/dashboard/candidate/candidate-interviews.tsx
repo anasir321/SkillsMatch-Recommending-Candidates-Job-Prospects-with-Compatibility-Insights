@@ -128,7 +128,7 @@ const CandidateInterviewTable = ({
                   <thead>
                     <tr>
                       {/* <th scope="col">Interview ID</th> */}
-                      <th scope="col">Job ID</th>
+                      {/* <th scope="col">Job ID</th> */}
                       {/* <th scope="col">Candidate ID</th> */}
                       <th scope="col">Interview Date</th>
                       <th scope="col">Interview Time</th>
@@ -137,13 +137,14 @@ const CandidateInterviewTable = ({
                       <th scope="col">Comments</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
+                      <th scope="col">View Job</th>
                     </tr>
                   </thead>
                   <tbody className="border-0">
                     {interviews.map((interview) => (
                       <tr key={interview.interview_id}>
                         {/* <td>{interview.interview_id}</td> */}
-                        <td>{interview.job_id}</td>
+                        {/* <td>{interview.job_id}</td> */}
                         {/* <td>{interview.candidate_id}</td> */}
                         <td>{new Date(interview.date).toLocaleDateString()}</td>
                         <td>{interview.time}</td>
@@ -176,6 +177,11 @@ const CandidateInterviewTable = ({
                                 ignored by candidate
                             </option>
                           </select>
+                        </td>
+                        <td>
+                        <a href={`/job-details-v1?job_id=${interview.job_id}`} className="btn btn-primary" style={{ width: "100px", backgroundColor: 'white', color: 'black', border: '1px solid black' }}>
+                          View Job
+                        </a>
                         </td>
                       </tr>
                     ))}
