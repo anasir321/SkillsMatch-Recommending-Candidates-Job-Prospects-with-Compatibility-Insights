@@ -82,7 +82,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     status: {
-      type: DataTypes.ENUM('scheduled', 'accepted with original date & time', 'accepted with alternate date & time', 'cancelled by HR'),
+      type: DataTypes.ENUM('scheduled', 'accepted with original date & time', 'accepted with alternate date & time', 'ignored by candidate','cancelled by HR'),
       allowNull: false,
     },
     createdAt: {

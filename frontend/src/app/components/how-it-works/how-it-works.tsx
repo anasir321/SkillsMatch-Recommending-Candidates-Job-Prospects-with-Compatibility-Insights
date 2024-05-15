@@ -13,9 +13,9 @@ const HowItWorks = () => {
       <div className="container">
         <div className="title-one text-center mb-65 lg-mb-40 wow fadeInUp" data-wow-delay="0.3s">
           <h2 className="text-white">
-            How it’s{" "}
+            How it{" "}
             <span className="position-relative">
-              work?{" "}
+              works?{" "}
               <Image
                 src={shape_1}
                 alt="shape"

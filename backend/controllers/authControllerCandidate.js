@@ -1,7 +1,16 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { Candidate, Institute, WorkExperience, Jobs, AppliedJobs, SavedJobs, Company_HR, Interviews } = require("../models");
+const {
+  Candidate,
+  Institute,
+  WorkExperience,
+  Jobs,
+  AppliedJobs,
+  SavedJobs,
+  Company_HR,
+  Interviews,
+} = require("../models");
 
 const dotenv = require("dotenv");
 
@@ -95,8 +104,7 @@ async function signupCandidate(req, res) {
   }
 }
 
-async function 
-loginCandidate(req, res) {
+async function loginCandidate(req, res) {
   try {
     const { email, password } = req.body;
     const candidate = await Candidate.findOne({ where: { email } });
@@ -107,7 +115,7 @@ loginCandidate(req, res) {
 
     var passwordIsValid = bcrypt.compareSync(password, candidate.password);
 
-    if(password == candidate.password){
+    if (password == candidate.password) {
       passwordIsValid = true;
     }
 
@@ -150,7 +158,7 @@ async function getCandidateDetails(req, res) {
     const institute = await Institute.findAll({ where: { candidate_id: id } });
     const workExperience = await WorkExperience.findAll({
       where: { candidate_id: id },
-    });    
+    });
 
     if (!candidate) {
       return res.status(404).json({
@@ -162,7 +170,7 @@ async function getCandidateDetails(req, res) {
     res.status(200).json({
       success: true,
       message: "Candidate details retrieved successfully",
-      data: { candidate, institute, workExperience},
+      data: { candidate, institute, workExperience },
     });
   } catch (error) {
     console.error(error);
@@ -174,14 +182,14 @@ async function getCandidateDetails(req, res) {
   }
 }
 
-async function getInstituteDetails (req, res){
-  try{
+async function getInstituteDetails(req, res) {
+  try {
     const { id } = req.user;
     const institute = await Institute.findAll({ where: { candidate_id: id } });
-    if (!institute){
-      return res.status(404).json({ 
+    if (!institute) {
+      return res.status(404).json({
         success: false,
-        message: "Institute Details not found"
+        message: "Institute Details not found",
       });
     }
     res.status(200).json({
@@ -189,8 +197,7 @@ async function getInstituteDetails (req, res){
       message: "Institute details retrieved successfully",
       data: { institute },
     });
-
-  } catch (error){
+  } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
@@ -225,7 +232,7 @@ const getWorkExperienceDetails = async (req, res) => {
       error: error.message,
     });
   }
-}
+};
 
 async function createCandidateWorkExperience(req, res) {
   try {
@@ -240,7 +247,7 @@ async function createCandidateWorkExperience(req, res) {
       return res.status(404).json({ message: "Candidate not found" });
     }
 
-    for(const detail of workExperience){
+    for (const detail of workExperience) {
       const { company_name, position, duration } = detail;
       const existingDetail = await WorkExperience.findOne({
         where: { candidate_id: id, company_name },
@@ -294,7 +301,11 @@ async function createCandidateEducationDetails(req, res) {
 
       if (existingDetail) {
         // Update the existing education detail
-        await existingDetail.update({ institute_name, degree_program, duration });
+        await existingDetail.update({
+          institute_name,
+          degree_program,
+          duration,
+        });
       } else {
         // Create a new education detail
         await Institute.create({
@@ -315,9 +326,8 @@ async function createCandidateEducationDetails(req, res) {
     return res
       .status(500)
       .json({ message: "Error! Unable to create education details" });
-  }  
+  }
 }
-
 
 async function getCandidateDetailsUsingId(req, res) {
   try {
@@ -338,7 +348,7 @@ async function getCandidateDetailsUsingId(req, res) {
     res.status(200).json({
       success: true,
       message: "Candidate details retrieved successfully",
-      data: { candidate, institute, workExperience},
+      data: { candidate, institute, workExperience },
     });
   } catch (error) {
     console.error(error);
@@ -479,7 +489,6 @@ async function updateCandidateEducationDetails(req, res) {
   }
 }
 
-
 async function updateCandidateWorkExperience(req, res) {
   try {
     const { id } = req.user;
@@ -583,7 +592,7 @@ async function uploadResume(req, res) {
           candidate.resume = `/uploads/resumes/${req.file.filename}`;
 
           console.log(candidate.resume);
-          console.log("INSIDE UPLOAD RESUME FUNCTION")
+          console.log("INSIDE UPLOAD RESUME FUNCTION");
 
           await Candidate.sequelize.transaction(async (t) => {
             await candidate.save({ transaction: t });
@@ -621,7 +630,12 @@ async function getResume(req, res) {
     const relativePath = `${candidate.resume}`;
 
     // Send the relative path directly as a response
-    res.status(200).json({ message: "Resume retrieved successfully", filePath: relativePath});
+    res
+      .status(200)
+      .json({
+        message: "Resume retrieved successfully",
+        filePath: relativePath,
+      });
   } catch (error) {
     console.error(error);
     return res
@@ -647,11 +661,8 @@ async function getResumeUsingId(req, res) {
     });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ message: "Error! Unable to retrieve resume" });
+    res.status(500).json({ message: "Error! Unable to retrieve resume" });
   }
-
 }
 
 async function getProfilePicture(req, res) {
@@ -723,76 +734,82 @@ async function getAllCandidates(req, res) {
 
 async function getCandidateDetailsUsingEmail(req, res) {
   try {
-      const {email} = req.params;
-      const company = await Candidate.findOne({ where: {email: email}});
-      if(!company){
-          return res.status(404).json({ message: "Candidate not found" });
-      }
-      res.status(200).json({
-          message: "Candidate details retrieved successfully",
-          data: { company },
-      });
+    const { email } = req.params;
+    const company = await Candidate.findOne({ where: { email: email } });
+    if (!company) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
+    res.status(200).json({
+      message: "Candidate details retrieved successfully",
+      data: { company },
+    });
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Error! Unable to get Candidate details." });
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Error! Unable to get Candidate details." });
   }
 }
 
 // apply for a job
 async function applyJob(req, res) {
   try {
-     // Extract job_id and candidate_id from request body
-     const { job_id, candidate_id } = req.body;
+    // Extract job_id and candidate_id from request body
+    const { job_id, candidate_id } = req.body;
 
-     // Find the job and candidate in the database
-     const job = await Jobs.findByPk(job_id);
-     const candidate = await Candidate.findByPk(candidate_id);
+    // Find the job and candidate in the database
+    const job = await Jobs.findByPk(job_id);
+    const candidate = await Candidate.findByPk(candidate_id);
 
-     // Check if job and candidate exist
-     if (!job) {
-         return res.status(404).json({ message: "Job not found" });
-     }
-     if (!candidate) {
-         return res.status(404).json({ message: "Candidate not found" });
-     }
+    // Check if job and candidate exist
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+    if (!candidate) {
+      return res.status(404).json({ message: "Candidate not found" });
+    }
 
-     // Check if the candidate has already applied for the job
-     const existingApplication = await AppliedJobs.findOne({
-         where: {
-             job_id,
-             candidate_id,
-         },
-     });
+    // Check if the candidate has already applied for the job
+    const existingApplication = await AppliedJobs.findOne({
+      where: {
+        job_id,
+        candidate_id,
+      },
+    });
 
-     if (existingApplication) {
-         return res.status(201).json({ message: "Candidate has already applied for this job" });
-     }
+    if (existingApplication) {
+      return res
+        .status(201)
+        .json({ message: "Candidate has already applied for this job" });
+    }
 
-     // Create a new job application
-     const application = await AppliedJobs.create({
-         job_id,
-         candidate_id,
-     });
+    // Create a new job application
+    const application = await AppliedJobs.create({
+      job_id,
+      candidate_id,
+    });
 
-     // Send a success response
-     res.status(200).json({
+    // Send a success response
+    res.status(200).json({
       message: "Candidate successfully applied for the job",
       data: { application },
-  });
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error! Unable to retrieve candidates" });
   }
 }
 
-async function getAppliedJobs(req, res){
-  try{
+async function getAppliedJobs(req, res) {
+  try {
     const { id } = req.user;
-    const appliedJobs = await AppliedJobs.findAll({ where: { candidate_id: id } });
-    if (!appliedJobs){
-      return res.status(404).json({ 
+    const appliedJobs = await AppliedJobs.findAll({
+      where: { candidate_id: id },
+    });
+    if (!appliedJobs) {
+      return res.status(404).json({
         success: false,
-        message: "Applied Jobs not found"
+        message: "Applied Jobs not found",
       });
     }
     res.status(200).json({
@@ -800,7 +817,7 @@ async function getAppliedJobs(req, res){
       message: "Applied Jobs retrieved successfully",
       data: { appliedJobs },
     });
-  } catch(error){
+  } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
@@ -810,28 +827,30 @@ async function getAppliedJobs(req, res){
   }
 }
 
-async function getJobDetailsUsingCandidateId(req, res){
-  try{
+async function getJobDetailsUsingCandidateId(req, res) {
+  try {
     const candidate_id = req.params.candidate_id;
 
-    const appliedJobs = await AppliedJobs.findAll({ where: { candidate_id: candidate_id } });
+    const appliedJobs = await AppliedJobs.findAll({
+      where: { candidate_id: candidate_id },
+    });
 
-    if(!appliedJobs){
+    if (!appliedJobs) {
       return res.status(404).json({
         success: false,
-        message: "No jobs found against this candidate"
+        message: "No jobs found against this candidate",
       });
     }
 
     // get job_ids of all the jobs applied by the candidate
-    const job_ids = appliedJobs.map(job => job.job_id);
+    const job_ids = appliedJobs.map((job) => job.job_id);
 
     const jobs = await Jobs.findAll({ where: { job_id: job_ids } });
 
-    if(!jobs){
+    if (!jobs) {
       return res.status(404).json({
         success: false,
-        message: "No job details found against this job_id"
+        message: "No job details found against this job_id",
       });
     }
 
@@ -840,8 +859,7 @@ async function getJobDetailsUsingCandidateId(req, res){
       message: "Job details retrieved successfully",
       data: { jobs },
     });
-
-  } catch(error){
+  } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
@@ -849,12 +867,11 @@ async function getJobDetailsUsingCandidateId(req, res){
       error: error.message,
     });
   }
-
 }
 
-async function saveJob(req,res){
-  try{
-    const { job_id, candidate_id, companyHR_id, } = req.body;
+async function saveJob(req, res) {
+  try {
+    const { job_id, candidate_id, companyHR_id } = req.body;
 
     const job = await Jobs.findAll({ where: { job_id } });
 
@@ -875,11 +892,10 @@ async function saveJob(req,res){
     console.error(error);
     res.status(500).json({ message: "Error! Unable to save job" });
   }
-
 }
 
-async function unsaveJob(req,res){
-  try{
+async function unsaveJob(req, res) {
+  try {
     const { job_id } = req.body;
 
     const savedJob = await SavedJobs.findAll({ where: { job_id } });
@@ -899,32 +915,31 @@ async function unsaveJob(req,res){
   }
 }
 
-async function isJobSaved(req,res){
-  try{
+async function isJobSaved(req, res) {
+  try {
     const { job_id } = req.body;
 
     const savedJob = await SavedJobs.findOne({ where: { job_id } });
 
     if (!savedJob) {
       return res.status(200).json({ isJobSaved: false });
-    }else {
+    } else {
       return res.status(200).json({ isJobSaved: true });
     }
-
-  } catch(error){
+  } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error! Unable to check if job is saved" });
   }
 }
 
-async function getAllSavedJobs(req, res){
-  try{
+async function getAllSavedJobs(req, res) {
+  try {
     const { id } = req.user;
     const savedJobs = await SavedJobs.findAll({ where: { candidate_id: id } });
-    if (!savedJobs){
-      return res.status(404).json({ 
+    if (!savedJobs) {
+      return res.status(404).json({
         success: false,
-        message: "Saved Jobs not found"
+        message: "Saved Jobs not found",
       });
     }
     res.status(200).json({
@@ -932,7 +947,7 @@ async function getAllSavedJobs(req, res){
       message: "Saved Jobs retrieved successfully",
       data: { savedJobs },
     });
-  } catch(error){
+  } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
@@ -942,28 +957,28 @@ async function getAllSavedJobs(req, res){
   }
 }
 
-async function getJobDetailsUsingSavedJobs(req, res){
-  try{
+async function getJobDetailsUsingSavedJobs(req, res) {
+  try {
     const job_id = req.params.job_id;
 
     const savedJobs = await SavedJobs.findAll({ where: { job_id: job_id } });
 
-    if(!savedJobs){
+    if (!savedJobs) {
       return res.status(404).json({
         success: false,
-        message: "No jobs found against this job_id"
+        message: "No jobs found against this job_id",
       });
     }
 
     // get job_ids of all the jobs applied by the candidate
-    const job_ids = savedJobs.map(job => job.job_id);
+    const job_ids = savedJobs.map((job) => job.job_id);
 
     const jobs = await Jobs.findAll({ where: { job_id: job_ids } });
 
-    if(!jobs){
+    if (!jobs) {
       return res.status(404).json({
         success: false,
-        message: "No job details found against this job_id"
+        message: "No job details found against this job_id",
       });
     }
 
@@ -972,8 +987,7 @@ async function getJobDetailsUsingSavedJobs(req, res){
       message: "Job details retrieved successfully",
       data: { jobs },
     });
-
-  } catch(error){
+  } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
@@ -989,7 +1003,7 @@ async function getJobDetailsUsingSavedJobs(req, res){
 //       // Step 1: Fetch candidates from API
 //       const response = await axios.get(`http://localhost:2004/recommend_candidates/${job_id}`);
 //       const recommendedCandidates = response.data.recommended_candidates;
-      
+
 //       // Step 2: Extract candidate IDs
 //       const candidateIds = recommendedCandidates.map(candidate => candidate.candidate_id);
 
@@ -1011,7 +1025,9 @@ async function getCandidateDetailsUsingCandidateIdsArray(req, res) {
   try {
     const { candidateIds } = req.body;
 
-    const candidateDetails = await Candidate.findAll({ where: { candidate_id: candidateIds } });
+    const candidateDetails = await Candidate.findAll({
+      where: { candidate_id: candidateIds },
+    });
 
     if (!candidateDetails) {
       return res.status(404).json({
@@ -1041,23 +1057,62 @@ async function getCandidateInterviews(req, res) {
     const { id } = req.user;
 
     // Fetch all interviews scheduled by the company HR using the companyHR_id
-    const interviews = await Interviews.findAll({ where: { candidate_id: id } });
+    const interviews = await Interviews.findAll({
+      where: { candidate_id: id },
+    });
 
     res.status(200).json({
       success: true,
       message: "Candidate interviews fetched successfully",
-      data: interviews
+      data: interviews,
     });
   } catch (error) {
     console.error("Error fetching candidate interviews:", error);
     res.status(500).json({
       success: false,
       message: "Failed to fetch candidate interviews",
-      error: error.message
+      error: error.message,
     });
   }
 }
 
+const updateInterviewStatus = async (req, res) => {
+  try {
+    // Extract candidate ID from JWT token
+    const { id } = req.user;
+
+    // Extract interview ID and status from request body
+    const { interview_id, status } = req.body;
+
+    console.log("Interview ID: ", interview_id);
+    console.log("Status: ", status);
+
+    // Update interview status in the database
+    const updatedInterview = await Interviews.update(
+      { status },
+      {
+        where: {
+          interview_id: interview_id,
+          candidate_id: id,
+        },
+      }
+    );
+
+    if (updatedInterview[0] === 0) {
+      // If no interview was updated
+      return res
+        .status(404)
+        .json({ message: "Interview not found or unauthorized" });
+    }
+
+    // Send success response
+    res.status(200).json({ message: "Interview status updated successfully" });
+  } catch (error) {
+    // Handle errors
+    console.error("Error updating interview status:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 module.exports = {
   signupCandidate,
@@ -1088,4 +1143,5 @@ module.exports = {
   getJobDetailsUsingSavedJobs,
   getCandidateDetailsUsingCandidateIdsArray,
   getCandidateInterviews,
+  updateInterviewStatus,
 };

@@ -1,4 +1,4 @@
-'use-client'
+"use-client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -18,11 +18,14 @@ interface InterviewDetails {
 }
 
 type IProps = {
-    isOpenSidebar: boolean;
-    setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpenSidebar: boolean;
+  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const CandidateInterviewTable = ({ isOpenSidebar, setIsOpenSidebar }: IProps) =>  {
+const CandidateInterviewTable = ({
+  isOpenSidebar,
+  setIsOpenSidebar,
+}: IProps) => {
   const [interviews, setInterviews] = useState<InterviewDetails[]>([]);
 
   useEffect(() => {
@@ -46,8 +49,35 @@ const CandidateInterviewTable = ({ isOpenSidebar, setIsOpenSidebar }: IProps) =>
     fetchInterviews();
   }, []);
 
-  return (
+  // Function to handle action selection
+  const handleActionChange = async (interview_id: number, action: string) => {
+    try {
+      // Make API call to update the interview status
+      await axios.patch(
+        "http://localhost:5000/api/auth/updateInterviewStatus",
+        { interview_id, status: action },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      // Update the status locally
+      setInterviews((prevInterviews) =>
+        prevInterviews.map((interview) =>
+          interview.interview_id === interview_id
+            ? { ...interview, status: action }
+            : interview
+        )
+      );
+    } catch (error) {
+        console.log("Interview ID:", interview_id);
+        console.log("Action:", action)
+      console.error("Error updating interview status:", error);
+    }
+  };
 
+  return (
     <div className="dashboard-body">
       <div className="position-relative">
         {/* header start */}
@@ -106,6 +136,7 @@ const CandidateInterviewTable = ({ isOpenSidebar, setIsOpenSidebar }: IProps) =>
                       <th scope="col">Alternate Time</th>
                       <th scope="col">Comments</th>
                       <th scope="col">Status</th>
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody className="border-0">
@@ -114,16 +145,38 @@ const CandidateInterviewTable = ({ isOpenSidebar, setIsOpenSidebar }: IProps) =>
                         {/* <td>{interview.interview_id}</td> */}
                         <td>{interview.job_id}</td>
                         {/* <td>{interview.candidate_id}</td> */}
-                        <td>
-                          {new Date(interview.date).toLocaleDateString()}
-                        </td>
+                        <td>{new Date(interview.date).toLocaleDateString()}</td>
                         <td>{interview.time}</td>
                         <td>
-                          {new Date(interview.alternate_date).toLocaleDateString()}
+                          {new Date(
+                            interview.alternate_date
+                          ).toLocaleDateString()}
                         </td>
                         <td>{interview.alternate_time}</td>
                         <td>{interview.comments}</td>
                         <td>{interview.status}</td>
+                        <td>
+                          {/* Action dropdown */}
+                          <select style={{ width: "150px" }}
+                            onChange={(e) =>
+                              handleActionChange(
+                                interview.interview_id,
+                                e.target.value
+                              )
+                            }
+                          >
+                            <option value="">Select Action</option>
+                            <option value="accepted with original date & time">
+                                accepted with original date & time
+                            </option>
+                            <option value="accepted with alternate date & time">
+                                accepted with alternate date & time
+                            </option>
+                            <option value="ignored by candidate">
+                                ignored by candidate
+                            </option>
+                          </select>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -152,7 +205,7 @@ const CandidateInterviewTable = ({ isOpenSidebar, setIsOpenSidebar }: IProps) =>
         </div>
       </div>
     </div>
-    );
-}
+  );
+};
 
 export default CandidateInterviewTable;

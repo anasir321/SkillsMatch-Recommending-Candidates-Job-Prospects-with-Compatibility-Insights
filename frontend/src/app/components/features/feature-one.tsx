@@ -66,7 +66,7 @@ const FeatureOne = () => {
           <div className="col-lg-5 order-lg-last">
             <div className="ps-xxl-4 wow fadeInRight">
               <div className="title-one">
-                <h2>Get over 50.000+ talented experts on SkillsMatch.</h2>
+                <h2>Get over 5000+ talented experts on SkillsMatch.</h2>
               </div>
               {/* <p className="mt-40 md-mt-20 mb-40 md-mb-20">
                 A full hybrid workforce management tools are yours to use, as
@@ -74,13 +74,13 @@ const FeatureOne = () => {
               </p> */}
               <ul className="list-style-one style-none">
                 <li>AI-Driven Candidate to Job & Vice-Versa Matching</li>
-                <li>Personalized Learning Pathways</li>
-                <li>Resume Builder</li>
+                <li>Personalized Learning Courses</li>
+                <li>Interview Managment & Scheduling</li>
                 <li>Resume Parser</li>
               </ul>
-              <Link href='/register' className="btn-one lg mt-50 md-mt-30">
+              {/* <Link href='/register' className="btn-one lg mt-50 md-mt-30">
                 Post a Job
-              </Link>
+              </Link> */}
             </div>
           </div>
           <div className="col-lg-7 col-md-11 m-auto order-lg-first">
