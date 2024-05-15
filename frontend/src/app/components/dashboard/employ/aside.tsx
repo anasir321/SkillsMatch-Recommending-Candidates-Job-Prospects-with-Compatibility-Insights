@@ -79,14 +79,13 @@ const nav_data: {
     link: "/dashboard/employ-dashboard/saved-candidate",
     title: "Saved Candidates",
   },
-  // {
-  //   id: 7,
-  //   icon: nav_9,
-  //   icon_active: nav_9_active,
-  //   link: "/dashboard/employ-dashboard/membership",
-  //   title: "Membership",
-  // },
-  // {
+  {
+    id: 7,
+    icon: nav_9,
+    icon_active: nav_9_active,
+    link: "/dashboard/employ-dashboard/scheduledInterviews",
+    title: "Scheduled Interviews",
+  }
   //   id: 8,
   //   icon: nav_7,
   //   icon_active: nav_7_active,

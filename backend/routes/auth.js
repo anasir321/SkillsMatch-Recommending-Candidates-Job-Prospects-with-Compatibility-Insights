@@ -47,7 +47,9 @@ const{  signupCompanyHR,
         countApplicantsUsingJobId,
         getSavedCandidatesUsingcompanyhrId,
         unsaveCandidateWithoutJobId,
-        getCandidateProfilePicture
+        getCandidateProfilePicture,
+        createInterview,
+        getCompanyHRInterviews
     } = require('../controllers/authControllerCompanyHR');
 
 const {
@@ -116,6 +118,8 @@ router.get('/getSavedCandidatesUsingcompanyhrId/:id', jwtMiddlewareCompanyHR, ge
 router.post('/unsaveCandidateWithoutJobId', jwtMiddlewareCompanyHR, unsaveCandidateWithoutJobId);
 router.post('/getCandidateProfilePicture', jwtMiddlewareCompanyHR, getCandidateProfilePicture);
 router.post('/getCandidateDetailsUsingCandidateIdsArray', jwtMiddlewareAllUsers, getCandidateDetailsUsingCandidateIdsArray);
+router.post('/createInterview', jwtMiddlewareCompanyHR, createInterview);
+router.get('/getCompanyHRInterviews', jwtMiddlewareCompanyHR, getCompanyHRInterviews);
 
 //JOBS
 router.put('/submitJob', jwtMiddlewareCompanyHR, submitJob);
